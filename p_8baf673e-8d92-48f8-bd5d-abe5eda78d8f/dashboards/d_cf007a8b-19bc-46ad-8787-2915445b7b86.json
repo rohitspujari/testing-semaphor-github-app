@@ -103,7 +103,7 @@
       "operation": "in",
       "sql": "SELECT min(order_date) as min, max(order_date) as max FROM sales_data {{ filters | where }}",
       "table": "sales_data",
-      "title": "order_date"
+      "title": "Order Date"
     },
     {
       "column": "public.sales_data.row_id",
