@@ -1,0 +1,5086 @@
+{
+  "aiContext": {
+    "selectedEntities": [
+      {
+        "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+        "connectionType": "PostgreSQL",
+        "database": "verceldb",
+        "datasetType": "physical",
+        "description": "This table contains sales orders",
+        "dialect": "postgres",
+        "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+        "id": "verceldb.public.sales_data",
+        "label": "Sales Data",
+        "name": "sales_data",
+        "schema": "public",
+        "type": "dataset"
+      }
+    ]
+  },
+  "aiScopeTables": [
+    {
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "connectionType": "PostgreSQL",
+      "databaseName": "verceldb",
+      "schemaName": "public",
+      "tableName": "sales_data"
+    }
+  ],
+  "baseQueries": [
+    {
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "description": "This a consumer segment base query",
+      "id": "fe1feff0-ad53-4c09-aa8e-721d07f34eff",
+      "name": "consumer_segment",
+      "sql": "WITH subquery AS (\n    SELECT * FROM sales_data WHERE segment = 'Consumer' \n) select * from subquery\n"
+    },
+    {
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "description": "Full Data",
+      "id": "992b62fa-7da9-44f4-8f25-78507a5ae16e",
+      "name": "all_segments",
+      "sql": "SELECT *, TO_CHAR(DATE_TRUNC('month', order_date), 'YYYY-MM') AS month FROM sales_data {{ filters | where }}"
+    },
+    {
+      "connectionId": "c_c1c5851c-504b-4cc9-b4f8-29bcf947b28c",
+      "description": "This is a big query dataset",
+      "id": "m_3844a00b-8902-446f-aa13-814fc95e58a1",
+      "name": "bigquery_orders",
+      "sql": "with cte as ( select * from sales_data.orders) select * from cte"
+    }
+  ],
+  "description": "Description: Demo Dashboard",
+  "emailSettings": {
+    "companyName": "My Company",
+    "dashboardUrl": "",
+    "senderTitle": "Semaphor",
+    "supportEmail": "support@semaphor.com"
+  },
+  "filters": [
+    {
+      "column": "sales_data.category",
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "database": "verceldb",
+      "dataType": "character varying",
+      "defaultValues": [
+        "Office Supplies"
+      ],
+      "excludeSheetIds": [
+        "c02280a1-10b5-4211-b523-613e6895abab"
+      ],
+      "id": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+      "operation": "in",
+      "sql": "SELECT category, COUNT(*) FROM sales_data {{ filters | where }} GROUP BY category ORDER BY category ASC LIMIT 50",
+      "table": "sales_data",
+      "title": "Category",
+      "type": "single",
+      "uiType": "radio"
+    },
+    {
+      "column": "sales_data.region",
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "database": "verceldb",
+      "dataType": "character varying",
+      "id": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+      "location": "dashboard",
+      "operation": "in",
+      "sheetId": "1bf53b08-4840-444f-a556-6a32c2cc7ee5",
+      "sql": "SELECT region, COUNT(*) FROM sales_data {{ filters | where }} GROUP BY region ORDER BY region ASC LIMIT 50",
+      "table": "sales_data",
+      "title": "Region"
+    },
+    {
+      "column": "public.sales_data.order_date",
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "database": "verceldb",
+      "dataType": "date",
+      "defaultDateRange": {
+        "from": "2015-01-01T06:00:00.000Z",
+        "to": "2015-12-31T06:00:00.000Z"
+      },
+      "id": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+      "location": "dashboard",
+      "operation": "in",
+      "sql": "SELECT min(order_date) as min, max(order_date) as max FROM sales_data {{ filters | where }}",
+      "table": "sales_data",
+      "title": "Order Date"
+    },
+    {
+      "column": "public.sales_data.row_id",
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "database": "verceldb",
+      "dataType": "integer",
+      "id": "946add83-4982-486f-aa76-cf2e80e81db1",
+      "location": "dashboard",
+      "operation": "in",
+      "sql": "SELECT row_id, COUNT(*) FROM sales_data {{ filters | where }} GROUP BY row_id ORDER BY row_id ASC LIMIT 50",
+      "table": "sales_data",
+      "title": "Row Id"
+    }
+  ],
+  "globalStyle": {
+    "default": {}
+  },
+  "id": "d_cf007a8b-19bc-46ad-8787-2915445b7b86",
+  "sheets": [
+    {
+      "frames": [
+        {
+          "activeCardId": "57716f55-1186-43a9-b821-c4937138f228",
+          "cards": [
+            {
+              "cfg": {
+                "data": {
+                  "labels": []
+                },
+                "options": {
+                  "plugins": {
+                    "datalabels": {
+                      "align": "center",
+                      "anchor": "center",
+                      "clamp": true,
+                      "display": true
+                    }
+                  }
+                }
+              },
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "character varying",
+                    "entityId": "sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "table",
+                    "id": "groupBy-verceldb.public.sales_data-ship_mode-1749591464320",
+                    "label": "Ship Mode",
+                    "name": "ship_mode",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "count",
+                    "dataType": "integer",
+                    "entityId": "sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "table",
+                    "id": "metrics-verceldb.public.sales_data-row_id-1749591487662",
+                    "label": "Count of Row Id",
+                    "name": "row_id",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "dbSelection": {
+                  "database": "verceldb",
+                  "entityType": "table",
+                  "schema": "public"
+                },
+                "mode": "database",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "table"
+                  }
+                ]
+              },
+              "description": "Breakdown of orders by shipping mode",
+              "id": "57716f55-1186-43a9-b821-c4937138f228",
+              "interactionConfig": {
+                "allowedDrillTargets": [],
+                "clickFilterInteractions": [
+                  {
+                    "filterFields": [
+                      {
+                        "dataType": "character varying",
+                        "entityId": "sales_data",
+                        "entityName": "sales_data",
+                        "entityType": "table",
+                        "id": "groupBy-verceldb.public.sales_data-ship_mode-1749591464320",
+                        "label": "Ship Mode",
+                        "name": "ship_mode",
+                        "qualifiedEntityName": "verceldb.public.sales_data",
+                        "role": "groupby"
+                      }
+                    ],
+                    "highlightSelf": true,
+                    "mode": "clickFilter"
+                  }
+                ],
+                "drillHierarchies": [],
+                "drillInteractions": []
+              },
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "preferences": {
+                "filterOnClick": true,
+                "onClickFilter": []
+              },
+              "queryConfig": {
+                "groupByColumns": [
+                  {
+                    "column_name": "ship_mode",
+                    "data_type": "character varying",
+                    "id": "ship_mode-930e3fd9-c0b8-4249-ba00-035c3a2eb0ad",
+                    "name": "ship_mode",
+                    "role": "groupby",
+                    "type": "character varying"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "column_name": "order_id",
+                    "data_type": "character varying",
+                    "id": "order_id-d47e8187-af6f-4d97-93e4-812b02525b05",
+                    "label": "Count of Order Id",
+                    "name": "order_id",
+                    "role": "metric",
+                    "type": "character varying"
+                  }
+                ],
+                "orderBy": [
+                  {
+                    "columnId": "order_id-d47e8187-af6f-4d97-93e4-812b02525b05",
+                    "direction": "desc"
+                  }
+                ]
+              },
+              "sql": "",
+              "title": "Shipping Modes",
+              "type": "doughnut"
+            }
+          ],
+          "id": "32252763-5e2d-47d8-97de-7b8a7ad5f5ae"
+        },
+        {
+          "activeCardId": "f7e020e0-3d4a-4e51-9146-35e4312ffb6e",
+          "cards": [
+            {
+              "cfg": {
+                "data": {
+                  "labels": []
+                }
+              },
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "date",
+                    "dateFormat": "YYYY-MM",
+                    "entityId": "sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "table",
+                    "granularity": "month",
+                    "id": "groupBy-verceldb.public.sales_data-order_date-1749756605308",
+                    "label": "Order Date",
+                    "name": "order_date",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "character varying",
+                    "entityId": "sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "table",
+                    "id": "metrics-verceldb.public.sales_data-order_id-1749756609794",
+                    "label": "Count of Order Id",
+                    "name": "order_id",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": [
+                  {
+                    "dataType": "character varying",
+                    "entityId": "sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "table",
+                    "id": "pivotBy-verceldb.public.sales_data-segment-1749756613816",
+                    "label": "Segment",
+                    "name": "segment",
+                    "role": "pivotby"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCardPreferences": {
+                "componentName": "Area Chart",
+                "pluginChartType": "area",
+                "settings": {
+                  "animation": {
+                    "duration": 300,
+                    "easing": "ease",
+                    "enabled": true
+                  },
+                  "appearance": {
+                    "colors": {
+                      "mappings": [],
+                      "scheme": "default",
+                      "useCustom": false
+                    },
+                    "dataPoints": {
+                      "dotSize": 4,
+                      "position": "top",
+                      "show": false,
+                      "size": 12,
+                      "style": "circle"
+                    },
+                    "grid": {
+                      "horizontal": true,
+                      "opacity": 0.5,
+                      "show": true,
+                      "style": "solid",
+                      "vertical": false
+                    }
+                  },
+                  "axes": {
+                    "x": {
+                      "axisLine": false,
+                      "label": "",
+                      "position": "bottom",
+                      "show": true
+                    },
+                    "y": {
+                      "axisLine": false,
+                      "label": "",
+                      "position": "left",
+                      "show": true
+                    }
+                  },
+                  "chart": {
+                    "orientation": "vertical",
+                    "type": "area"
+                  },
+                  "chartSpecific": {
+                    "bar": {},
+                    "combo": {},
+                    "funnel": {},
+                    "line": {
+                      "curve": "monotone",
+                      "fillOpacity": 0.2,
+                      "strokeWidth": 2
+                    },
+                    "pie": {}
+                  },
+                  "formatting": {
+                    "compactDisplay": "short",
+                    "currency": "USD",
+                    "enabled": false,
+                    "locale": "en-US",
+                    "maximumFractionDigits": 2,
+                    "minimumFractionDigits": 0,
+                    "notation": "standard",
+                    "prefix": "",
+                    "signDisplay": "auto",
+                    "style": "decimal",
+                    "suffix": "",
+                    "unitDisplay": "short",
+                    "useGrouping": true
+                  },
+                  "interaction": {
+                    "brush": {
+                      "enabled": false
+                    },
+                    "tooltip": {
+                      "enabled": true,
+                      "format": "default",
+                      "trigger": "hover"
+                    },
+                    "zoom": {
+                      "enabled": false,
+                      "type": "x"
+                    }
+                  },
+                  "legend": {
+                    "alignment": "center",
+                    "orientation": "horizontal",
+                    "position": "bottom",
+                    "show": true
+                  }
+                },
+                "type": "component",
+                "url": "https://apps.semaphor.cloud/plugins/standard/shadcn-charts-plugin",
+                "visualType": "single"
+              },
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "description": "This table contains sales orders",
+                    "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+                    "id": "verceldb.public.sales_data",
+                    "label": "Sales Data",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef"
+              },
+              "description": "Order volumes, trends, and patterns over each month",
+              "id": "orders-by-month",
+              "interactionConfig": {
+                "allowedDrillTargets": [],
+                "clickFilterInteractions": [
+                  {
+                    "filterFields": [
+                      {
+                        "dataType": "date",
+                        "dateFormat": "YYYY-MM",
+                        "entityId": "verceldb.public.sales_data",
+                        "entityName": "sales_data",
+                        "entityType": "dataset",
+                        "granularity": "month",
+                        "id": "groupBy-sales_data-order_date-1750984274045",
+                        "label": "Order Date",
+                        "name": "order_date",
+                        "qualifiedEntityName": "sales_data",
+                        "role": "groupby"
+                      },
+                      {
+                        "dataType": "character varying",
+                        "entityId": "verceldb.public.sales_data",
+                        "entityName": "sales_data",
+                        "entityType": "dataset",
+                        "id": "pivotBy-sales_data-region-1750984284146",
+                        "label": "Region",
+                        "name": "region",
+                        "qualifiedEntityName": "sales_data",
+                        "role": "pivotby"
+                      }
+                    ],
+                    "highlightSelf": true,
+                    "mode": "clickFilter"
+                  }
+                ],
+                "drillHierarchies": [],
+                "drillInteractions": []
+              },
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "preferences": {},
+              "title": "Orders by Month",
+              "type": "custom"
+            },
+            {
+              "cfg": {
+                "data": {
+                  "labels": []
+                }
+              },
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "date",
+                    "dateFormat": "YYYY-MM",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "granularity": "month",
+                    "id": "groupBy-verceldb.public.sales_data-order_date-1760580114412",
+                    "label": "Order Date",
+                    "name": "order_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-order_id-1760580118343",
+                    "label": "Count of Order Id",
+                    "name": "order_id",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": [
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "pivotBy-verceldb.public.sales_data-region-1760580122376",
+                    "label": "Region",
+                    "name": "region",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "pivotby"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCardPreferences": {
+                "componentName": "Bar Chart",
+                "settings": {
+                  "animation": {
+                    "duration": 300,
+                    "easing": "ease",
+                    "enabled": true
+                  },
+                  "appearance": {
+                    "colors": {
+                      "mappings": [],
+                      "scheme": "default",
+                      "useCustom": false
+                    },
+                    "dataPoints": {
+                      "dotSize": 4,
+                      "position": "top",
+                      "show": false,
+                      "size": 12,
+                      "style": "circle"
+                    },
+                    "grid": {
+                      "horizontal": true,
+                      "opacity": 0.5,
+                      "show": true,
+                      "style": "solid",
+                      "vertical": false
+                    }
+                  },
+                  "axes": {
+                    "x": {
+                      "axisLine": false,
+                      "label": "",
+                      "position": "bottom",
+                      "show": true
+                    },
+                    "y": {
+                      "axisLine": false,
+                      "label": "",
+                      "position": "left",
+                      "show": true
+                    }
+                  },
+                  "chart": {
+                    "orientation": "vertical",
+                    "type": "area"
+                  },
+                  "chartSpecific": {
+                    "bar": {},
+                    "combo": {},
+                    "funnel": {},
+                    "line": {
+                      "curve": "monotone",
+                      "fillOpacity": 0.2,
+                      "strokeWidth": 2
+                    },
+                    "pie": {}
+                  },
+                  "formatting": {
+                    "compactDisplay": "short",
+                    "currency": "USD",
+                    "enabled": false,
+                    "locale": "en-US",
+                    "maximumFractionDigits": 2,
+                    "minimumFractionDigits": 0,
+                    "notation": "standard",
+                    "prefix": "",
+                    "signDisplay": "auto",
+                    "style": "decimal",
+                    "suffix": "",
+                    "unitDisplay": "short",
+                    "useGrouping": true
+                  },
+                  "interaction": {
+                    "brush": {
+                      "enabled": false
+                    },
+                    "tooltip": {
+                      "enabled": true,
+                      "format": "default",
+                      "trigger": "hover"
+                    },
+                    "zoom": {
+                      "enabled": false,
+                      "type": "x"
+                    }
+                  },
+                  "legend": {
+                    "alignment": "center",
+                    "orientation": "horizontal",
+                    "position": "bottom",
+                    "show": true
+                  }
+                },
+                "type": "component",
+                "url": "https://apps.semaphor.cloud/plugins/standard/shadcn-charts-plugin",
+                "visualType": "single"
+              },
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "description": "This table contains sales orders",
+                    "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+                    "id": "verceldb.public.sales_data",
+                    "label": "Sales Data",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef"
+              },
+              "description": "Description",
+              "id": "f7e020e0-3d4a-4e51-9146-35e4312ffb6e",
+              "interactionConfig": {
+                "allowedDrillTargets": [],
+                "clickFilterInteractions": [
+                  {
+                    "filterFields": [
+                      {
+                        "dataType": "date",
+                        "dateFormat": "YYYY-MM-DD",
+                        "entityId": "verceldb.public.sales_data",
+                        "entityName": "sales_data",
+                        "entityType": "dataset",
+                        "granularity": "week",
+                        "id": "groupBy-sales_data-order_date-1750984353886",
+                        "label": "Order Date",
+                        "name": "order_date",
+                        "qualifiedEntityName": "sales_data",
+                        "role": "groupby"
+                      }
+                    ],
+                    "highlightSelf": true,
+                    "mode": "clickFilter"
+                  }
+                ],
+                "drillHierarchies": [
+                  {
+                    "default": false,
+                    "id": "hierarchy_1750984397492",
+                    "label": "Geo",
+                    "steps": [
+                      {
+                        "field": {
+                          "dataType": "character varying",
+                          "description": "The geographical region where the order was placed",
+                          "entityId": "verceldb.public.sales_data",
+                          "entityName": "sales_data",
+                          "entityType": "dataset",
+                          "id": "verceldb.public.sales_data-region",
+                          "label": "Region",
+                          "name": "region",
+                          "qualifiedEntityName": "sales_data"
+                        },
+                        "label": "Drill to Region",
+                        "mode": "drillDown",
+                        "preferredChartType": "bar",
+                        "retainFilters": true
+                      },
+                      {
+                        "field": {
+                          "dataType": "character varying",
+                          "description": "The state where the order was placed",
+                          "entityId": "verceldb.public.sales_data",
+                          "entityName": "sales_data",
+                          "entityType": "dataset",
+                          "id": "verceldb.public.sales_data-state",
+                          "label": "State",
+                          "name": "state",
+                          "qualifiedEntityName": "sales_data"
+                        },
+                        "label": "Drill to State",
+                        "mode": "drillDown",
+                        "preferredChartType": "bar",
+                        "retainFilters": true
+                      },
+                      {
+                        "field": {
+                          "dataType": "character varying",
+                          "description": "The city where the order was placed",
+                          "entityId": "verceldb.public.sales_data",
+                          "entityName": "sales_data",
+                          "entityType": "dataset",
+                          "id": "verceldb.public.sales_data-city",
+                          "label": "City",
+                          "name": "city",
+                          "qualifiedEntityName": "sales_data"
+                        },
+                        "label": "Drill to City",
+                        "mode": "drillDown",
+                        "preferredChartType": "bar",
+                        "retainFilters": true
+                      },
+                      {
+                        "field": {
+                          "dataType": "character varying",
+                          "description": "The postal code of the location where the order was placed",
+                          "entityId": "verceldb.public.sales_data",
+                          "entityName": "sales_data",
+                          "entityType": "dataset",
+                          "id": "verceldb.public.sales_data-postal_code",
+                          "label": "Postal Code",
+                          "name": "postal_code",
+                          "qualifiedEntityName": "sales_data"
+                        },
+                        "label": "Drill to Postal Code",
+                        "mode": "drillDown",
+                        "preferredChartType": "bar",
+                        "retainFilters": true
+                      }
+                    ],
+                    "type": "static"
+                  },
+                  {
+                    "default": false,
+                    "id": "hierarchy_1750984437188",
+                    "label": "Product",
+                    "steps": [
+                      {
+                        "field": {
+                          "dataType": "character varying",
+                          "description": "The market segment of the customer",
+                          "entityId": "verceldb.public.sales_data",
+                          "entityName": "sales_data",
+                          "entityType": "dataset",
+                          "id": "verceldb.public.sales_data-segment",
+                          "label": "Segment",
+                          "name": "segment",
+                          "qualifiedEntityName": "sales_data"
+                        },
+                        "label": "Drill to Segment",
+                        "mode": "drillDown",
+                        "preferredChartType": "bar",
+                        "retainFilters": true
+                      },
+                      {
+                        "field": {
+                          "dataType": "character varying",
+                          "description": "The category of the product",
+                          "entityId": "verceldb.public.sales_data",
+                          "entityName": "sales_data",
+                          "entityType": "dataset",
+                          "id": "verceldb.public.sales_data-category",
+                          "label": "Category",
+                          "name": "category",
+                          "qualifiedEntityName": "sales_data"
+                        },
+                        "label": "Drill to Category",
+                        "mode": "drillDown",
+                        "preferredChartType": "bar",
+                        "retainFilters": true
+                      },
+                      {
+                        "field": {
+                          "dataType": "character varying",
+                          "description": "The sub-category of the product",
+                          "entityId": "verceldb.public.sales_data",
+                          "entityName": "sales_data",
+                          "entityType": "dataset",
+                          "id": "verceldb.public.sales_data-sub_category",
+                          "label": "Sub-Category",
+                          "name": "sub_category",
+                          "qualifiedEntityName": "sales_data"
+                        },
+                        "label": "Drill to Sub-Category",
+                        "mode": "drillDown",
+                        "preferredChartType": "bar",
+                        "retainFilters": true
+                      }
+                    ],
+                    "type": "static"
+                  }
+                ],
+                "drillInteractions": [],
+                "interactions": [
+                  {
+                    "filterFields": [],
+                    "label": "Monthly Active Users",
+                    "mode": "drillToDetail",
+                    "targetInsightId": "v_037f40df-7996-4f77-8529-b206a9fac33d",
+                    "trigger": {
+                      "field": {
+                        "aggregate": "COUNT",
+                        "dataType": "character varying",
+                        "entityId": "verceldb.public.sales_data",
+                        "entityName": "sales_data",
+                        "entityType": "dataset",
+                        "id": "metrics-verceldb.public.sales_data-order_id-1760580118343",
+                        "label": "Count of Order Id",
+                        "name": "order_id",
+                        "qualifiedEntityName": "verceldb.public.sales_data",
+                        "role": "metric"
+                      },
+                      "type": "metric"
+                    }
+                  }
+                ]
+              },
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "preferences": {
+                "chartOptions": {
+                  "scales": {
+                    "x": {
+                      "grid": {
+                        "display": false
+                      }
+                    },
+                    "y": {
+                      "grid": {
+                        "display": false
+                      }
+                    }
+                  }
+                }
+              },
+              "python": "",
+              "sql": "",
+              "tabTitle": "Orders by Week",
+              "title": "Orders by Week",
+              "type": "stackedBar"
+            }
+          ],
+          "id": "91dd0610-79bc-4d77-8b03-6bf3e01899bb"
+        },
+        {
+          "activeCardId": "e9df6158-99e6-4252-855c-a79413393d64",
+          "cards": [
+            {
+              "cfg": {
+                "data": {
+                  "labels": []
+                },
+                "options": {
+                  "plugins": {
+                    "datalabels": {
+                      "align": "end",
+                      "anchor": "end",
+                      "clamp": true,
+                      "display": true
+                    }
+                  }
+                }
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": {
+                "data": {
+                  "datasets": [
+                    {
+                      "backgroundColor": "#a78bfa",
+                      "borderColor": "#a78bfa",
+                      "data": [],
+                      "datalabels": {
+                        "align": "end",
+                        "anchor": "end",
+                        "clamp": true,
+                        "display": true
+                      },
+                      "label": "Avg_profit",
+                      "type": "line"
+                    },
+                    {
+                      "backgroundColor": "#f87171",
+                      "borderColor": "#f87171",
+                      "data": [],
+                      "datalabels": {
+                        "align": "end",
+                        "anchor": "end",
+                        "clamp": true,
+                        "display": false
+                      },
+                      "label": "Avg_sales_quantity"
+                    }
+                  ],
+                  "labels": []
+                },
+                "options": {
+                  "borderRadius": 1,
+                  "layout": {
+                    "padding": {
+                      "top": -40
+                    }
+                  },
+                  "maintainAspectRatio": false,
+                  "plugins": {
+                    "datalabels": {
+                      "align": "end",
+                      "anchor": "end",
+                      "clamp": true,
+                      "display": false
+                    },
+                    "legend": {
+                      "align": "center",
+                      "maxHeight": 0,
+                      "position": "top"
+                    },
+                    "title": {
+                      "display": true
+                    },
+                    "tooltip": {
+                      "backgroundColor": "#fff",
+                      "bodyColor": "#000",
+                      "borderColor": "rgb(128,131,139)",
+                      "borderWidth": 0.25,
+                      "boxPadding": 4,
+                      "cornerRadius": 2,
+                      "titleColor": "#000"
+                    }
+                  },
+                  "responsive": true,
+                  "scales": {
+                    "x": {
+                      "display": true,
+                      "grid": {
+                        "display": true
+                      },
+                      "title": {
+                        "display": true
+                      }
+                    },
+                    "y": {
+                      "beginAtZero": true,
+                      "display": true,
+                      "grid": {
+                        "display": true
+                      },
+                      "ticks": {
+                        "precision": 0
+                      },
+                      "title": {
+                        "display": true,
+                        "text": ""
+                      }
+                    }
+                  }
+                },
+                "type": "bar"
+              },
+              "data": [],
+              "description": "Profit trends across product categories.",
+              "id": "e9df6158-99e6-4252-855c-a79413393d64",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "preferences": {
+                "filterOnClick": true,
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "sql": "SELECT sub_category, ROUND(AVG(profit), 1) AS avg_profit, AVG(quantity) AS avg_sales_quantity \nFROM sales_data \n{{ filters | where }} \nGROUP BY sub_category;\n",
+              "title": "Average Profit",
+              "type": "bar"
+            }
+          ],
+          "id": "abb62664-0371-4580-8272-39308a7973a8"
+        },
+        {
+          "activeCardId": "43644703-30f6-4078-bd2d-740b28a621c1",
+          "cards": [
+            {
+              "cfg": {
+                "data": {
+                  "labels": []
+                },
+                "options": {
+                  "indexAxis": "y",
+                  "plugins": {
+                    "datalabels": {
+                      "align": "center",
+                      "anchor": "center",
+                      "clamp": true,
+                      "display": true
+                    }
+                  }
+                }
+              },
+              "connectionId": "c_accf9aed-d4f2-4f4b-b452-801902e55fd1",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "description": "Current Order Volume",
+              "id": "43644703-30f6-4078-bd2d-740b28a621c1",
+              "lastSelectedDatabase": "",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "",
+              "lastSelectedTable": "api",
+              "preferences": {
+                "chartOptions": {
+                  "scales": {
+                    "x": {
+                      "grid": {
+                        "display": false
+                      }
+                    },
+                    "y": {
+                      "grid": {
+                        "display": false
+                      }
+                    }
+                  }
+                },
+                "filterOnClick": true,
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "refreshInterval": "",
+              "sql": "SELECT * from api  {{ no_filter }} limit 10",
+              "title": "Realtime Orders",
+              "type": "bar"
+            }
+          ],
+          "id": "716f7d0f-43cd-4f69-9420-204f5b6dfe76"
+        },
+        {
+          "activeCardId": "a505ad04-d0d8-4790-881c-d6725413d702",
+          "cards": [
+            {
+              "cfg": {
+                "data": {
+                  "labels": []
+                },
+                "options": {
+                  "plugins": {
+                    "datalabels": {
+                      "align": "center",
+                      "anchor": "center",
+                      "clamp": true,
+                      "display": true
+                    }
+                  }
+                }
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "description": "This card references Base Query",
+              "id": "a505ad04-d0d8-4790-881c-d6725413d702",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "preferences": {
+                "chartOptions": {
+                  "indexAxis": "y",
+                  "scales": {
+                    "x": {
+                      "type": "logarithmic"
+                    }
+                  }
+                },
+                "filterOnClick": true,
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "sql": "SELECT category, COUNT(*) FROM {{ ref('all_segments') }} GROUP BY category ORDER BY category DESC LIMIT 100",
+              "title": "Ref Card",
+              "type": "bar"
+            }
+          ],
+          "id": "1ae92310-94ef-43e7-9059-2513d96da36e"
+        },
+        {
+          "activeCardId": "3150add9-e4a2-47e3-b37f-2577221f5599",
+          "cards": [
+            {
+              "cfg": {
+                "data": {
+                  "labels": []
+                }
+              },
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-sales_data-sub_category-1750985582704",
+                    "label": "Sub Category",
+                    "name": "sub_category",
+                    "qualifiedEntityName": "sales_data",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "SUM",
+                    "dataType": "numeric",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-sales_data-sales-1750985585805",
+                    "label": "Sum of Sales",
+                    "name": "sales",
+                    "qualifiedEntityName": "sales_data",
+                    "role": "metric"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "description": "This table contains sales orders",
+                    "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+                    "id": "verceldb.public.sales_data",
+                    "label": "Sales Data",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef"
+              },
+              "description": "Description",
+              "id": "3150add9-e4a2-47e3-b37f-2577221f5599",
+              "interactionConfig": {
+                "allowedDrillTargets": [
+                  {
+                    "dataType": "character varying",
+                    "description": "Unique identifier for each order",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-order_id",
+                    "label": "Order ID",
+                    "name": "order_id",
+                    "qualifiedEntityName": "sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "description": "The method of shipping for the order",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-ship_mode",
+                    "label": "Ship Mode",
+                    "name": "ship_mode",
+                    "qualifiedEntityName": "sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "description": "Unique identifier for each customer",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-customer_id",
+                    "label": "Customer ID",
+                    "name": "customer_id",
+                    "qualifiedEntityName": "sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "description": "The name of the customer",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-customer_name",
+                    "label": "Customer Name",
+                    "name": "customer_name",
+                    "qualifiedEntityName": "sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "description": "The market segment of the customer",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-segment",
+                    "label": "Segment",
+                    "name": "segment",
+                    "qualifiedEntityName": "sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "description": "The country where the order was placed",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-country",
+                    "label": "Country",
+                    "name": "country",
+                    "qualifiedEntityName": "sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "description": "The city where the order was placed",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-city",
+                    "label": "City",
+                    "name": "city",
+                    "qualifiedEntityName": "sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "description": "The state where the order was placed",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-state",
+                    "label": "State",
+                    "name": "state",
+                    "qualifiedEntityName": "sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "description": "The postal code of the location where the order was placed",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-postal_code",
+                    "label": "Postal Code",
+                    "name": "postal_code",
+                    "qualifiedEntityName": "sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "description": "The geographical region where the order was placed",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-region",
+                    "label": "Region",
+                    "name": "region",
+                    "qualifiedEntityName": "sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "description": "Unique identifier for each product",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-product_id",
+                    "label": "Product ID",
+                    "name": "product_id",
+                    "qualifiedEntityName": "sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "description": "The category of the product",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-category",
+                    "label": "Category",
+                    "name": "category",
+                    "qualifiedEntityName": "sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "description": "The sub-category of the product",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-sub_category",
+                    "label": "Sub-Category",
+                    "name": "sub_category",
+                    "qualifiedEntityName": "sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "description": "The name of the product",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "verceldb.public.sales_data-product_name",
+                    "label": "Product Name",
+                    "name": "product_name",
+                    "qualifiedEntityName": "sales_data"
+                  }
+                ],
+                "clickFilterInteractions": [
+                  {
+                    "filterFields": [
+                      {
+                        "dataType": "character varying",
+                        "entityId": "verceldb.public.sales_data",
+                        "entityName": "sales_data",
+                        "entityType": "dataset",
+                        "id": "groupBy-sales_data-sub_category-1750985582704",
+                        "label": "Sub Category",
+                        "name": "sub_category",
+                        "qualifiedEntityName": "sales_data",
+                        "role": "groupby"
+                      }
+                    ],
+                    "highlightSelf": true,
+                    "mode": "clickFilter"
+                  }
+                ],
+                "drillHierarchies": [
+                  {
+                    "default": false,
+                    "id": "hierarchy_1750985627954",
+                    "label": "Geo Hierarchy",
+                    "steps": [
+                      {
+                        "field": {
+                          "dataType": "character varying",
+                          "description": "The market segment of the customer",
+                          "entityId": "verceldb.public.sales_data",
+                          "entityName": "sales_data",
+                          "entityType": "dataset",
+                          "id": "verceldb.public.sales_data-segment",
+                          "label": "Segment",
+                          "name": "segment",
+                          "qualifiedEntityName": "sales_data"
+                        },
+                        "label": "Drill to Segment",
+                        "mode": "drillDown",
+                        "preferredChartType": "bar",
+                        "retainFilters": true
+                      },
+                      {
+                        "field": {
+                          "dataType": "character varying",
+                          "description": "The category of the product",
+                          "entityId": "verceldb.public.sales_data",
+                          "entityName": "sales_data",
+                          "entityType": "dataset",
+                          "id": "verceldb.public.sales_data-category",
+                          "label": "Category",
+                          "name": "category",
+                          "qualifiedEntityName": "sales_data"
+                        },
+                        "label": "Drill to Category",
+                        "mode": "drillDown",
+                        "preferredChartType": "bar",
+                        "retainFilters": true
+                      },
+                      {
+                        "field": {
+                          "dataType": "character varying",
+                          "description": "The sub-category of the product",
+                          "entityId": "verceldb.public.sales_data",
+                          "entityName": "sales_data",
+                          "entityType": "dataset",
+                          "id": "verceldb.public.sales_data-sub_category",
+                          "label": "Sub-Category",
+                          "name": "sub_category",
+                          "qualifiedEntityName": "sales_data"
+                        },
+                        "label": "Drill to Sub-Category",
+                        "mode": "drillDown",
+                        "preferredChartType": "bar",
+                        "retainFilters": true
+                      }
+                    ],
+                    "type": "static"
+                  }
+                ],
+                "drillInteractions": []
+              },
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "preferences": {},
+              "python": "",
+              "sql": "",
+              "title": "Average Sales by Sub Categories",
+              "type": "bar"
+            }
+          ],
+          "id": "b21404ec-cfde-45d9-9ab5-f87f61fba8bc"
+        },
+        {
+          "activeCardId": "ab3e061f-db04-4a4b-a5a2-9b617dbc0c05",
+          "cards": [
+            {
+              "config": {
+                "columnAggregates": [
+                  {
+                    "function": "SUM",
+                    "label": "Column Total",
+                    "pivotLevel": "ALL"
+                  }
+                ],
+                "filters": {
+                  "conditions": [
+                    {
+                      "field": {
+                        "dataType": "character varying",
+                        "description": "The method of shipping.",
+                        "entityId": "verceldb.public.sales_data",
+                        "entityName": "sales_data",
+                        "entityType": "dataset",
+                        "id": "verceldb.public.sales_data-ship_mode",
+                        "label": "Ship Mode",
+                        "name": "ship_mode",
+                        "qualifiedEntityName": "verceldb.public.sales_data",
+                        "qualifiedFieldName": "public.sales_data.ship_mode"
+                      },
+                      "id": "condition-1760154778259",
+                      "operator": "=",
+                      "value": "Second Class"
+                    }
+                  ],
+                  "groups": [],
+                  "id": "group-1760154777090",
+                  "logicalOperator": "AND",
+                  "negate": false
+                },
+                "groupByColumns": [
+                  {
+                    "dataType": "date",
+                    "dateFormat": "YYYY-MM",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "granularity": "month",
+                    "id": "groupBy-verceldb.public.sales_data-ship_date-1757791131330",
+                    "label": "Ship Date",
+                    "name": "ship_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-ship_mode-1753725804923",
+                    "label": "Ship Mode",
+                    "name": "ship_mode",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-category-1753725853565",
+                    "label": "Category",
+                    "name": "category",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-customer_name-1757790997535",
+                    "label": "Customer Name",
+                    "name": "customer_name",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "SUM",
+                    "dataType": "numeric",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-sales-1758080308557",
+                    "label": "Sum of Sales",
+                    "name": "sales",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": [
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "pivotBy-verceldb.public.sales_data-segment-1753725821326",
+                    "label": "Segment",
+                    "name": "segment",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  }
+                ],
+                "rowAggregates": [
+                  {
+                    "function": "SUM",
+                    "groupLevel": "ALL",
+                    "label": "Row Total"
+                  }
+                ],
+                "sortByColumns": [
+                  {
+                    "dataType": "date",
+                    "direction": "asc",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "sortBy-verceldb.public.sales_data-ship_date-1757791143739",
+                    "label": "Ship Date",
+                    "name": "ship_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "sortby"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "This table contains sales orders",
+                    "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+                    "id": "verceldb.public.sales_data",
+                    "label": "Sales Data",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef"
+              },
+              "description": "Description",
+              "id": "ab3e061f-db04-4a4b-a5a2-9b617dbc0c05",
+              "lastSelectedDatabase": "",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "",
+              "lastSelectedTable": "",
+              "paginationConfig": {
+                "page": 2,
+                "pageSize": 10
+              },
+              "preferences": {
+                "tablePrefs": {
+                  "columnSettingsMap": {
+                    "sales_data_sales_sum_SUM_ALL": {
+                      "colorRanges": [],
+                      "dateFormat": {
+                        "customFormat": "yyyy-MM-dd'T'HH:mm:ss",
+                        "format": "MM/dd/yyyy",
+                        "sourceTimezone": "auto",
+                        "timezone": "auto",
+                        "useCustomFormat": false,
+                        "useRelativeTime": false
+                      },
+                      "maxWidth": 500,
+                      "minWidth": 50,
+                      "numberFormat": {
+                        "currency": "USD",
+                        "dataBarColor": "#3b82f6",
+                        "locale": "en-US",
+                        "maximumFractionDigits": 2,
+                        "minimumFractionDigits": 1,
+                        "showDataBar": false,
+                        "style": "currency"
+                      },
+                      "textAlign": "right",
+                      "textOverflow": "ellipsis",
+                      "textWrap": "nowrap",
+                      "type": "number",
+                      "width": 150
+                    }
+                  }
+                }
+              },
+              "python": "",
+              "sql": "",
+              "title": "Title",
+              "type": "pivotTable"
+            }
+          ],
+          "id": "075213e5-9a2e-4571-bd0b-2edb31a7a730"
+        },
+        {
+          "activeCardId": "9b4c52ac-5b61-46eb-94ab-69a25a49f9d5",
+          "cards": [
+            {
+              "config": {
+                "columnAggregates": [
+                  {
+                    "function": "SUM",
+                    "label": "Column Total",
+                    "pivotLevel": "ALL"
+                  }
+                ],
+                "groupByColumns": [
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-city-1758241140915",
+                    "label": "City",
+                    "name": "city",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-category-1753725853565",
+                    "label": "Category",
+                    "name": "category",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-customer_name-1757790997535",
+                    "label": "Customer Name",
+                    "name": "customer_name",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "SUM",
+                    "dataType": "numeric",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-sales-1758080308557",
+                    "label": "Sum of Sales",
+                    "name": "sales",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": [
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "pivotBy-verceldb.public.sales_data-segment-1753725821326",
+                    "label": "Segment",
+                    "name": "segment",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "pivotBy-verceldb.public.sales_data-region-1758165519750",
+                    "label": "Region",
+                    "name": "region",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "pivotby"
+                  }
+                ],
+                "rowAggregates": [
+                  {
+                    "function": "SUM",
+                    "groupLevel": "ALL",
+                    "label": "Row Total"
+                  }
+                ],
+                "sortByColumns": []
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "This table contains sales orders",
+                    "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+                    "id": "verceldb.public.sales_data",
+                    "label": "Sales Data",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef"
+              },
+              "description": "Description",
+              "id": "9b4c52ac-5b61-46eb-94ab-69a25a49f9d5",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "",
+              "paginationConfig": {
+                "page": 2,
+                "pageSize": 10
+              },
+              "preferences": {
+                "tablePrefs": {
+                  "columnSettingsMap": {
+                    "sales_data_sales_sum_SUM_ALL": {
+                      "colorRanges": [],
+                      "dateFormat": {
+                        "customFormat": "yyyy-MM-dd'T'HH:mm:ss",
+                        "format": "MM/dd/yyyy",
+                        "sourceTimezone": "auto",
+                        "timezone": "auto",
+                        "useCustomFormat": false,
+                        "useRelativeTime": false
+                      },
+                      "maxWidth": 500,
+                      "minWidth": 50,
+                      "numberFormat": {
+                        "currency": "USD",
+                        "dataBarColor": "#3b82f6",
+                        "locale": "en-US",
+                        "maximumFractionDigits": 2,
+                        "minimumFractionDigits": 1,
+                        "showDataBar": false,
+                        "style": "currency"
+                      },
+                      "textAlign": "right",
+                      "textOverflow": "ellipsis",
+                      "textWrap": "nowrap",
+                      "type": "number",
+                      "width": 150
+                    }
+                  }
+                }
+              },
+              "python": "",
+              "sql": "",
+              "title": "Title (Copy)",
+              "type": "pivotTable"
+            }
+          ],
+          "id": "4ed9484e-466e-49ef-8ac3-9bf966a48381"
+        },
+        {
+          "activeCardId": "3e20039f-dfdb-4ba9-88c8-bf1f1e96b8b2",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "date",
+                    "dateFormat": "YYYY-MM",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "granularity": "month",
+                    "id": "groupBy-verceldb.public.sales_data-ship_date-1760074809523",
+                    "label": "Ship Date",
+                    "name": "ship_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-customer_id-1760074810271",
+                    "label": "Customer Id",
+                    "name": "customer_id",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-customer_name-1760074810847",
+                    "label": "Customer Name",
+                    "name": "customer_name",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-country-1760074811451",
+                    "label": "Country",
+                    "name": "country",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-order_id-1760074821713",
+                    "label": "Order Id",
+                    "name": "order_id",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "date",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-ship_date-1760074809292",
+                    "label": "Count of Ship Date",
+                    "name": "ship_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "This table contains sales orders",
+                    "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+                    "id": "verceldb.public.sales_data",
+                    "label": "Sales Data",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef"
+              },
+              "description": "Description",
+              "id": "3e20039f-dfdb-4ba9-88c8-bf1f1e96b8b2",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "",
+              "paginationConfig": {
+                "page": 1,
+                "pageSize": 50
+              },
+              "preferences": {},
+              "sql": "",
+              "title": "Title",
+              "type": "table"
+            }
+          ],
+          "id": "6fe58f82-e9e5-479b-b47b-e3d9efffb070"
+        }
+      ],
+      "id": "1bf53b08-4840-444f-a556-6a32c2cc7ee5",
+      "layout": [
+        {
+          "h": 8,
+          "i": "32252763-5e2d-47d8-97de-7b8a7ad5f5ae",
+          "moved": false,
+          "static": false,
+          "w": 18,
+          "x": 0,
+          "y": 7
+        },
+        {
+          "h": 7,
+          "i": "91dd0610-79bc-4d77-8b03-6bf3e01899bb",
+          "moved": false,
+          "static": false,
+          "w": 29,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "h": 8,
+          "i": "abb62664-0371-4580-8272-39308a7973a8",
+          "moved": false,
+          "static": false,
+          "w": 30,
+          "x": 18,
+          "y": 7
+        },
+        {
+          "h": 7,
+          "i": "716f7d0f-43cd-4f69-9420-204f5b6dfe76",
+          "moved": false,
+          "static": false,
+          "w": 19,
+          "x": 29,
+          "y": 0
+        },
+        {
+          "h": 7,
+          "i": "1ae92310-94ef-43e7-9059-2513d96da36e",
+          "minH": 2,
+          "minW": 6,
+          "w": 20,
+          "x": 0,
+          "y": null
+        }
+      ],
+      "layouts": {
+        "lg": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 15,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 15,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 13,
+            "x": 35,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 25,
+            "y": 0
+          },
+          {
+            "h": 34,
+            "i": "32252763-5e2d-47d8-97de-7b8a7ad5f5ae",
+            "moved": false,
+            "static": false,
+            "w": 16,
+            "x": 15,
+            "y": 107
+          },
+          {
+            "h": 37,
+            "i": "91dd0610-79bc-4d77-8b03-6bf3e01899bb",
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 43,
+            "i": "abb62664-0371-4580-8272-39308a7973a8",
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 184
+          },
+          {
+            "h": 34,
+            "i": "716f7d0f-43cd-4f69-9420-204f5b6dfe76",
+            "moved": false,
+            "static": false,
+            "w": 17,
+            "x": 31,
+            "y": 107
+          },
+          {
+            "h": 34,
+            "i": "1ae92310-94ef-43e7-9059-2513d96da36e",
+            "minH": 2,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 15,
+            "x": 0,
+            "y": 107
+          },
+          {
+            "h": 43,
+            "i": "b21404ec-cfde-45d9-9ab5-f87f61fba8bc",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 141
+          },
+          {
+            "h": 62,
+            "i": "075213e5-9a2e-4571-bd0b-2edb31a7a730",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 45
+          },
+          {
+            "h": 39,
+            "i": "4ed9484e-466e-49ef-8ac3-9bf966a48381",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 227
+          },
+          {
+            "h": 35,
+            "i": "6fe58f82-e9e5-479b-b47b-e3d9efffb070",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 266
+          }
+        ],
+        "md": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 16,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 26,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 32,
+            "i": "32252763-5e2d-47d8-97de-7b8a7ad5f5ae",
+            "moved": false,
+            "static": false,
+            "w": 16,
+            "x": 0,
+            "y": 16
+          },
+          {
+            "h": 32,
+            "i": "91dd0610-79bc-4d77-8b03-6bf3e01899bb",
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 16,
+            "y": 8
+          },
+          {
+            "h": 31,
+            "i": "abb62664-0371-4580-8272-39308a7973a8",
+            "moved": false,
+            "static": false,
+            "w": 17,
+            "x": 0,
+            "y": 48
+          },
+          {
+            "h": 30,
+            "i": "716f7d0f-43cd-4f69-9420-204f5b6dfe76",
+            "moved": false,
+            "static": false,
+            "w": 17,
+            "x": 0,
+            "y": 79
+          },
+          {
+            "h": 31,
+            "i": "1ae92310-94ef-43e7-9059-2513d96da36e",
+            "minH": 2,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 19,
+            "x": 17,
+            "y": 40
+          },
+          {
+            "h": 30,
+            "i": "b21404ec-cfde-45d9-9ab5-f87f61fba8bc",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 19,
+            "x": 17,
+            "y": 71
+          },
+          {
+            "h": 35,
+            "i": "075213e5-9a2e-4571-bd0b-2edb31a7a730",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 109
+          },
+          {
+            "h": 35,
+            "i": "4ed9484e-466e-49ef-8ac3-9bf966a48381",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 144
+          },
+          {
+            "h": 35,
+            "i": "707c29ae-2efe-4d73-b5df-01e4dd9de0e5",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 179
+          },
+          {
+            "h": 35,
+            "i": "6fe58f82-e9e5-479b-b47b-e3d9efffb070",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 214
+          },
+          {
+            "h": 35,
+            "i": "40c28c8b-c145-4c30-b38b-451ff850e98e",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 249
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "sm": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 18,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 29,
+            "i": "32252763-5e2d-47d8-97de-7b8a7ad5f5ae",
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 48
+          },
+          {
+            "h": 32,
+            "i": "91dd0610-79bc-4d77-8b03-6bf3e01899bb",
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 16
+          },
+          {
+            "h": 34,
+            "i": "abb62664-0371-4580-8272-39308a7973a8",
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 106
+          },
+          {
+            "h": 39,
+            "i": "716f7d0f-43cd-4f69-9420-204f5b6dfe76",
+            "moved": false,
+            "static": false,
+            "w": 11,
+            "x": 0,
+            "y": 140
+          },
+          {
+            "h": 29,
+            "i": "1ae92310-94ef-43e7-9059-2513d96da36e",
+            "minH": 2,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 77
+          },
+          {
+            "h": 39,
+            "i": "b21404ec-cfde-45d9-9ab5-f87f61fba8bc",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 13,
+            "x": 11,
+            "y": 140
+          },
+          {
+            "h": 35,
+            "i": "075213e5-9a2e-4571-bd0b-2edb31a7a730",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 179
+          },
+          {
+            "h": 35,
+            "i": "4ed9484e-466e-49ef-8ac3-9bf966a48381",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 214
+          },
+          {
+            "h": 35,
+            "i": "707c29ae-2efe-4d73-b5df-01e4dd9de0e5",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 249
+          },
+          {
+            "h": 35,
+            "i": "6fe58f82-e9e5-479b-b47b-e3d9efffb070",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 284
+          },
+          {
+            "h": 35,
+            "i": "40c28c8b-c145-4c30-b38b-451ff850e98e",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 319
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xs": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 0,
+            "y": 16
+          },
+          {
+            "h": 28,
+            "i": "32252763-5e2d-47d8-97de-7b8a7ad5f5ae",
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 32
+          },
+          {
+            "h": 29,
+            "i": "91dd0610-79bc-4d77-8b03-6bf3e01899bb",
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 60
+          },
+          {
+            "h": 38,
+            "i": "abb62664-0371-4580-8272-39308a7973a8",
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 89
+          },
+          {
+            "h": 42,
+            "i": "716f7d0f-43cd-4f69-9420-204f5b6dfe76",
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 127
+          },
+          {
+            "h": 32,
+            "i": "1ae92310-94ef-43e7-9059-2513d96da36e",
+            "minH": 2,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 169
+          },
+          {
+            "h": 35,
+            "i": "b21404ec-cfde-45d9-9ab5-f87f61fba8bc",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 201
+          },
+          {
+            "h": 35,
+            "i": "075213e5-9a2e-4571-bd0b-2edb31a7a730",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 236
+          },
+          {
+            "h": 35,
+            "i": "4ed9484e-466e-49ef-8ac3-9bf966a48381",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 271
+          },
+          {
+            "h": 35,
+            "i": "707c29ae-2efe-4d73-b5df-01e4dd9de0e5",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 306
+          },
+          {
+            "h": 35,
+            "i": "6fe58f82-e9e5-479b-b47b-e3d9efffb070",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 301
+          },
+          {
+            "h": 35,
+            "i": "40c28c8b-c145-4c30-b38b-451ff850e98e",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 336
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xxs": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 16
+          },
+          {
+            "h": 8,
+            "i": "32252763-5e2d-47d8-97de-7b8a7ad5f5ae",
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 24
+          },
+          {
+            "h": 7,
+            "i": "91dd0610-79bc-4d77-8b03-6bf3e01899bb",
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 32
+          },
+          {
+            "h": 8,
+            "i": "abb62664-0371-4580-8272-39308a7973a8",
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 39
+          },
+          {
+            "h": 7,
+            "i": "716f7d0f-43cd-4f69-9420-204f5b6dfe76",
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 47
+          },
+          {
+            "h": 30,
+            "i": "1ae92310-94ef-43e7-9059-2513d96da36e",
+            "minH": 2,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 54
+          },
+          {
+            "h": 35,
+            "i": "b21404ec-cfde-45d9-9ab5-f87f61fba8bc",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 84
+          },
+          {
+            "h": 35,
+            "i": "075213e5-9a2e-4571-bd0b-2edb31a7a730",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 119
+          },
+          {
+            "h": 35,
+            "i": "4ed9484e-466e-49ef-8ac3-9bf966a48381",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 227
+          },
+          {
+            "h": 35,
+            "i": "707c29ae-2efe-4d73-b5df-01e4dd9de0e5",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 266
+          },
+          {
+            "h": 35,
+            "i": "6fe58f82-e9e5-479b-b47b-e3d9efffb070",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 301
+          },
+          {
+            "h": 35,
+            "i": "40c28c8b-c145-4c30-b38b-451ff850e98e",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 336
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "title": "Sheet 1"
+    },
+    {
+      "frames": [
+        {
+          "activeCardId": "74f45fd2-1be3-4f02-b577-b495a725014c",
+          "cards": [
+            {
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "dbSelection": {
+                  "database": "verceldb",
+                  "entityType": "table",
+                  "schema": "public"
+                },
+                "mode": "database",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "table"
+                  }
+                ]
+              },
+              "description": "Description",
+              "id": "74f45fd2-1be3-4f02-b577-b495a725014c",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "preferences": {
+                "tablePrefs": {
+                  "columnSettingsMap": {
+                    "row_id": {
+                      "colorRanges": [],
+                      "dateFormat": {
+                        "customFormat": "yyyy-MM-dd'T'HH:mm:ss",
+                        "format": "MM/dd/yyyy",
+                        "sourceTimezone": "auto",
+                        "timezone": "auto",
+                        "useCustomFormat": false,
+                        "useRelativeTime": false
+                      },
+                      "maxWidth": 500,
+                      "minWidth": 50,
+                      "numberFormat": {
+                        "currency": "USD",
+                        "dataBarColor": "#3b82f6",
+                        "locale": "en-US",
+                        "maximumFractionDigits": 2,
+                        "minimumFractionDigits": 0,
+                        "showDataBar": false,
+                        "style": "decimal"
+                      },
+                      "textAlign": "left",
+                      "textOverflow": "ellipsis",
+                      "textWrap": "nowrap",
+                      "type": "text",
+                      "width": 150
+                    }
+                  },
+                  "columnSizing": {
+                    "row_id": 111
+                  }
+                }
+              },
+              "sql": "SELECT * FROM public.sales_data  {{ filters | where }} LIMIT 700",
+              "title": "Client Side Pagination",
+              "type": "table"
+            }
+          ],
+          "id": "dea2010f-9556-486c-9cc0-a8a44f6a939a"
+        },
+        {
+          "activeCardId": "9731b9ec-ec45-4ed6-b71d-f6ecf5b20d37",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-customer_id-1762120187090",
+                    "label": "Customer Id",
+                    "name": "customer_id",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-customer_name-1762120188056",
+                    "label": "Customer Name",
+                    "name": "customer_name",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-segment-1762120189247",
+                    "label": "Segment",
+                    "name": "segment",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-ship_mode-1762120185968",
+                    "label": "Count of Ship Mode",
+                    "name": "ship_mode",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "This table contains sales orders",
+                    "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+                    "id": "verceldb.public.sales_data",
+                    "label": "Sales Data",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef"
+              },
+              "description": "Description",
+              "id": "9731b9ec-ec45-4ed6-b71d-f6ecf5b20d37",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "paginationConfig": {
+                "page": 1,
+                "pageSize": 50
+              },
+              "preferences": {},
+              "sql": "",
+              "title": "Server side Pagination",
+              "type": "table"
+            }
+          ],
+          "id": "0621bc73-61a2-4412-bd46-e4016b23fe99"
+        }
+      ],
+      "id": "deeeb4ad-1f6c-4d9a-9f3b-1424717df8db",
+      "layouts": {
+        "lg": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "minH": 7,
+            "moved": false,
+            "static": false,
+            "w": 7,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 0,
+            "y": 16
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "dea2010f-9556-486c-9cc0-a8a44f6a939a",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 24
+          },
+          {
+            "h": 40,
+            "i": "0621bc73-61a2-4412-bd46-e4016b23fe99",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 59
+          }
+        ],
+        "md": [
+          {
+            "h": 35,
+            "i": "c5c562f3-c173-47a4-827b-e122706867e9",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 32
+          },
+          {
+            "h": 35,
+            "i": "a02db98b-66fb-4e09-a9b1-86eb830f1ccf",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 44
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "dea2010f-9556-486c-9cc0-a8a44f6a939a",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 77
+          },
+          {
+            "h": 35,
+            "i": "0621bc73-61a2-4412-bd46-e4016b23fe99",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 79
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "sm": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "minH": 7,
+            "moved": false,
+            "static": false,
+            "w": 7,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "c5c562f3-c173-47a4-827b-e122706867e9",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 51
+          },
+          {
+            "h": 35,
+            "i": "a02db98b-66fb-4e09-a9b1-86eb830f1ccf",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 86
+          },
+          {
+            "h": 35,
+            "i": "dea2010f-9556-486c-9cc0-a8a44f6a939a",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 16
+          },
+          {
+            "h": 35,
+            "i": "0621bc73-61a2-4412-bd46-e4016b23fe99",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 79
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xs": [
+          {
+            "h": 35,
+            "i": "c5c562f3-c173-47a4-827b-e122706867e9",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "a02db98b-66fb-4e09-a9b1-86eb830f1ccf",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 44
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "dea2010f-9556-486c-9cc0-a8a44f6a939a",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 77
+          },
+          {
+            "h": 35,
+            "i": "0621bc73-61a2-4412-bd46-e4016b23fe99",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 79
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xxs": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "c5c562f3-c173-47a4-827b-e122706867e9",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 32
+          },
+          {
+            "h": 35,
+            "i": "a02db98b-66fb-4e09-a9b1-86eb830f1ccf",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 44
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "dea2010f-9556-486c-9cc0-a8a44f6a939a",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 77
+          },
+          {
+            "h": 35,
+            "i": "0621bc73-61a2-4412-bd46-e4016b23fe99",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 79
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "title": "Table Sheet"
+    },
+    {
+      "frames": [
+        {
+          "activeCardId": "81fd2bea-87c0-4114-b931-847f279f4e5d",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "text",
+                    "entityId": "verceldb.public.Dashboard",
+                    "entityName": "Dashboard",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.Dashboard-id-1761192186548",
+                    "label": "Count of Id",
+                    "name": "id",
+                    "qualifiedEntityName": "verceldb.public.Dashboard",
+                    "role": "metric"
+                  }
+                ]
+              },
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                "connectionType": "PostgreSQL",
+                "dbSelection": {
+                  "database": "verceldb",
+                  "entityType": "table",
+                  "schema": "public"
+                },
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "",
+                    "dialect": "postgres",
+                    "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+                    "id": "verceldb.public.Dashboard",
+                    "label": "Dashboard",
+                    "name": "Dashboard",
+                    "schema": "public",
+                    "type": "dataset"
+                  },
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "",
+                    "dialect": "postgres",
+                    "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+                    "id": "verceldb.public.User",
+                    "label": "User",
+                    "name": "User",
+                    "schema": "public",
+                    "type": "dataset"
+                  },
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "",
+                    "dialect": "postgres",
+                    "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+                    "id": "verceldb.public.Project",
+                    "label": "Project",
+                    "name": "Project",
+                    "schema": "public",
+                    "type": "dataset"
+                  },
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "This is the company that manages Semaphor projects",
+                    "dialect": "postgres",
+                    "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+                    "id": "verceldb.public.organizations",
+                    "label": "Organizations",
+                    "name": "organizations",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+                "type": "dataset"
+              },
+              "id": "81fd2bea-87c0-4114-b931-847f279f4e5d",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "Dashboard",
+              "preferences": {
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "sql": "",
+              "title": "Title",
+              "type": "bar"
+            }
+          ],
+          "id": "900a939d-5917-4118-b52c-79cf0a7429e0"
+        },
+        {
+          "activeCardId": "78e1f334-42b6-44de-9dde-501c0974e038",
+          "cards": [
+            {
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                "connectionType": "PostgreSQL",
+                "dbSelection": {
+                  "database": "verceldb",
+                  "entityType": "table",
+                  "schema": "public"
+                },
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "",
+                    "dialect": "postgres",
+                    "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+                    "id": "verceldb.public.User",
+                    "label": "User",
+                    "name": "User",
+                    "schema": "public",
+                    "type": "dataset"
+                  },
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "",
+                    "dialect": "postgres",
+                    "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+                    "id": "verceldb.public.Project",
+                    "label": "Project",
+                    "name": "Project",
+                    "schema": "public",
+                    "type": "dataset"
+                  },
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "",
+                    "dialect": "postgres",
+                    "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+                    "id": "verceldb.public.Dashboard",
+                    "label": "Dashboard",
+                    "name": "Dashboard",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "5f02bb58-9698-4060-a335-b24c099c0c8a"
+              },
+              "description": "Description",
+              "id": "78e1f334-42b6-44de-9dde-501c0974e038",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "User",
+              "preferences": {},
+              "sql": "",
+              "title": "Title",
+              "type": "bar"
+            }
+          ],
+          "id": "cb914268-6dfc-42ed-a581-38cf061cddfe"
+        }
+      ],
+      "id": "c02280a1-10b5-4211-b523-613e6895abab",
+      "layouts": {
+        "lg": [
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "900a939d-5917-4118-b52c-79cf0a7429e0",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "cb914268-6dfc-42ed-a581-38cf061cddfe",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 20,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "md": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "900a939d-5917-4118-b52c-79cf0a7429e0",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "cb914268-6dfc-42ed-a581-38cf061cddfe",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 35
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "sm": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "900a939d-5917-4118-b52c-79cf0a7429e0",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "cb914268-6dfc-42ed-a581-38cf061cddfe",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 35
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xs": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "900a939d-5917-4118-b52c-79cf0a7429e0",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "cb914268-6dfc-42ed-a581-38cf061cddfe",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 35
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xxs": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "900a939d-5917-4118-b52c-79cf0a7429e0",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "cb914268-6dfc-42ed-a581-38cf061cddfe",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 35
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "title": "Cross Dataset"
+    },
+    {
+      "frames": [
+        {
+          "activeCardId": "c95615a5-0f2d-490c-8a8f-5937a0febcf1",
+          "cards": [
+            {
+              "config": {
+                "comparisonType": "same_period_last_year",
+                "groupByColumns": [
+                  {
+                    "dataType": "date",
+                    "dateFormat": "YYYY-MM",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "granularity": "month",
+                    "id": "groupBy-verceldb.public.sales_data-order_date-1761510045546",
+                    "label": "Order Date",
+                    "name": "order_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-order_id-1761510048116",
+                    "label": "Count of Order Id",
+                    "name": "order_id",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  },
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-order_id-1761510050798",
+                    "label": "Count of Order Id (2)",
+                    "name": "order_id",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  }
+                ],
+                "showTrendline": false,
+                "targetValue": 0,
+                "trendlineGranularity": "day",
+                "trendlineWindow": 30
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "description": "This table contains sales orders",
+                    "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+                    "id": "verceldb.public.sales_data",
+                    "label": "Sales Data",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef"
+              },
+              "id": "c95615a5-0f2d-490c-8a8f-5937a0febcf1",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "preferences": {
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "sql": "",
+              "title": "Title",
+              "type": "kpi"
+            }
+          ],
+          "id": "69469950-92ca-42ff-9d29-20826fcbe12d"
+        },
+        {
+          "activeCardId": "c3ab5b66-913a-471d-8477-63da22b8cf47",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "date",
+                    "dateFormat": "YYYY-MM",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "granularity": "month",
+                    "id": "groupBy-verceldb.public.sales_data-order_date-1761453353784",
+                    "label": "Order Date",
+                    "name": "order_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-order_id-1761453357977",
+                    "label": "Count of Order Id",
+                    "name": "order_id",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "description": "This table contains sales orders",
+                    "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+                    "id": "verceldb.public.sales_data",
+                    "label": "Sales Data",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef"
+              },
+              "description": "Description",
+              "id": "c3ab5b66-913a-471d-8477-63da22b8cf47",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "preferences": {
+                "dataLabelsConfig": {
+                  "enabled": true
+                }
+              },
+              "sql": "",
+              "title": "Title",
+              "type": "bar"
+            }
+          ],
+          "id": "4b56c6f0-8bab-4f6c-8bde-4fdb65bf15e4"
+        }
+      ],
+      "id": "5969a151-9dcb-4b5c-b4bb-df26e8548974",
+      "layouts": {
+        "lg": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "moved": false,
+            "static": false,
+            "w": 17,
+            "x": 10,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 19,
+            "i": "69469950-92ca-42ff-9d29-20826fcbe12d",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 11,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "4b56c6f0-8bab-4f6c-8bde-4fdb65bf15e4",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 27
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "md": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "69469950-92ca-42ff-9d29-20826fcbe12d",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "4b56c6f0-8bab-4f6c-8bde-4fdb65bf15e4",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 31
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "sm": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "69469950-92ca-42ff-9d29-20826fcbe12d",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "4b56c6f0-8bab-4f6c-8bde-4fdb65bf15e4",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 31
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xs": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "69469950-92ca-42ff-9d29-20826fcbe12d",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "4b56c6f0-8bab-4f6c-8bde-4fdb65bf15e4",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 31
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xxs": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "69469950-92ca-42ff-9d29-20826fcbe12d",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "4b56c6f0-8bab-4f6c-8bde-4fdb65bf15e4",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 31
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "title": "KPI Sheet"
+    },
+    {
+      "frames": [
+        {
+          "activeCardId": "25d6dbe2-aca3-46bf-bf08-687a993a7221",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "date",
+                    "dateFormat": "YYYY-MM",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "granularity": "month",
+                    "id": "groupBy-verceldb.public.sales_data-order_date-1762208236975",
+                    "label": "Order Date",
+                    "name": "order_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "date",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-order_date-1762208236385",
+                    "label": "Count of Order Date",
+                    "name": "order_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": [
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "pivotBy-verceldb.public.sales_data-segment-1762208239714",
+                    "label": "Segment",
+                    "name": "segment",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "pivotby"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "This table contains sales orders",
+                    "dialect": "postgres",
+                    "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+                    "id": "verceldb.public.sales_data",
+                    "label": "Sales Data",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "type": "dataset"
+              },
+              "id": "25d6dbe2-aca3-46bf-bf08-687a993a7221",
+              "interactionConfig": {
+                "allowedDrillTargets": [],
+                "clickFilterInteractions": [],
+                "drillHierarchies": [
+                  {
+                    "default": false,
+                    "id": "hierarchy_1762455695604",
+                    "label": "Product Hierarchy",
+                    "steps": [
+                      {
+                        "field": {
+                          "dataType": "character varying",
+                          "description": "The market segment of the customer",
+                          "entityId": "verceldb.public.sales_data",
+                          "entityName": "sales_data",
+                          "entityType": "dataset",
+                          "id": "verceldb.public.sales_data-segment",
+                          "label": "Segment",
+                          "name": "segment",
+                          "qualifiedEntityName": "verceldb.public.sales_data",
+                          "qualifiedFieldName": "public.sales_data.segment"
+                        },
+                        "label": "Drill to Segment",
+                        "mode": "drillDown",
+                        "preferredChartType": "bar",
+                        "retainFilters": true
+                      },
+                      {
+                        "field": {
+                          "dataType": "character varying",
+                          "description": "The category of the product",
+                          "entityId": "verceldb.public.sales_data",
+                          "entityName": "sales_data",
+                          "entityType": "dataset",
+                          "id": "verceldb.public.sales_data-category",
+                          "label": "Category",
+                          "name": "category",
+                          "qualifiedEntityName": "verceldb.public.sales_data",
+                          "qualifiedFieldName": "public.sales_data.category"
+                        },
+                        "label": "Drill to Category",
+                        "mode": "drillDown",
+                        "preferredChartType": "bar",
+                        "retainFilters": true
+                      },
+                      {
+                        "field": {
+                          "dataType": "character varying",
+                          "description": "The sub-category of the product",
+                          "entityId": "verceldb.public.sales_data",
+                          "entityName": "sales_data",
+                          "entityType": "dataset",
+                          "id": "verceldb.public.sales_data-sub_category",
+                          "label": "Sub-Category",
+                          "name": "sub_category",
+                          "qualifiedEntityName": "verceldb.public.sales_data",
+                          "qualifiedFieldName": "public.sales_data.sub_category"
+                        },
+                        "label": "Drill to Sub-Category",
+                        "mode": "drillDown",
+                        "preferredChartType": "bar",
+                        "retainFilters": true
+                      }
+                    ],
+                    "type": "static"
+                  }
+                ],
+                "drillInteractions": [],
+                "interactions": [
+                  {
+                    "filterFields": [],
+                    "hierarchyId": "hierarchy_1762455695604",
+                    "mode": "drillDown",
+                    "trigger": {
+                      "field": {
+                        "aggregate": "COUNT",
+                        "dataType": "date",
+                        "entityId": "verceldb.public.sales_data",
+                        "entityName": "sales_data",
+                        "entityType": "dataset",
+                        "id": "metrics-verceldb.public.sales_data-order_date-1762208236385",
+                        "label": "Count of Order Date",
+                        "name": "order_date",
+                        "qualifiedEntityName": "verceldb.public.sales_data",
+                        "role": "metric"
+                      },
+                      "type": "metric"
+                    }
+                  },
+                  {
+                    "filterFields": [],
+                    "mode": "clickFilter",
+                    "trigger": {
+                      "field": {
+                        "aggregate": "COUNT",
+                        "dataType": "date",
+                        "entityId": "verceldb.public.sales_data",
+                        "entityName": "sales_data",
+                        "entityType": "dataset",
+                        "id": "metrics-verceldb.public.sales_data-order_date-1762208236385",
+                        "label": "Count of Order Date",
+                        "name": "order_date",
+                        "qualifiedEntityName": "verceldb.public.sales_data",
+                        "role": "metric"
+                      },
+                      "type": "metric"
+                    }
+                  }
+                ]
+              },
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "preferences": {
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "sql": "",
+              "title": "Title",
+              "type": "stackedBar"
+            }
+          ],
+          "id": "400e58ab-8af9-4d20-9751-b3f0258c65cf"
+        },
+        {
+          "activeCardId": "ddbe64ca-c9af-4361-9016-c92b78caf2bc",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "date",
+                    "dateFormat": "YYYY-MM",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "granularity": "month",
+                    "id": "groupBy-verceldb.public.sales_data-order_date-1762208236975",
+                    "label": "Order Date",
+                    "name": "order_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "date",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-order_date-1762208236385",
+                    "label": "Count of Order Date",
+                    "name": "order_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": [
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "pivotBy-verceldb.public.sales_data-segment-1762208239714",
+                    "label": "Segment",
+                    "name": "segment",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "pivotby"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "This table contains sales orders",
+                    "dialect": "postgres",
+                    "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+                    "id": "verceldb.public.sales_data",
+                    "label": "Sales Data",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "type": "dataset"
+              },
+              "id": "ddbe64ca-c9af-4361-9016-c92b78caf2bc",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "preferences": {
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "sql": "",
+              "title": "Orders by Month - Duplicate",
+              "type": "stackedBar"
+            }
+          ],
+          "id": "94ad2eba-c8f0-46e1-aaf9-18ba43e2f975"
+        },
+        {
+          "activeCardId": "83733cf5-4a41-43bb-938e-d856d32688bd",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-segment-1762208299476",
+                    "label": "Segment",
+                    "name": "segment",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "date",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-order_date-1762208236385",
+                    "label": "Count of Order Date",
+                    "name": "order_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": []
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "This table contains sales orders",
+                    "dialect": "postgres",
+                    "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+                    "id": "verceldb.public.sales_data",
+                    "label": "Sales Data",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "type": "dataset"
+              },
+              "id": "83733cf5-4a41-43bb-938e-d856d32688bd",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "paginationConfig": {
+                "page": 1,
+                "pageSize": 50
+              },
+              "preferences": {
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "sql": "",
+              "title": "Orders by Segment",
+              "type": "bar"
+            }
+          ],
+          "id": "501bd19c-55af-40b7-9765-ea7fcf3f9155"
+        },
+        {
+          "activeCardId": "e7993bc5-9555-4aea-a628-dd24ccccc43f",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "character varying",
+                    "entityId": "sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "table",
+                    "id": "groupBy-verceldb.public.sales_data-region-1762553616450",
+                    "label": "Region",
+                    "name": "region",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "AVG",
+                    "dataType": "numeric",
+                    "entityId": "sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "table",
+                    "id": "metrics-verceldb.public.sales_data-sales-1762553623622",
+                    "label": "Average of Sales",
+                    "name": "sales",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  },
+                  {
+                    "aggregate": "SUM",
+                    "dataType": "numeric",
+                    "entityId": "sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "table",
+                    "id": "metrics-verceldb.public.sales_data-quantity-1762553635095",
+                    "label": "Sum of Quantity",
+                    "name": "quantity",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "metric"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "dbSelection": {
+                  "database": "verceldb",
+                  "entityType": "table",
+                  "schema": "public"
+                },
+                "mode": "database",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "table"
+                  }
+                ]
+              },
+              "description": "Description",
+              "id": "e7993bc5-9555-4aea-a628-dd24ccccc43f",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "preferences": {},
+              "sql": "",
+              "title": "Title",
+              "type": "bar"
+            }
+          ],
+          "id": "81b5ccb6-d6f1-4b8d-b025-aefa247acd4a"
+        }
+      ],
+      "id": "b46f1514-1f81-49e1-b032-7f93f4d6e403",
+      "layouts": {
+        "lg": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 10,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "400e58ab-8af9-4d20-9751-b3f0258c65cf",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "94ad2eba-c8f0-46e1-aaf9-18ba43e2f975",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 43
+          },
+          {
+            "h": 43,
+            "i": "501bd19c-55af-40b7-9765-ea7fcf3f9155",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 20,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "81b5ccb6-d6f1-4b8d-b025-aefa247acd4a",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 78
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "md": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "400e58ab-8af9-4d20-9751-b3f0258c65cf",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "94ad2eba-c8f0-46e1-aaf9-18ba43e2f975",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 51
+          },
+          {
+            "h": 35,
+            "i": "501bd19c-55af-40b7-9765-ea7fcf3f9155",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 86
+          },
+          {
+            "h": 35,
+            "i": "81b5ccb6-d6f1-4b8d-b025-aefa247acd4a",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 78
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "sm": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "400e58ab-8af9-4d20-9751-b3f0258c65cf",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "94ad2eba-c8f0-46e1-aaf9-18ba43e2f975",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 51
+          },
+          {
+            "h": 35,
+            "i": "501bd19c-55af-40b7-9765-ea7fcf3f9155",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 86
+          },
+          {
+            "h": 35,
+            "i": "81b5ccb6-d6f1-4b8d-b025-aefa247acd4a",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 78
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xs": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "400e58ab-8af9-4d20-9751-b3f0258c65cf",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "94ad2eba-c8f0-46e1-aaf9-18ba43e2f975",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 51
+          },
+          {
+            "h": 35,
+            "i": "501bd19c-55af-40b7-9765-ea7fcf3f9155",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 86
+          },
+          {
+            "h": 35,
+            "i": "81b5ccb6-d6f1-4b8d-b025-aefa247acd4a",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 78
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xxs": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "400e58ab-8af9-4d20-9751-b3f0258c65cf",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "94ad2eba-c8f0-46e1-aaf9-18ba43e2f975",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 51
+          },
+          {
+            "h": 35,
+            "i": "501bd19c-55af-40b7-9765-ea7fcf3f9155",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 86
+          },
+          {
+            "h": 35,
+            "i": "81b5ccb6-d6f1-4b8d-b025-aefa247acd4a",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 78
+          },
+          {
+            "h": 8,
+            "i": "946add83-4982-486f-aa76-cf2e80e81db1",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "title": "Interaction V2"
+    }
+  ],
+  "style": {
+    "dark": {
+      "chart": {
+        "dataset": {
+          "backgroundColor": [
+            "#14b8a6",
+            "#5eead4",
+            "#374151",
+            "#6b7280",
+            "#d1d5db"
+          ],
+          "borderColor": [
+            "#14b8a6",
+            "#5eead4",
+            "#374151",
+            "#6b7280",
+            "#d1d5db"
+          ],
+          "datalables": {}
+        },
+        "options": {
+          "datalabels": {
+            "display": false
+          },
+          "plugins": {
+            "tooltip": {
+              "backgroundColor": "#000",
+              "bodyColor": "#fff",
+              "borderColor": "rgb(128,131,139)",
+              "borderWidth": 0.25,
+              "boxPadding": 4,
+              "cornerRadius": 2,
+              "titleColor": "#fff"
+            }
+          },
+          "scales": {
+            "x": {
+              "grid": {
+                "color": "#1e293b",
+                "display": true
+              }
+            },
+            "y": {
+              "grid": {
+                "color": "#1e293b",
+                "display": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "default": {
+      "chart": {
+        "dataset": {
+          "backgroundColor": [
+            "#14b8a6",
+            "#5eead4",
+            "#374151",
+            "#6b7280",
+            "#d1d5db"
+          ],
+          "borderColor": [
+            "#14b8a6",
+            "#5eead4",
+            "#374151",
+            "#6b7280",
+            "#d1d5db"
+          ]
+        },
+        "font": {
+          "family": "'__open_sans_fc1856', '__open_sans_Fallback_fc1856'"
+        },
+        "options": {
+          "borderRadius": 2,
+          "interaction": {
+            "mode": "index"
+          },
+          "layout": {
+            "padding": {
+              "top": -40
+            }
+          },
+          "maintainAspectRatio": false,
+          "plugins": {
+            "datalabels": {
+              "display": false
+            },
+            "legend": {
+              "align": "center",
+              "labels": {
+                "borderRadius": 2,
+                "useBorderRadius": true
+              },
+              "maxHeight": 0,
+              "position": "top"
+            },
+            "title": {
+              "display": true
+            },
+            "tooltip": {
+              "backgroundColor": "#fff",
+              "bodyColor": "#000",
+              "borderColor": "rgb(128,131,139)",
+              "borderWidth": 0.25,
+              "boxPadding": 4,
+              "cornerRadius": 4,
+              "pointStyle": "rectRounded",
+              "titleColor": "#000",
+              "usePointStyle": true
+            }
+          },
+          "responsive": true,
+          "scales": {
+            "x": {
+              "grid": {
+                "display": true
+              },
+              "title": {
+                "display": true
+              }
+            },
+            "y": {
+              "beginAtZero": true,
+              "grid": {
+                "display": true
+              },
+              "ticks": {
+                "precision": 0
+              },
+              "title": {
+                "display": true,
+                "text": ""
+              }
+            }
+          }
+        }
+      },
+      "dashboardPanel": "",
+      "dashboardTabsContainer": "",
+      "gridLayout": {
+        "className": ""
+      }
+    }
+  },
+  "title": "Demo Dashboard"
+}
