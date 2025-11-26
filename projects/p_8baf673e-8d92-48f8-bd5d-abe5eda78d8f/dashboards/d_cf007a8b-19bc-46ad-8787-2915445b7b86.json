@@ -87,7 +87,7 @@
       "sheetId": "1bf53b08-4840-444f-a556-6a32c2cc7ee5",
       "sql": "SELECT region, COUNT(*) FROM sales_data {{ filters | where }} GROUP BY region ORDER BY region ASC LIMIT 50",
       "table": "sales_data",
-      "title": "Region"
+      "title": "Sales Region"
     },
     {
       "column": "public.sales_data.order_date",
