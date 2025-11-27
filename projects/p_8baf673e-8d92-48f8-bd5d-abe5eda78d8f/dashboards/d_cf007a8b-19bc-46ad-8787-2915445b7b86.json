@@ -115,7 +115,7 @@
       "operation": "in",
       "sql": "SELECT row_id, COUNT(*) FROM sales_data {{ filters | where }} GROUP BY row_id ORDER BY row_id ASC LIMIT 50",
       "table": "sales_data",
-      "title": "Row Number"
+      "title": "Row"
     }
   ],
   "globalStyle": {
