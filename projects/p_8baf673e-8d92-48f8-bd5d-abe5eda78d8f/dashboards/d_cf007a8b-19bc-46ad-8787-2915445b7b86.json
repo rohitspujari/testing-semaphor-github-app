@@ -3771,7 +3771,7 @@
                 ]
               },
               "sql": "",
-              "title": "Title",
+              "title": "KPI",
               "type": "kpi"
             }
           ],
@@ -3848,7 +3848,7 @@
                 }
               },
               "sql": "",
-              "title": "Title",
+              "title": "Bar Chart",
               "type": "bar"
             }
           ],
@@ -3890,13 +3890,13 @@
             "y": 0
           },
           {
-            "h": 19,
+            "h": 13,
             "i": "69469950-92ca-42ff-9d29-20826fcbe12d",
             "minH": 10,
             "minW": 6,
             "moved": false,
             "static": false,
-            "w": 11,
+            "w": 6,
             "x": 20,
             "y": 8
           },
