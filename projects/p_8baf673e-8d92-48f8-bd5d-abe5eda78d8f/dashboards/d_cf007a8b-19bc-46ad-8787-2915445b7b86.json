@@ -3810,6 +3810,20 @@
                     "qualifiedEntityName": "verceldb.public.sales_data",
                     "role": "metric"
                   }
+                ],
+                "sortByColumns": [
+                  {
+                    "dataType": "date",
+                    "direction": "asc",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "sortBy-verceldb.public.sales_data-order_date-1764229733724",
+                    "label": "Order Date",
+                    "name": "order_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "sortby"
+                  }
                 ]
               },
               "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
@@ -3897,19 +3911,19 @@
             "moved": false,
             "static": false,
             "w": 6,
-            "x": 20,
+            "x": 0,
             "y": 8
           },
           {
-            "h": 35,
+            "h": 43,
             "i": "4b56c6f0-8bab-4f6c-8bde-4fdb65bf15e4",
             "minH": 10,
             "minW": 6,
             "moved": false,
             "static": false,
-            "w": 20,
+            "w": 37,
             "x": 0,
-            "y": 8
+            "y": 21
           }
         ],
         "md": [
