@@ -1985,8 +1985,8 @@
             "minW": 6,
             "moved": false,
             "static": false,
-            "w": 10,
-            "x": 38,
+            "w": 20,
+            "x": 28,
             "y": 0
           },
           {
@@ -3711,7 +3711,7 @@
                 }
               },
               "sql": "",
-              "title": "Orders by month",
+              "title": "My First Change",
               "type": "bar"
             }
           ],
@@ -3750,7 +3750,7 @@
             "static": false,
             "w": 29,
             "x": 0,
-            "y": 8
+            "y": 51
           },
           {
             "h": 43,
@@ -3761,7 +3761,7 @@
             "static": false,
             "w": 37,
             "x": 0,
-            "y": 23
+            "y": 8
           }
         ],
         "md": [
@@ -3794,7 +3794,7 @@
             "static": false,
             "w": 20,
             "x": 0,
-            "y": 24
+            "y": 16
           },
           {
             "h": 35,
@@ -3805,93 +3805,95 @@
             "static": false,
             "w": 20,
             "x": 0,
-            "y": 59
+            "y": 51
           }
         ],
         "sm": [
           {
             "h": 8,
             "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "moved": false,
+            "static": false,
             "w": 10,
             "x": 0,
             "y": 0
-          },
-          {
-            "h": 8,
-            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
-            "w": 10,
-            "x": 0,
-            "y": 0
-          },
-          {
-            "h": 35,
-            "i": "69469950-92ca-42ff-9d29-20826fcbe12d",
-            "minH": 10,
-            "minW": 6,
-            "w": 20,
-            "x": 0,
-            "y": 8
           },
           {
             "h": 8,
             "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
             "minH": 7,
             "minW": 6,
+            "moved": false,
+            "static": false,
             "w": 10,
             "x": 0,
-            "y": 0
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "69469950-92ca-42ff-9d29-20826fcbe12d",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 16
           },
           {
             "h": 35,
             "i": "4b56c6f0-8bab-4f6c-8bde-4fdb65bf15e4",
             "minH": 10,
             "minW": 6,
+            "moved": false,
+            "static": false,
             "w": 20,
             "x": 0,
-            "y": 31
+            "y": 51
           }
         ],
         "xs": [
           {
             "h": 8,
             "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "moved": false,
+            "static": false,
             "w": 10,
             "x": 0,
             "y": 0
-          },
-          {
-            "h": 8,
-            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
-            "w": 10,
-            "x": 0,
-            "y": 0
-          },
-          {
-            "h": 35,
-            "i": "69469950-92ca-42ff-9d29-20826fcbe12d",
-            "minH": 10,
-            "minW": 6,
-            "w": 20,
-            "x": 0,
-            "y": 8
           },
           {
             "h": 8,
             "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
             "minH": 7,
             "minW": 6,
+            "moved": false,
+            "static": false,
             "w": 10,
             "x": 0,
-            "y": 0
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "69469950-92ca-42ff-9d29-20826fcbe12d",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 16
           },
           {
             "h": 35,
             "i": "4b56c6f0-8bab-4f6c-8bde-4fdb65bf15e4",
             "minH": 10,
             "minW": 6,
-            "w": 20,
+            "moved": false,
+            "static": false,
+            "w": 12,
             "x": 0,
-            "y": 31
+            "y": 51
           }
         ],
         "xxs": [
