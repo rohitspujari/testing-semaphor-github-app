@@ -56,6 +56,9 @@
     "senderTitle": "Semaphor",
     "supportEmail": "support@semaphor.com"
   },
+  "filterLayout": {
+    "displayMode": "toolbar"
+  },
   "filters": [
     {
       "column": "sales_data.category",
@@ -70,9 +73,11 @@
       ],
       "id": "492ca81f-2a85-4fdd-99c7-633ada500da2",
       "operation": "in",
+      "showLabel": false,
       "sql": "SELECT category, COUNT(*) FROM sales_data {{ filters | where }} GROUP BY category ORDER BY category ASC LIMIT 50",
       "table": "sales_data",
       "title": "Category",
+      "toolbarWidth": 354,
       "type": "single",
       "uiType": "radio"
     },
@@ -85,15 +90,18 @@
       "location": "dashboard",
       "operation": "in",
       "sheetId": "1bf53b08-4840-444f-a556-6a32c2cc7ee5",
+      "showLabel": false,
       "sql": "SELECT region, COUNT(*) FROM sales_data {{ filters | where }} GROUP BY region ORDER BY region ASC LIMIT 50",
       "table": "sales_data",
-      "title": "Sales Region"
+      "title": "Sales Region",
+      "toolbarWidth": 232
     },
     {
       "column": "public.sales_data.order_date",
       "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
       "database": "verceldb",
       "dataType": "date",
+      "dateSelectionMode": "range",
       "defaultDateRange": {
         "from": "2015-01-01T06:00:00.000Z",
         "to": "2015-12-31T06:00:00.000Z"
@@ -101,9 +109,50 @@
       "id": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
       "location": "dashboard",
       "operation": "in",
+      "showLabel": false,
       "sql": "SELECT min(order_date) as min, max(order_date) as max FROM sales_data {{ filters | where }}",
       "table": "sales_data",
-      "title": "Order Date"
+      "targetColumns": [
+        {
+          "column": "public.sales_data.ship_date",
+          "label": "Ship Date"
+        }
+      ],
+      "title": "Order Date",
+      "toolbarWidth": 337
+    },
+    {
+      "applyToSheetIds": [
+        "25aed712-1b40-4f4a-903b-8e476480db42"
+      ],
+      "column": "public.sales_data.segment",
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "database": "verceldb",
+      "dataType": "character varying",
+      "id": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+      "location": "sheet",
+      "operation": "in",
+      "showLabel": false,
+      "sql": "SELECT t.segment, COUNT(*) FROM public.sales_data t {{ filters | where }} GROUP BY t.segment ORDER BY t.segment ASC LIMIT 50",
+      "table": "sales_data",
+      "title": "Segment",
+      "toolbarWidth": 217
+    },
+    {
+      "applyToSheetIds": [
+        "25aed712-1b40-4f4a-903b-8e476480db42"
+      ],
+      "column": "public.sales_data.customer_name",
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "database": "verceldb",
+      "dataType": "character varying",
+      "id": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+      "location": "sheet",
+      "operation": "in",
+      "sql": "SELECT t.customer_name, COUNT(*) FROM public.sales_data t {{ filters | where }} GROUP BY t.customer_name ORDER BY t.customer_name ASC LIMIT 50",
+      "table": "sales_data",
+      "title": "Customer Name",
+      "toolbarWidth": 291
     }
   ],
   "globalStyle": {
@@ -485,44 +534,57 @@
               "config": {
                 "groupByColumns": [
                   {
-                    "dataType": "date",
-                    "dateFormat": "YYYY-MM",
+                    "dataType": "character varying",
                     "entityId": "verceldb.public.sales_data",
                     "entityName": "sales_data",
                     "entityType": "dataset",
-                    "granularity": "month",
-                    "id": "groupBy-verceldb.public.sales_data-order_date-1760580114412",
-                    "label": "Order Date",
-                    "name": "order_date",
+                    "id": "groupBy-verceldb.public.sales_data-sub_category-1765060615939",
+                    "label": "Sub Category",
+                    "name": "sub_category",
                     "qualifiedEntityName": "verceldb.public.sales_data",
+                    "qualifiedFieldName": "public.sales_data.sub_category",
                     "role": "groupby"
                   }
                 ],
                 "metricColumns": [
                   {
                     "aggregate": "COUNT",
-                    "dataType": "character varying",
+                    "dataType": "date",
                     "entityId": "verceldb.public.sales_data",
                     "entityName": "sales_data",
                     "entityType": "dataset",
-                    "id": "metrics-verceldb.public.sales_data-order_id-1760580118343",
-                    "label": "Count of Order Id",
-                    "name": "order_id",
+                    "id": "metrics-verceldb.public.sales_data-order_date-1765060593446",
+                    "label": "Count of Order Date",
+                    "name": "order_date",
                     "qualifiedEntityName": "verceldb.public.sales_data",
+                    "qualifiedFieldName": "public.sales_data.order_date",
                     "role": "metric"
-                  }
-                ],
-                "pivotByColumns": [
+                  },
                   {
-                    "dataType": "character varying",
+                    "aggregate": "AVG",
+                    "dataType": "numeric",
                     "entityId": "verceldb.public.sales_data",
                     "entityName": "sales_data",
                     "entityType": "dataset",
-                    "id": "pivotBy-verceldb.public.sales_data-region-1760580122376",
-                    "label": "Region",
-                    "name": "region",
+                    "id": "metrics-verceldb.public.sales_data-sales-1765060620126",
+                    "label": "Average of Sales",
+                    "name": "sales",
                     "qualifiedEntityName": "verceldb.public.sales_data",
-                    "role": "pivotby"
+                    "qualifiedFieldName": "public.sales_data.sales",
+                    "role": "metric"
+                  },
+                  {
+                    "aggregate": "SUM",
+                    "dataType": "numeric",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-quantity-1765060623105",
+                    "label": "Sum of Quantity",
+                    "name": "quantity",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "qualifiedFieldName": "public.sales_data.quantity",
+                    "role": "metric"
                   }
                 ]
               },
@@ -558,13 +620,11 @@
                   },
                   "axes": {
                     "x": {
-                      "axisLine": false,
                       "label": "",
                       "position": "bottom",
                       "show": true
                     },
                     "y": {
-                      "axisLine": false,
                       "label": "",
                       "position": "left",
                       "show": true
@@ -572,18 +632,14 @@
                   },
                   "chart": {
                     "orientation": "vertical",
-                    "type": "area"
+                    "type": "line"
                   },
                   "chartSpecific": {
-                    "bar": {},
-                    "combo": {},
-                    "funnel": {},
                     "line": {
                       "curve": "monotone",
-                      "fillOpacity": 0.2,
+                      "fillOpacity": 0,
                       "strokeWidth": 2
-                    },
-                    "pie": {}
+                    }
                   },
                   "formatting": {
                     "compactDisplay": "short",
@@ -617,7 +673,7 @@
                   "legend": {
                     "alignment": "center",
                     "orientation": "horizontal",
-                    "position": "bottom",
+                    "position": "top",
                     "show": true
                   }
                 },
@@ -648,7 +704,7 @@
                 ],
                 "semanticDomainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef"
               },
-              "description": "Description",
+              "description": "",
               "id": "f7e020e0-3d4a-4e51-9146-35e4312ffb6e",
               "interactionConfig": {
                 "allowedDrillTargets": [],
@@ -840,26 +896,39 @@
               "lastSelectedSchema": "public",
               "lastSelectedTable": "sales_data",
               "preferences": {
-                "chartOptions": {
-                  "scales": {
-                    "x": {
-                      "grid": {
-                        "display": false
-                      }
-                    },
-                    "y": {
-                      "grid": {
-                        "display": false
-                      }
-                    }
+                "colorConfig": {
+                  "segments": {
+                    "Average of Sales": "#fbbf24",
+                    "Count of Order Date": "#14b8a6",
+                    "Sum of Quantity": "#374151"
                   }
-                }
+                },
+                "datasetOptions": [
+                  {
+                    "fill": "",
+                    "idx": 1,
+                    "type": "line",
+                    "yAxisId": "y"
+                  },
+                  {
+                    "fill": "",
+                    "idx": 2,
+                    "type": "line",
+                    "yAxisId": "y"
+                  },
+                  {
+                    "fill": "",
+                    "idx": 0,
+                    "type": "bar",
+                    "yAxisId": "y"
+                  }
+                ]
               },
               "python": "",
               "sql": "",
               "tabTitle": "Orders by Week",
               "title": "Orders by Week",
-              "type": "stackedBar"
+              "type": "combo"
             }
           ],
           "id": "91dd0610-79bc-4d77-8b03-6bf3e01899bb"
@@ -1968,55 +2037,22 @@
       "layouts": {
         "lg": [
           {
-            "h": 8,
-            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
-            "minH": 7,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 14,
-            "x": 0,
-            "y": 0
-          },
-          {
-            "h": 8,
-            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
-            "minH": 7,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 10,
-            "x": 38,
-            "y": 0
-          },
-          {
-            "h": 8,
-            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
-            "minH": 7,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 14,
-            "x": 14,
-            "y": 0
-          },
-          {
-            "h": 34,
+            "h": 44,
             "i": "32252763-5e2d-47d8-97de-7b8a7ad5f5ae",
             "moved": false,
             "static": false,
-            "w": 16,
-            "x": 15,
-            "y": 107
+            "w": 24,
+            "x": 24,
+            "y": 0
           },
           {
-            "h": 37,
+            "h": 44,
             "i": "91dd0610-79bc-4d77-8b03-6bf3e01899bb",
             "moved": false,
             "static": false,
-            "w": 48,
+            "w": 24,
             "x": 0,
-            "y": 8
+            "y": 0
           },
           {
             "h": 43,
@@ -2025,7 +2061,7 @@
             "static": false,
             "w": 48,
             "x": 0,
-            "y": 184
+            "y": 140
           },
           {
             "h": 34,
@@ -2034,7 +2070,7 @@
             "static": false,
             "w": 17,
             "x": 31,
-            "y": 107
+            "y": 106
           },
           {
             "h": 34,
@@ -2045,18 +2081,18 @@
             "static": false,
             "w": 15,
             "x": 0,
-            "y": 107
+            "y": 106
           },
           {
-            "h": 43,
+            "h": 34,
             "i": "b21404ec-cfde-45d9-9ab5-f87f61fba8bc",
             "minH": 10,
             "minW": 6,
             "moved": false,
             "static": false,
-            "w": 48,
-            "x": 0,
-            "y": 141
+            "w": 16,
+            "x": 15,
+            "y": 106
           },
           {
             "h": 62,
@@ -2067,7 +2103,7 @@
             "static": false,
             "w": 48,
             "x": 0,
-            "y": 45
+            "y": 44
           },
           {
             "h": 39,
@@ -2078,7 +2114,7 @@
             "static": false,
             "w": 48,
             "x": 0,
-            "y": 227
+            "y": 183
           },
           {
             "h": 35,
@@ -2089,43 +2125,19 @@
             "static": false,
             "w": 48,
             "x": 0,
-            "y": 266
+            "y": 222
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "md": [
-          {
-            "h": 8,
-            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
-            "minH": 7,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 16,
-            "x": 0,
-            "y": 0
-          },
-          {
-            "h": 8,
-            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
-            "minH": 7,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 10,
-            "x": 26,
-            "y": 0
-          },
-          {
-            "h": 8,
-            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
-            "minH": 7,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 10,
-            "x": 0,
-            "y": 8
-          },
           {
             "h": 32,
             "i": "32252763-5e2d-47d8-97de-7b8a7ad5f5ae",
@@ -2133,7 +2145,7 @@
             "static": false,
             "w": 16,
             "x": 0,
-            "y": 16
+            "y": 0
           },
           {
             "h": 32,
@@ -2142,7 +2154,7 @@
             "static": false,
             "w": 20,
             "x": 16,
-            "y": 8
+            "y": 0
           },
           {
             "h": 31,
@@ -2151,7 +2163,7 @@
             "static": false,
             "w": 17,
             "x": 0,
-            "y": 48
+            "y": 32
           },
           {
             "h": 30,
@@ -2160,7 +2172,7 @@
             "static": false,
             "w": 17,
             "x": 0,
-            "y": 79
+            "y": 63
           },
           {
             "h": 31,
@@ -2171,7 +2183,7 @@
             "static": false,
             "w": 19,
             "x": 17,
-            "y": 40
+            "y": 32
           },
           {
             "h": 30,
@@ -2182,7 +2194,7 @@
             "static": false,
             "w": 19,
             "x": 17,
-            "y": 71
+            "y": 63
           },
           {
             "h": 35,
@@ -2193,7 +2205,7 @@
             "static": false,
             "w": 20,
             "x": 0,
-            "y": 109
+            "y": 93
           },
           {
             "h": 35,
@@ -2204,18 +2216,7 @@
             "static": false,
             "w": 20,
             "x": 0,
-            "y": 144
-          },
-          {
-            "h": 35,
-            "i": "707c29ae-2efe-4d73-b5df-01e4dd9de0e5",
-            "minH": 10,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 20,
-            "x": 0,
-            "y": 179
+            "y": 128
           },
           {
             "h": 35,
@@ -2226,54 +2227,28 @@
             "static": false,
             "w": 20,
             "x": 0,
-            "y": 214
+            "y": 163
           },
           {
-            "h": 35,
-            "i": "40c28c8b-c145-4c30-b38b-451ff850e98e",
-            "minH": 10,
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
             "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 20,
+            "w": 10,
             "x": 0,
-            "y": 249
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "sm": [
-          {
-            "h": 8,
-            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
-            "minH": 7,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 24,
-            "x": 0,
-            "y": 8
-          },
-          {
-            "h": 8,
-            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
-            "minH": 7,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 6,
-            "x": 18,
-            "y": 0
-          },
-          {
-            "h": 8,
-            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
-            "minH": 7,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 12,
-            "x": 0,
-            "y": 0
-          },
           {
             "h": 29,
             "i": "32252763-5e2d-47d8-97de-7b8a7ad5f5ae",
@@ -2281,7 +2256,7 @@
             "static": false,
             "w": 24,
             "x": 0,
-            "y": 48
+            "y": 32
           },
           {
             "h": 32,
@@ -2290,7 +2265,7 @@
             "static": false,
             "w": 24,
             "x": 0,
-            "y": 16
+            "y": 0
           },
           {
             "h": 34,
@@ -2299,7 +2274,7 @@
             "static": false,
             "w": 24,
             "x": 0,
-            "y": 106
+            "y": 90
           },
           {
             "h": 39,
@@ -2308,7 +2283,7 @@
             "static": false,
             "w": 11,
             "x": 0,
-            "y": 140
+            "y": 124
           },
           {
             "h": 29,
@@ -2319,7 +2294,7 @@
             "static": false,
             "w": 24,
             "x": 0,
-            "y": 77
+            "y": 61
           },
           {
             "h": 39,
@@ -2330,7 +2305,7 @@
             "static": false,
             "w": 13,
             "x": 11,
-            "y": 140
+            "y": 124
           },
           {
             "h": 35,
@@ -2341,7 +2316,7 @@
             "static": false,
             "w": 20,
             "x": 0,
-            "y": 179
+            "y": 163
           },
           {
             "h": 35,
@@ -2352,18 +2327,7 @@
             "static": false,
             "w": 20,
             "x": 0,
-            "y": 214
-          },
-          {
-            "h": 35,
-            "i": "707c29ae-2efe-4d73-b5df-01e4dd9de0e5",
-            "minH": 10,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 20,
-            "x": 0,
-            "y": 249
+            "y": 198
           },
           {
             "h": 35,
@@ -2374,18 +2338,25 @@
             "static": false,
             "w": 20,
             "x": 0,
-            "y": 284
+            "y": 233
           },
           {
-            "h": 35,
-            "i": "40c28c8b-c145-4c30-b38b-451ff850e98e",
-            "minH": 10,
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
             "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 20,
+            "w": 10,
             "x": 0,
-            "y": 319
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xs": [
@@ -2528,6 +2499,24 @@
             "w": 10,
             "x": 0,
             "y": 0
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xxs": [
@@ -2661,6 +2650,24 @@
           {
             "h": 8,
             "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
             "minH": 7,
             "minW": 6,
             "w": 10,
@@ -2892,6 +2899,24 @@
             "w": 48,
             "x": 0,
             "y": 59
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "md": [
@@ -2941,6 +2966,24 @@
             "w": 20,
             "x": 0,
             "y": 79
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "sm": [
@@ -3006,6 +3049,24 @@
             "w": 20,
             "x": 0,
             "y": 79
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xs": [
@@ -3055,6 +3116,24 @@
             "w": 20,
             "x": 0,
             "y": 79
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xxs": [
@@ -3116,6 +3195,24 @@
             "w": 20,
             "x": 0,
             "y": 79
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ]
       },
@@ -3351,6 +3448,24 @@
             "w": 20,
             "x": 20,
             "y": 0
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "md": [
@@ -3389,6 +3504,24 @@
           {
             "h": 8,
             "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
             "minH": 7,
             "minW": 6,
             "w": 10,
@@ -3437,6 +3570,24 @@
             "w": 10,
             "x": 0,
             "y": 0
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xs": [
@@ -3480,6 +3631,24 @@
             "w": 10,
             "x": 0,
             "y": 0
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xxs": [
@@ -3518,6 +3687,24 @@
           {
             "h": 8,
             "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
             "minH": 7,
             "minW": 6,
             "w": 10,
@@ -3711,7 +3898,7 @@
                 }
               },
               "sql": "",
-              "title": "Orders by month",
+              "title": "Orders by Month - All",
               "type": "bar"
             }
           ],
@@ -3722,26 +3909,6 @@
       "layouts": {
         "lg": [
           {
-            "h": 8,
-            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
-            "moved": false,
-            "static": false,
-            "w": 17,
-            "x": 10,
-            "y": 0
-          },
-          {
-            "h": 8,
-            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
-            "minH": 7,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 10,
-            "x": 0,
-            "y": 0
-          },
-          {
             "h": 15,
             "i": "69469950-92ca-42ff-9d29-20826fcbe12d",
             "minH": 10,
@@ -3750,7 +3917,7 @@
             "static": false,
             "w": 29,
             "x": 0,
-            "y": 8
+            "y": 0
           },
           {
             "h": 43,
@@ -3761,7 +3928,7 @@
             "static": false,
             "w": 37,
             "x": 0,
-            "y": 23
+            "y": 15
           }
         ],
         "md": [
@@ -3806,6 +3973,24 @@
             "w": 20,
             "x": 0,
             "y": 59
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "sm": [
@@ -3849,6 +4034,24 @@
             "w": 20,
             "x": 0,
             "y": 31
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xs": [
@@ -3892,6 +4095,24 @@
             "w": 20,
             "x": 0,
             "y": 31
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xxs": [
@@ -3935,6 +4156,24 @@
             "w": 20,
             "x": 0,
             "y": 31
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ]
       },
@@ -4469,6 +4708,24 @@
             "w": 20,
             "x": 0,
             "y": 78
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "md": [
@@ -4528,6 +4785,24 @@
             "w": 20,
             "x": 0,
             "y": 78
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "sm": [
@@ -4587,6 +4862,24 @@
             "w": 20,
             "x": 0,
             "y": 78
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xs": [
@@ -4646,6 +4939,24 @@
             "w": 20,
             "x": 0,
             "y": 78
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xxs": [
@@ -4705,10 +5016,320 @@
             "w": 20,
             "x": 0,
             "y": 78
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ]
       },
       "title": "Interaction V2"
+    },
+    {
+      "frames": [
+        {
+          "activeCardId": "8a2320c1-2c7b-46e4-b75e-906da3477637",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "date",
+                    "dateFormat": "YYYY-MM",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "granularity": "month",
+                    "id": "groupBy-verceldb.public.sales_data-order_date-1765055302671",
+                    "label": "Order Date",
+                    "name": "order_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "qualifiedFieldName": "public.sales_data.order_date",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-order_id-1765055298618",
+                    "label": "Count of Order Id",
+                    "name": "order_id",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "qualifiedFieldName": "public.sales_data.order_id",
+                    "role": "metric"
+                  },
+                  {
+                    "aggregate": "SUM",
+                    "dataType": "numeric",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-quantity-1765295710724",
+                    "label": "Sum of Quantity",
+                    "name": "quantity",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "qualifiedFieldName": "public.sales_data.quantity",
+                    "role": "metric"
+                  },
+                  {
+                    "aggregate": "SUM",
+                    "dataType": "numeric",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.sales_data-sales-1765295769181",
+                    "label": "Sum of Sales",
+                    "name": "sales",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "qualifiedFieldName": "public.sales_data.sales",
+                    "role": "metric"
+                  }
+                ],
+                "sortByColumns": [
+                  {
+                    "dataType": "date",
+                    "direction": "asc",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "sortBy-verceldb.public.sales_data-order_date-1765055309960",
+                    "label": "Order Date",
+                    "name": "order_date",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "role": "sortby"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "This table contains sales orders",
+                    "dialect": "postgres",
+                    "domainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef",
+                    "id": "verceldb.public.sales_data",
+                    "label": "Sales Data",
+                    "name": "sales_data",
+                    "schema": "public",
+                    "type": "dataset"
+                  }
+                ],
+                "type": "dataset"
+              },
+              "id": "8a2320c1-2c7b-46e4-b75e-906da3477637",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "sales_data",
+              "preferences": {
+                "dataLabelsConfig": {
+                  "display": true,
+                  "enabled": true,
+                  "position": "bottom"
+                },
+                "xAxisConfig": {
+                  "enabled": false
+                },
+                "yAxisConfig": {
+                  "enabled": false
+                }
+              },
+              "sql": "",
+              "title": "Title",
+              "type": "area"
+            }
+          ],
+          "id": "e32bab98-cdca-40f3-8d9f-caaea1596773"
+        }
+      ],
+      "id": "25aed712-1b40-4f4a-903b-8e476480db42",
+      "layouts": {
+        "lg": [
+          {
+            "h": 38,
+            "i": "e32bab98-cdca-40f3-8d9f-caaea1596773",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "md": [
+          {
+            "h": 35,
+            "i": "e32bab98-cdca-40f3-8d9f-caaea1596773",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "sm": [
+          {
+            "h": 35,
+            "i": "e32bab98-cdca-40f3-8d9f-caaea1596773",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xs": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "e32bab98-cdca-40f3-8d9f-caaea1596773",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xxs": [
+          {
+            "h": 8,
+            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "99626c9b-69ad-46d9-82f2-d5a0d8e8c044",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "e32bab98-cdca-40f3-8d9f-caaea1596773",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 8,
+            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "title": "Date Order Bug"
     }
   ],
   "style": {
@@ -4782,7 +5403,7 @@
           ]
         },
         "font": {
-          "family": "'__open_sans_fc1856', '__open_sans_Fallback_fc1856'"
+          "family": "'open_sans', 'open_sans Fallback'"
         },
         "options": {
           "borderRadius": 2,
