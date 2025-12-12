@@ -1196,24 +1196,26 @@
                     "entityId": "verceldb.public.sales_data",
                     "entityName": "sales_data",
                     "entityType": "dataset",
-                    "id": "groupBy-sales_data-sub_category-1750985582704",
+                    "id": "groupBy-verceldb.public.sales_data-sub_category-1765566031775",
                     "label": "Sub Category",
                     "name": "sub_category",
-                    "qualifiedEntityName": "sales_data",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "qualifiedFieldName": "public.sales_data.sub_category",
                     "role": "groupby"
                   }
                 ],
                 "metricColumns": [
                   {
-                    "aggregate": "SUM",
+                    "aggregate": "AVG",
                     "dataType": "numeric",
                     "entityId": "verceldb.public.sales_data",
                     "entityName": "sales_data",
                     "entityType": "dataset",
-                    "id": "metrics-sales_data-sales-1750985585805",
-                    "label": "Sum of Sales",
+                    "id": "metrics-verceldb.public.sales_data-sales-1765566022708",
+                    "label": "Average of Sales",
                     "name": "sales",
-                    "qualifiedEntityName": "sales_data",
+                    "qualifiedEntityName": "verceldb.public.sales_data",
+                    "qualifiedFieldName": "public.sales_data.sales",
                     "role": "metric"
                   }
                 ]
@@ -2126,15 +2128,6 @@
             "w": 48,
             "x": 0,
             "y": 222
-          },
-          {
-            "h": 8,
-            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
-            "minH": 7,
-            "minW": 6,
-            "w": 10,
-            "x": 0,
-            "y": 0
           }
         ],
         "md": [
