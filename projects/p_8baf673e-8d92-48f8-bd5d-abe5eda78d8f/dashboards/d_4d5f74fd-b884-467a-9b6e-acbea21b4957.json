@@ -97,7 +97,7 @@
           "id": "28a69fc4-c698-4a50-82f1-229ccb97472e"
         },
         {
-          "activeCardId": "5ca5fa14-ba21-48cb-9467-c59bb1b12fbf",
+          "activeCardId": "6e2d5fd9-802b-4640-9293-dc6063a2fc59",
           "cards": [
             {
               "config": {
@@ -159,7 +159,7 @@
                 "semanticDomainId": "a4583589-3b4a-4aa6-a249-00b59964d2ef"
               },
               "description": "Description",
-              "id": "5ca5fa14-ba21-48cb-9467-c59bb1b12fbf",
+              "id": "6e2d5fd9-802b-4640-9293-dc6063a2fc59",
               "lastSelectedDatabase": "verceldb",
               "lastSelectedDatamodelId": "",
               "lastSelectedSchema": "public",
@@ -198,7 +198,7 @@
             "i": "28a69fc4-c698-4a50-82f1-229ccb97472e",
             "moved": false,
             "static": false,
-            "w": 18,
+            "w": 20,
             "x": 0,
             "y": 0
           },
