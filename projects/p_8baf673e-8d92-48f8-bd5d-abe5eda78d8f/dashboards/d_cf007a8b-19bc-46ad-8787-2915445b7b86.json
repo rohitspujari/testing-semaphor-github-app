@@ -79,7 +79,7 @@
       "title": "Category",
       "toolbarWidth": 354,
       "type": "single",
-      "uiType": "radio"
+      "uiType": "dropdown"
     },
     {
       "column": "sales_data.region",
@@ -2846,7 +2846,7 @@
               "lastSelectedSchema": "public",
               "lastSelectedTable": "sales_data",
               "paginationConfig": {
-                "page": 1,
+                "page": 36,
                 "pageSize": 50
               },
               "preferences": {},
@@ -2879,7 +2879,7 @@
             "minW": 6,
             "moved": false,
             "static": false,
-            "w": 48,
+            "w": 43,
             "x": 0,
             "y": 35
           }
