@@ -78,7 +78,7 @@
       "table": "sales_data",
       "title": "Category",
       "toolbarWidth": 354,
-      "type": "single",
+      "type": "multiple",
       "uiType": "dropdown"
     },
     {
@@ -2846,7 +2846,7 @@
               "lastSelectedSchema": "public",
               "lastSelectedTable": "sales_data",
               "paginationConfig": {
-                "page": 36,
+                "page": 91,
                 "pageSize": 50
               },
               "preferences": {},
