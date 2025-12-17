@@ -2784,7 +2784,18 @@
                     "id": "groupBy-verceldb.public.sales_data-segment-1762120189247",
                     "label": "Segment",
                     "name": "segment",
+                    "qualifiedEntityName": "verceldb.public.sales_data"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.public.sales_data",
+                    "entityName": "sales_data",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.sales_data-order_id-1765931891874",
+                    "label": "Order Id",
+                    "name": "order_id",
                     "qualifiedEntityName": "verceldb.public.sales_data",
+                    "qualifiedFieldName": "public.sales_data.order_id",
                     "role": "groupby"
                   }
                 ],
@@ -2851,27 +2862,6 @@
       "layouts": {
         "lg": [
           {
-            "h": 8,
-            "i": "492ca81f-2a85-4fdd-99c7-633ada500da2",
-            "minH": 7,
-            "moved": false,
-            "static": false,
-            "w": 7,
-            "x": 0,
-            "y": 0
-          },
-          {
-            "h": 8,
-            "i": "7de5700f-a50b-4c2f-b831-b84622ce22e9",
-            "minH": 7,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 10,
-            "x": 0,
-            "y": 16
-          },
-          {
             "h": 35,
             "i": "dea2010f-9556-486c-9cc0-a8a44f6a939a",
             "minH": 10,
@@ -2880,7 +2870,7 @@
             "static": false,
             "w": 20,
             "x": 0,
-            "y": 24
+            "y": 0
           },
           {
             "h": 40,
@@ -2891,25 +2881,7 @@
             "static": false,
             "w": 48,
             "x": 0,
-            "y": 59
-          },
-          {
-            "h": 8,
-            "i": "761051c0-7487-48b7-b4db-ddc8b52b33ec",
-            "minH": 7,
-            "minW": 6,
-            "w": 10,
-            "x": 0,
-            "y": 0
-          },
-          {
-            "h": 8,
-            "i": "49644711-f7d2-4be4-9cec-8600b10e1cc7",
-            "minH": 7,
-            "minW": 6,
-            "w": 10,
-            "x": 0,
-            "y": 0
+            "y": 35
           }
         ],
         "md": [
