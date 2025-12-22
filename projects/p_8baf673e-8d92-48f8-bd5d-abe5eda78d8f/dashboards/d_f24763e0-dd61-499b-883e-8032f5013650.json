@@ -105,7 +105,7 @@
               "preferences": {},
               "python": "",
               "sql": "",
-              "title": "Title",
+              "title": "Orders",
               "type": "bar"
             }
           ],
@@ -116,6 +116,17 @@
       "layouts": {
         "lg": [
           {
+            "h": 8,
+            "i": "48252191-6f6c-4e0c-b2b4-e27cfcccf7d2",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
             "h": 35,
             "i": "f148ec51-3f22-4075-95c1-626e2d471f22",
             "minH": 10,
@@ -124,16 +135,7 @@
             "static": false,
             "w": 20,
             "x": 0,
-            "y": 0
-          },
-          {
-            "h": 8,
-            "i": "48252191-6f6c-4e0c-b2b4-e27cfcccf7d2",
-            "minH": 7,
-            "minW": 6,
-            "w": 10,
-            "x": 0,
-            "y": 0
+            "y": 8
           }
         ],
         "md": [
