@@ -958,7 +958,46 @@
                 "page": 1,
                 "pageSize": 50
               },
-              "preferences": {},
+              "preferences": {
+                "tablePrefs": {
+                  "columnSettingsMap": {
+                    "Product Sk": {
+                      "colorRanges": [],
+                      "dateFormat": {
+                        "customFormat": "yyyy-MM-dd'T'HH:mm:ss",
+                        "format": "MM/dd/yyyy",
+                        "sourceTimezone": "auto",
+                        "timezone": "auto",
+                        "useCustomFormat": false,
+                        "useRelativeTime": false
+                      },
+                      "linkFormat": {
+                        "labelColumn": "",
+                        "labelType": "value",
+                        "openInNewTab": true,
+                        "staticLabel": "",
+                        "urlTemplate": "{value}"
+                      },
+                      "maxWidth": 500,
+                      "minWidth": 50,
+                      "numberFormat": {
+                        "currency": "USD",
+                        "dataBarColor": "#3b82f6",
+                        "locale": "en-US",
+                        "maximumFractionDigits": 2,
+                        "minimumFractionDigits": 0,
+                        "showDataBar": false,
+                        "style": "currency"
+                      },
+                      "textAlign": "right",
+                      "textOverflow": "ellipsis",
+                      "textWrap": "nowrap",
+                      "type": "number",
+                      "width": 150
+                    }
+                  }
+                }
+              },
               "title": "Title",
               "type": "table"
             }
