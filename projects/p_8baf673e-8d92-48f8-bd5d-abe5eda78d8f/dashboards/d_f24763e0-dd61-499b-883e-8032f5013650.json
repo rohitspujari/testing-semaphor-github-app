@@ -1,0 +1,264 @@
+{
+  "description": "Description: BigQuery Test Dashboard",
+  "filters": [
+    {
+      "applyToSheetIds": [
+        "2c105dfa-8c19-4372-9b9b-cd062b4af7d3"
+      ],
+      "column": "sales_dataset.orders.ship_mode",
+      "connectionId": "c_86277d2b-0721-492b-a580-c04c8ada0a90",
+      "database": "glint-387515",
+      "dataType": "STRING",
+      "id": "48252191-6f6c-4e0c-b2b4-e27cfcccf7d2",
+      "location": "sheet",
+      "operation": "in",
+      "sql": "SELECT t.ship_mode, COUNT(*) FROM sales_dataset.orders t {{ filters | where }} GROUP BY t.ship_mode ORDER BY t.ship_mode ASC LIMIT 50",
+      "table": "orders",
+      "title": "Ship Mode"
+    }
+  ],
+  "id": "d_f24763e0-dd61-499b-883e-8032f5013650",
+  "sheets": [
+    {
+      "frames": [
+        {
+          "activeCardId": "1b3e34b1-58fb-47d4-bd32-39d172b34f97",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "DATE",
+                    "dateFormat": "YYYY-MM",
+                    "entityId": "orders",
+                    "entityName": "orders",
+                    "entityType": "table",
+                    "granularity": "month",
+                    "id": "groupBy-glint-387515.sales_dataset.orders-order_date-1766110323248",
+                    "label": "Order Date",
+                    "name": "order_date",
+                    "qualifiedEntityName": "glint-387515.sales_dataset.orders",
+                    "qualifiedFieldName": "sales_dataset.orders.order_date",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "DATE",
+                    "entityId": "orders",
+                    "entityName": "orders",
+                    "entityType": "table",
+                    "id": "metrics-glint-387515.sales_dataset.orders-order_date-1766110322540",
+                    "label": "Count of Order Date",
+                    "name": "order_date",
+                    "qualifiedEntityName": "glint-387515.sales_dataset.orders",
+                    "qualifiedFieldName": "sales_dataset.orders.order_date",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": [
+                  {
+                    "dataType": "STRING",
+                    "entityId": "orders",
+                    "entityName": "orders",
+                    "entityType": "table",
+                    "id": "pivotBy-glint-387515.sales_dataset.orders-segment-1766110326450",
+                    "label": "Segment",
+                    "name": "segment",
+                    "qualifiedEntityName": "glint-387515.sales_dataset.orders",
+                    "qualifiedFieldName": "sales_dataset.orders.segment",
+                    "role": "pivotby"
+                  }
+                ]
+              },
+              "connectionId": "c_86277d2b-0721-492b-a580-c04c8ada0a90",
+              "customCfg": "",
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_86277d2b-0721-492b-a580-c04c8ada0a90",
+                "connectionType": "BigQuery",
+                "dbSelection": {
+                  "database": "glint-387515",
+                  "entityType": "table",
+                  "schema": "sales_dataset"
+                },
+                "mode": "database",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_86277d2b-0721-492b-a580-c04c8ada0a90",
+                    "connectionType": "BigQuery",
+                    "database": "glint-387515",
+                    "dialect": "bigquery",
+                    "name": "orders",
+                    "schema": "sales_dataset",
+                    "type": "table"
+                  }
+                ]
+              },
+              "id": "1b3e34b1-58fb-47d4-bd32-39d172b34f97",
+              "lastSelectedDatabase": "glint-387515",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "sales_dataset",
+              "lastSelectedTable": "orders",
+              "preferences": {},
+              "python": "",
+              "sql": "",
+              "title": "Title",
+              "type": "bar"
+            }
+          ],
+          "id": "f148ec51-3f22-4075-95c1-626e2d471f22"
+        }
+      ],
+      "id": "2c105dfa-8c19-4372-9b9b-cd062b4af7d3",
+      "layouts": {
+        "lg": [
+          {
+            "h": 35,
+            "i": "f148ec51-3f22-4075-95c1-626e2d471f22",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "48252191-6f6c-4e0c-b2b4-e27cfcccf7d2",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "md": [
+          {
+            "h": 8,
+            "i": "48252191-6f6c-4e0c-b2b4-e27cfcccf7d2",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "f148ec51-3f22-4075-95c1-626e2d471f22",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          }
+        ],
+        "sm": [
+          {
+            "h": 44,
+            "i": "b0044462-391e-460b-b3b0-302799eb97c5",
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "9488a642-609a-4d2e-8b70-1cde05e0453f",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 52
+          },
+          {
+            "h": 35,
+            "i": "f148ec51-3f22-4075-95c1-626e2d471f22",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 52
+          },
+          {
+            "h": 8,
+            "i": "48252191-6f6c-4e0c-b2b4-e27cfcccf7d2",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xs": [
+          {
+            "h": 35,
+            "i": "9488a642-609a-4d2e-8b70-1cde05e0453f",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 52
+          },
+          {
+            "h": 35,
+            "i": "f148ec51-3f22-4075-95c1-626e2d471f22",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 52
+          },
+          {
+            "h": 8,
+            "i": "48252191-6f6c-4e0c-b2b4-e27cfcccf7d2",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xxs": [
+          {
+            "h": 35,
+            "i": "9488a642-609a-4d2e-8b70-1cde05e0453f",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 52
+          },
+          {
+            "h": 35,
+            "i": "f148ec51-3f22-4075-95c1-626e2d471f22",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 52
+          },
+          {
+            "h": 8,
+            "i": "48252191-6f6c-4e0c-b2b4-e27cfcccf7d2",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "title": "Sheet 1"
+    }
+  ],
+  "title": "BigQuery Test Dashboard"
+}
