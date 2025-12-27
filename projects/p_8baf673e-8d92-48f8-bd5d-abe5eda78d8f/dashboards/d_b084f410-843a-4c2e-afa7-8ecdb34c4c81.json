@@ -116,499 +116,27 @@
     ]
   },
   "description": "Description: Retail Dashboard",
+  "filters": [
+    {
+      "applyToSheetIds": [
+        "73b8e4f7-5790-4386-b95d-9c307d7578d3"
+      ],
+      "column": "reporting_retail.fact_sales_denormalized.store_location",
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "database": "verceldb",
+      "dataType": "character varying",
+      "id": "fa5f5032-09a1-46c2-8cf0-ece74b730097",
+      "location": "sheet",
+      "operation": "in",
+      "sql": "SELECT t.store_location, COUNT(*) FROM reporting_retail.fact_sales_denormalized t {{ filters | where }} GROUP BY t.store_location ORDER BY t.store_location ASC LIMIT 50",
+      "table": "dim_campaigns",
+      "title": "Store Location"
+    }
+  ],
   "id": "d_b084f410-843a-4c2e-afa7-8ecdb34c4c81",
   "sheets": [
     {
       "frames": [
-        {
-          "activeCardId": "9e76621c-1bbf-4b70-9c75-ebb8835f3bea",
-          "cards": [
-            {
-              "config": {
-                "groupByColumns": [
-                  {
-                    "dataType": "character varying",
-                    "entityId": "verceldb.reporting_retail.dim_products",
-                    "entityName": "dim_products",
-                    "entityType": "dataset",
-                    "id": "gb_category",
-                    "label": "Category",
-                    "name": "category",
-                    "qualifiedEntityName": "verceldb.reporting_retail.dim_products"
-                  },
-                  {
-                    "dataType": "character varying",
-                    "entityId": "verceldb.reporting_retail.dim_products",
-                    "entityName": "dim_products",
-                    "entityType": "dataset",
-                    "id": "gb_brand",
-                    "label": "Brand",
-                    "name": "brand",
-                    "qualifiedEntityName": "verceldb.reporting_retail.dim_products"
-                  },
-                  {
-                    "dataType": "integer",
-                    "entityId": "verceldb.reporting_retail.dim_campaigns",
-                    "entityName": "dim_campaigns",
-                    "entityType": "dataset",
-                    "id": "groupBy-verceldb.reporting_retail.dim_campaigns-campaign_sk-1765646573483",
-                    "label": "Campaign Suroogate Key vkn klnfklnsd ",
-                    "name": "campaign_sk",
-                    "qualifiedEntityName": "verceldb.reporting_retail.dim_campaigns",
-                    "qualifiedFieldName": "reporting_retail.dim_campaigns.campaign_sk",
-                    "role": "groupby"
-                  }
-                ],
-                "joinPlan": {
-                  "baseEntity": {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "name": "fact_sales_denormalized",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  "joins": [
-                    {
-                      "id": "join_products",
-                      "joinKeyGroups": [
-                        {
-                          "id": "jkg_prod",
-                          "keys": [
-                            {
-                              "operator": "=",
-                              "source": {
-                                "dataType": "integer",
-                                "entityId": "verceldb.reporting_retail.fact_sales_denormalized",
-                                "entityName": "fact_sales_denormalized",
-                                "entityType": "dataset",
-                                "id": "fact_product_sk",
-                                "label": "Product SK (Fact)",
-                                "name": "product_sk",
-                                "qualifiedEntityName": "verceldb.reporting_retail.fact_sales_denormalized",
-                                "qualifiedFieldName": "fact_sales_denormalized.product_sk"
-                              },
-                              "target": {
-                                "dataType": "integer",
-                                "entityId": "verceldb.reporting_retail.dim_products",
-                                "entityName": "dim_products",
-                                "entityType": "dataset",
-                                "id": "dim_product_sk",
-                                "label": "Product SK (Dim)",
-                                "name": "product_sk",
-                                "qualifiedEntityName": "verceldb.reporting_retail.dim_products",
-                                "qualifiedFieldName": "dim_products.product_sk"
-                              }
-                            }
-                          ],
-                          "operator": "AND"
-                        }
-                      ],
-                      "joinType": "INNER",
-                      "sequence": 1,
-                      "source": {
-                        "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                        "connectionType": "PostgreSQL",
-                        "database": "verceldb",
-                        "name": "fact_sales_denormalized",
-                        "schema": "reporting_retail",
-                        "type": "dataset"
-                      },
-                      "target": {
-                        "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                        "connectionType": "PostgreSQL",
-                        "database": "verceldb",
-                        "name": "dim_products",
-                        "schema": "reporting_retail",
-                        "type": "dataset"
-                      }
-                    }
-                  ]
-                },
-                "metricColumns": [
-                  {
-                    "aggregate": "SUM",
-                    "dataType": "real",
-                    "entityId": "verceldb.reporting_retail.fact_sales_denormalized",
-                    "entityName": "fact_sales_denormalized",
-                    "entityType": "dataset",
-                    "id": "m_total_sales",
-                    "label": "Total Sales",
-                    "name": "total_amount",
-                    "qualifiedEntityName": "verceldb.reporting_retail.fact_sales_denormalized",
-                    "qualifiedFieldName": "fact_sales_denormalized.total_amount",
-                    "role": "metric"
-                  },
-                  {
-                    "aggregate": "AVG",
-                    "dataType": "real",
-                    "entityId": "verceldb.reporting_retail.fact_sales_denormalized",
-                    "entityName": "fact_sales_denormalized",
-                    "entityType": "dataset",
-                    "id": "m_avg_ticket",
-                    "label": "Avg Ticket",
-                    "name": "total_amount",
-                    "qualifiedEntityName": "verceldb.reporting_retail.fact_sales_denormalized",
-                    "qualifiedFieldName": "fact_sales_denormalized.total_amount",
-                    "role": "metric"
-                  },
-                  {
-                    "aggregate": "COUNT",
-                    "dataType": "character varying",
-                    "entityId": "verceldb.reporting_retail.fact_sales_denormalized",
-                    "entityName": "fact_sales_denormalized",
-                    "entityType": "dataset",
-                    "id": "m_txn_count",
-                    "label": "Transactions",
-                    "name": "sales_id",
-                    "qualifiedEntityName": "verceldb.reporting_retail.fact_sales_denormalized",
-                    "qualifiedFieldName": "fact_sales_denormalized.sales_id",
-                    "role": "metric"
-                  }
-                ],
-                "rowLimit": 1000,
-                "sortByColumns": [
-                  {
-                    "dataType": "real",
-                    "direction": "desc",
-                    "entityId": "verceldb.reporting_retail.fact_sales_denormalized",
-                    "entityName": "fact_sales_denormalized",
-                    "entityType": "dataset",
-                    "id": "m_total_sales",
-                    "label": "Total Sales",
-                    "name": "total_amount",
-                    "qualifiedEntityName": "verceldb.reporting_retail.fact_sales_denormalized",
-                    "qualifiedFieldName": "fact_sales_denormalized.total_amount",
-                    "role": "sortby"
-                  }
-                ]
-              },
-              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-              "customCfg": null,
-              "data": [],
-              "datamodelId": "",
-              "dataSource": {
-                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                "connectionType": "PostgreSQL",
-                "mode": "semanticDomain",
-                "selectedEntities": [
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Contains campaign metadata used for marketing attribution and reporting, including identifiers, names, date keys, and budget.",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.dim_campaigns",
-                    "label": "Campaigns",
-                    "name": "dim_campaigns",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Normalized fact table containing sales transactions, with foreign keys to dimension tables (customer, product, store, salesperson, campaign) and the total sale amount.",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.fact_sales_normalized",
-                    "label": "Fact Sales Normalized",
-                    "name": "fact_sales_normalized",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Denormalized fact table containing sales transactions with related dimension attributes (customer, product, store, salesperson, and campaign).",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.fact_sales_denormalized",
-                    "label": "Sales Facts (Denormalized)",
-                    "name": "fact_sales_denormalized",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Contains calendar-related information for dates with a surrogate key and components such as year, month, day, weekday, and quarter.",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.dim_dates",
-                    "label": "Date Dimension",
-                    "name": "dim_dates",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Contains store metadata used for analysis in the store dimension",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.dim_stores",
-                    "label": "Stores Dimension",
-                    "name": "dim_stores",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Dimension table containing details about each salesperson, used for lookups and joins in sales analytics.",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.dim_salespersons",
-                    "label": "Salespersons",
-                    "name": "dim_salespersons",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Contains master data about customers used for analytics and reporting, including identifiers and basic demographic attributes.",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.dim_customers",
-                    "label": "Customer Dimension",
-                    "name": "dim_customers",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Contains descriptive attributes for products used to classify and enrich transactional data",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.dim_products",
-                    "label": "Product Dimension",
-                    "name": "dim_products",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  }
-                ],
-                "semanticDomainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9"
-              },
-              "description": "Description",
-              "id": "9e76621c-1bbf-4b70-9c75-ebb8835f3bea",
-              "lastSelectedDatabase": "verceldb",
-              "lastSelectedDatamodelId": "",
-              "lastSelectedSchema": "reporting_retail",
-              "lastSelectedTable": "dim_campaigns",
-              "paginationConfig": {
-                "page": 1,
-                "pageSize": 50
-              },
-              "preferences": {},
-              "title": "Title",
-              "type": "combo"
-            }
-          ],
-          "id": "d359af73-1e3c-4dc8-ad6b-67389056df81"
-        },
-        {
-          "activeCardId": "afdee2db-7f3e-4a5c-ac04-e4fed27cadb5",
-          "cards": [
-            {
-              "config": {
-                "groupByColumns": [
-                  {
-                    "dataType": "character varying",
-                    "entityId": "verceldb.reporting_retail.dim_campaigns",
-                    "entityName": "dim_campaigns",
-                    "entityType": "dataset",
-                    "id": "groupBy-verceldb.reporting_retail.dim_campaigns-campaign_name-1761449029748",
-                    "label": "Campaign Name. ndklndgl. rdngkl ngelgn gwg nl",
-                    "name": "campaign_name",
-                    "qualifiedEntityName": "verceldb.reporting_retail.dim_campaigns"
-                  },
-                  {
-                    "dataType": "character varying",
-                    "entityId": "verceldb.reporting_retail.dim_stores",
-                    "entityName": "dim_stores",
-                    "entityType": "dataset",
-                    "id": "groupBy-verceldb.reporting_retail.dim_stores-store_name-1761449051212",
-                    "label": "Store Name",
-                    "name": "store_name",
-                    "qualifiedEntityName": "verceldb.reporting_retail.dim_stores",
-                    "role": "groupby"
-                  }
-                ],
-                "metricColumns": [
-                  {
-                    "aggregate": "SUM",
-                    "dataType": "real",
-                    "entityId": "verceldb.reporting_retail.fact_sales_denormalized",
-                    "entityName": "fact_sales_denormalized",
-                    "entityType": "dataset",
-                    "id": "metrics-verceldb.reporting_retail.fact_sales_denormalized-total_amount-1761448961893",
-                    "label": "Sum of Total Amount gemfgk new glenl nelkt nlewt ",
-                    "name": "total_amount",
-                    "qualifiedEntityName": "verceldb.reporting_retail.fact_sales_denormalized",
-                    "role": "metric"
-                  }
-                ]
-              },
-              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-              "customCfg": null,
-              "data": [],
-              "datamodelId": "",
-              "dataSource": {
-                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                "connectionType": "PostgreSQL",
-                "mode": "semanticDomain",
-                "selectedEntities": [
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Contains campaign metadata used for marketing attribution and reporting, including identifiers, names, date keys, and budget.",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.dim_campaigns",
-                    "label": "Campaigns",
-                    "name": "dim_campaigns",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Normalized fact table containing sales transactions, with foreign keys to dimension tables (customer, product, store, salesperson, campaign) and the total sale amount.",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.fact_sales_normalized",
-                    "label": "Fact Sales Normalized",
-                    "name": "fact_sales_normalized",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Denormalized fact table containing sales transactions with related dimension attributes (customer, product, store, salesperson, and campaign).",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.fact_sales_denormalized",
-                    "label": "Sales Facts (Denormalized)",
-                    "name": "fact_sales_denormalized",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Contains calendar-related information for dates with a surrogate key and components such as year, month, day, weekday, and quarter.",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.dim_dates",
-                    "label": "Date Dimension",
-                    "name": "dim_dates",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Contains store metadata used for analysis in the store dimension",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.dim_stores",
-                    "label": "Stores Dimension",
-                    "name": "dim_stores",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Dimension table containing details about each salesperson, used for lookups and joins in sales analytics.",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.dim_salespersons",
-                    "label": "Salespersons",
-                    "name": "dim_salespersons",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Contains master data about customers used for analytics and reporting, including identifiers and basic demographic attributes.",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.dim_customers",
-                    "label": "Customer Dimension",
-                    "name": "dim_customers",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  },
-                  {
-                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
-                    "connectionType": "PostgreSQL",
-                    "database": "verceldb",
-                    "datasetType": "physical",
-                    "description": "Contains descriptive attributes for products used to classify and enrich transactional data",
-                    "dialect": "postgres",
-                    "domainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9",
-                    "id": "verceldb.reporting_retail.dim_products",
-                    "label": "Product Dimension",
-                    "name": "dim_products",
-                    "schema": "reporting_retail",
-                    "type": "dataset"
-                  }
-                ],
-                "semanticDomainId": "9a6a00f2-2d6c-4123-9f73-fbaa505551c9"
-              },
-              "description": "Description",
-              "id": "afdee2db-7f3e-4a5c-ac04-e4fed27cadb5",
-              "lastSelectedDatabase": "verceldb",
-              "lastSelectedDatamodelId": "",
-              "lastSelectedSchema": "reporting_retail",
-              "lastSelectedTable": "dim_campaigns",
-              "paginationConfig": {
-                "page": 1,
-                "pageSize": 50
-              },
-              "preferences": {},
-              "sql": "",
-              "title": "Campaign Store Sales",
-              "type": "table"
-            }
-          ],
-          "id": "e66ed741-4cb8-4022-b9c7-f78e359246b7"
-        },
         {
           "activeCardId": "83ff6154-f982-4ae7-817e-880037dc380d",
           "cards": [
@@ -788,6 +316,26 @@
                 "groupByColumns": [
                   {
                     "dataType": "character varying",
+                    "entityId": "verceldb.reporting_retail.dim_stores",
+                    "entityName": "dim_stores",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.reporting_retail.dim_stores-store_name-1766859478077",
+                    "label": "Store Name",
+                    "name": "store_name",
+                    "qualifiedEntityName": "verceldb.reporting_retail.dim_stores"
+                  },
+                  {
+                    "dataType": "character varying",
+                    "entityId": "verceldb.reporting_retail.dim_stores",
+                    "entityName": "dim_stores",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.reporting_retail.dim_stores-store_location-1766859518705",
+                    "label": "Store Location",
+                    "name": "store_location",
+                    "qualifiedEntityName": "verceldb.reporting_retail.dim_stores"
+                  },
+                  {
+                    "dataType": "character varying",
                     "entityId": "verceldb.reporting_retail.fact_sales_normalized",
                     "entityName": "fact_sales_normalized",
                     "entityType": "dataset",
@@ -804,9 +352,7 @@
                     "id": "groupBy-verceldb.reporting_retail.fact_sales_normalized-product_sk-1766434319571",
                     "label": "Product Sk",
                     "name": "product_sk",
-                    "qualifiedEntityName": "verceldb.reporting_retail.fact_sales_normalized",
-                    "qualifiedFieldName": "reporting_retail.fact_sales_normalized.product_sk",
-                    "role": "groupby"
+                    "qualifiedEntityName": "verceldb.reporting_retail.fact_sales_normalized"
                   }
                 ],
                 "metricColumns": [
@@ -998,7 +544,7 @@
                   }
                 }
               },
-              "title": "Title",
+              "title": "Big Table",
               "type": "table"
             }
           ],
@@ -1009,24 +555,15 @@
       "layouts": {
         "lg": [
           {
-            "h": 48,
-            "i": "d359af73-1e3c-4dc8-ad6b-67389056df81",
-            "moved": false,
-            "static": false,
-            "w": 29,
-            "x": 0,
-            "y": 0
-          },
-          {
-            "h": 35,
-            "i": "e66ed741-4cb8-4022-b9c7-f78e359246b7",
-            "minH": 10,
+            "h": 8,
+            "i": "fa5f5032-09a1-46c2-8cf0-ece74b730097",
+            "minH": 7,
             "minW": 6,
             "moved": false,
             "static": false,
-            "w": 29,
+            "w": 10,
             "x": 0,
-            "y": 48
+            "y": 0
           },
           {
             "h": 35,
@@ -1035,20 +572,20 @@
             "minW": 6,
             "moved": false,
             "static": false,
-            "w": 20,
+            "w": 48,
             "x": 0,
-            "y": 83
+            "y": 47
           },
           {
-            "h": 35,
+            "h": 39,
             "i": "d8c90960-ea21-42ac-ae48-40b6171c4dba",
             "minH": 10,
             "minW": 6,
             "moved": false,
             "static": false,
-            "w": 20,
+            "w": 48,
             "x": 0,
-            "y": 118
+            "y": 8
           }
         ],
         "md": [
@@ -1059,18 +596,7 @@
             "static": false,
             "w": 1,
             "x": 0,
-            "y": 0
-          },
-          {
-            "h": 35,
-            "i": "e66ed741-4cb8-4022-b9c7-f78e359246b7",
-            "minH": 10,
-            "minW": 6,
-            "moved": false,
-            "static": false,
-            "w": 20,
-            "x": 0,
-            "y": 1
+            "y": 35
           },
           {
             "h": 35,
@@ -1079,7 +605,7 @@
             "minW": 6,
             "moved": false,
             "static": false,
-            "w": 20,
+            "w": 36,
             "x": 0,
             "y": 36
           },
@@ -1088,9 +614,20 @@
             "i": "d8c90960-ea21-42ac-ae48-40b6171c4dba",
             "minH": 10,
             "minW": 6,
-            "w": 20,
+            "moved": false,
+            "static": false,
+            "w": 36,
             "x": 0,
-            "y": 118
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "fa5f5032-09a1-46c2-8cf0-ece74b730097",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "sm": [
@@ -1129,6 +666,15 @@
             "w": 20,
             "x": 0,
             "y": 118
+          },
+          {
+            "h": 8,
+            "i": "fa5f5032-09a1-46c2-8cf0-ece74b730097",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xs": [
@@ -1158,6 +704,15 @@
             "w": 20,
             "x": 0,
             "y": 118
+          },
+          {
+            "h": 8,
+            "i": "fa5f5032-09a1-46c2-8cf0-ece74b730097",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xxs": [
@@ -1187,6 +742,15 @@
             "w": 20,
             "x": 0,
             "y": 118
+          },
+          {
+            "h": 8,
+            "i": "fa5f5032-09a1-46c2-8cf0-ece74b730097",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ]
       },
