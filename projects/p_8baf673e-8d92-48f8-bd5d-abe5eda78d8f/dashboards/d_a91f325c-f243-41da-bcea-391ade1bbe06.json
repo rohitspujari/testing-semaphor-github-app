@@ -314,6 +314,20 @@
                     "qualifiedFieldName": "event_id",
                     "role": "metric"
                   }
+                ],
+                "sortByColumns": [
+                  {
+                    "dataType": "TIMESTAMP WITH TIME ZONE",
+                    "direction": "desc",
+                    "entityId": "token_events",
+                    "entityName": "token_events",
+                    "entityType": "table",
+                    "id": "sortBy-semaphor.telemetry.token_events-event_timestamp-1767165372080",
+                    "label": "Event Timestamp",
+                    "name": "event_timestamp",
+                    "qualifiedEntityName": "semaphor.telemetry.token_events",
+                    "role": "sortby"
+                  }
                 ]
               },
               "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
@@ -391,7 +405,8 @@
                   },
                   "columnSizing": {
                     "Event Id": 275,
-                    "Event Timestamp": 219
+                    "Event Timestamp": 219,
+                    "Token": 183
                   }
                 }
               },
@@ -610,6 +625,126 @@
             }
           ],
           "id": "5e11b98e-bf01-4895-b648-e4530115d53e"
+        },
+        {
+          "activeCardId": "6514e18d-c252-45ce-a1bb-e95ac7e10afc",
+          "cards": [
+            {
+              "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                "connectionType": "S3Tables",
+                "dbSelection": {
+                  "database": "semaphor",
+                  "entityType": "table",
+                  "schema": "telemetry"
+                },
+                "mode": "database",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                    "connectionType": "S3Tables",
+                    "database": "semaphor",
+                    "dialect": "duckdb",
+                    "name": "token_events",
+                    "schema": "telemetry",
+                    "type": "table"
+                  }
+                ]
+              },
+              "description": "Description",
+              "id": "6514e18d-c252-45ce-a1bb-e95ac7e10afc",
+              "lastSelectedDatabase": "semaphor",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "telemetry",
+              "lastSelectedTable": "token_events",
+              "paginationConfig": {
+                "page": 1,
+                "pageSize": 50
+              },
+              "preferences": {
+                "tablePrefs": {
+                  "columnSettingsMap": {
+                    "current": {
+                      "colorRanges": [],
+                      "dateFormat": {
+                        "customFormat": "yyyy-MM-dd'T'HH:mm:ss",
+                        "format": "MM/dd/yyyy HH:mm zzz",
+                        "sourceTimezone": "auto",
+                        "timezone": "auto",
+                        "useCustomFormat": false,
+                        "useRelativeTime": false
+                      },
+                      "linkFormat": {
+                        "labelColumn": "",
+                        "labelType": "value",
+                        "openInNewTab": true,
+                        "staticLabel": "",
+                        "urlTemplate": "{value}"
+                      },
+                      "maxWidth": 500,
+                      "minWidth": 50,
+                      "numberFormat": {
+                        "currency": "USD",
+                        "dataBarColor": "#3b82f6",
+                        "locale": "en-US",
+                        "maximumFractionDigits": 2,
+                        "minimumFractionDigits": 0,
+                        "showDataBar": false,
+                        "style": "decimal"
+                      },
+                      "textAlign": "left",
+                      "textOverflow": "ellipsis",
+                      "textWrap": "nowrap",
+                      "type": "date",
+                      "width": 150
+                    },
+                    "Last Event Timestamp": {
+                      "colorRanges": [],
+                      "dateFormat": {
+                        "customFormat": "yyyy-MM-dd'T'HH:mm:ss",
+                        "format": "LLLL dd, yyyy 'at' HH:mm zzz",
+                        "sourceTimezone": "auto",
+                        "timezone": "auto",
+                        "useCustomFormat": false,
+                        "useRelativeTime": false
+                      },
+                      "linkFormat": {
+                        "labelColumn": "",
+                        "labelType": "value",
+                        "openInNewTab": true,
+                        "staticLabel": "",
+                        "urlTemplate": "{value}"
+                      },
+                      "maxWidth": 500,
+                      "minWidth": 50,
+                      "numberFormat": {
+                        "currency": "USD",
+                        "dataBarColor": "#3b82f6",
+                        "locale": "en-US",
+                        "maximumFractionDigits": 2,
+                        "minimumFractionDigits": 0,
+                        "showDataBar": false,
+                        "style": "decimal"
+                      },
+                      "textAlign": "left",
+                      "textOverflow": "ellipsis",
+                      "textWrap": "nowrap",
+                      "type": "date",
+                      "width": 150
+                    }
+                  }
+                }
+              },
+              "sql": "SELECT\n  MAX(event_timestamp) AS 'Last Event Timestamp'\nFROM semaphor.telemetry.token_events\n {{ filters | where }}",
+              "title": "Title",
+              "type": "table"
+            }
+          ],
+          "id": "e7f34622-705e-4842-97cf-32c3cf08d900"
         }
       ],
       "id": "7ef6f94b-b8e0-4fc8-9eb9-a6944e7b8eed",
@@ -622,7 +757,7 @@
             "static": false,
             "w": 48,
             "x": 0,
-            "y": 13
+            "y": 22
           },
           {
             "h": 50,
@@ -633,7 +768,7 @@
             "static": false,
             "w": 48,
             "x": 0,
-            "y": 49
+            "y": 58
           },
           {
             "h": 13,
@@ -655,7 +790,7 @@
             "static": false,
             "w": 20,
             "x": 0,
-            "y": 99
+            "y": 108
           },
           {
             "h": 35,
@@ -666,7 +801,18 @@
             "static": false,
             "w": 20,
             "x": 20,
-            "y": 99
+            "y": 108
+          },
+          {
+            "h": 22,
+            "i": "e7f34622-705e-4842-97cf-32c3cf08d900",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 19,
+            "x": 9,
+            "y": 0
           }
         ],
         "md": [
@@ -700,6 +846,15 @@
           {
             "h": 35,
             "i": "5e11b98e-bf01-4895-b648-e4530115d53e",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 134
+          },
+          {
+            "h": 35,
+            "i": "e7f34622-705e-4842-97cf-32c3cf08d900",
             "minH": 10,
             "minW": 6,
             "w": 20,
@@ -743,6 +898,15 @@
             "w": 20,
             "x": 0,
             "y": 134
+          },
+          {
+            "h": 35,
+            "i": "e7f34622-705e-4842-97cf-32c3cf08d900",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 134
           }
         ],
         "xs": [
@@ -776,6 +940,15 @@
           {
             "h": 35,
             "i": "5e11b98e-bf01-4895-b648-e4530115d53e",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 134
+          },
+          {
+            "h": 35,
+            "i": "e7f34622-705e-4842-97cf-32c3cf08d900",
             "minH": 10,
             "minW": 6,
             "w": 20,
@@ -819,6 +992,15 @@
             "w": 20,
             "x": 0,
             "y": 134
+          },
+          {
+            "h": 35,
+            "i": "e7f34622-705e-4842-97cf-32c3cf08d900",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 134
           }
         ]
       },
@@ -844,7 +1026,7 @@
           "y": 0
         }
       ],
-      "title": "Sheet 1",
+      "title": "Org User Summary",
       "xs": [
         {
           "h": 36,
