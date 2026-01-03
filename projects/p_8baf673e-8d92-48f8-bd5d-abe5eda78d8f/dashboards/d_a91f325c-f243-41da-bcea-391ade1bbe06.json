@@ -1,6 +1,25 @@
 {
   "description": "Description: Telemetry",
-  "filters": [],
+  "filterLayout": {
+    "displayMode": "toolbar"
+  },
+  "filters": [
+    {
+      "applyToSheetIds": [
+        "7ef6f94b-b8e0-4fc8-9eb9-a6944e7b8eed"
+      ],
+      "column": "token_events.event_timestamp",
+      "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+      "dataType": "TIMESTAMP WITH TIME ZONE",
+      "id": "35c3d922-1b3c-435a-897f-6f40adc50e92",
+      "location": "sheet",
+      "operation": "in",
+      "qualifiedTableName": "semaphor.telemetry.token_events",
+      "sql": "SELECT min(t.event_timestamp) as min, max(t.event_timestamp) as max FROM semaphor.telemetry.token_events t {{ filters | where }}",
+      "title": "Event Timestamp",
+      "toolbarWidth": 313
+    }
+  ],
   "id": "d_a91f325c-f243-41da-bcea-391ade1bbe06",
   "sheets": [
     {
@@ -165,15 +184,25 @@
                 "groupByColumns": [
                   {
                     "dataType": "TIMESTAMP WITH TIME ZONE",
-                    "dateFormat": "YYYY-MM",
+                    "dateFormat": "MM-DD-YYYY",
                     "entityId": "token_events",
                     "entityName": "token_events",
                     "entityType": "table",
-                    "granularity": "month",
+                    "granularity": "day",
                     "id": "groupBy-semaphor.telemetry.token_events-event_timestamp-1767137582343",
                     "label": "Event Timestamp",
                     "name": "event_timestamp",
                     "qualifiedEntityName": "semaphor.telemetry.token_events"
+                  },
+                  {
+                    "dataType": "VARCHAR",
+                    "entityId": "dim_projects",
+                    "entityName": "dim_projects",
+                    "entityType": "table",
+                    "id": "groupBy-semaphor.telemetry.dim_projects-name-1767274501230",
+                    "label": "Name",
+                    "name": "name",
+                    "qualifiedEntityName": "semaphor.telemetry.dim_projects"
                   },
                   {
                     "dataType": "VARCHAR",
@@ -295,11 +324,74 @@
                     "id": "groupBy-semaphor.telemetry.token_events-ingested_timestamp-1767137604003",
                     "label": "Ingested Timestamp",
                     "name": "ingested_timestamp",
-                    "qualifiedEntityName": "semaphor.telemetry.token_events",
-                    "qualifiedFieldName": "ingested_timestamp",
-                    "role": "groupby"
+                    "qualifiedEntityName": "semaphor.telemetry.token_events"
                   }
                 ],
+                "joinPlan": {
+                  "baseEntity": {
+                    "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                    "connectionType": "S3Tables",
+                    "database": "semaphor",
+                    "name": "token_events",
+                    "schema": "telemetry",
+                    "type": "table"
+                  },
+                  "joins": [
+                    {
+                      "id": "join-1767274449667",
+                      "joinKeyGroups": [
+                        {
+                          "id": "group-1767274449667-qcxndj1l2",
+                          "keys": [
+                            {
+                              "id": "key-1767274454184",
+                              "operator": "=",
+                              "source": {
+                                "dataType": "",
+                                "entityId": "token_events",
+                                "entityName": "token_events",
+                                "entityType": "table",
+                                "id": "source-1767274454184",
+                                "label": "",
+                                "name": "project_id",
+                                "qualifiedFieldName": ""
+                              },
+                              "target": {
+                                "dataType": "",
+                                "entityId": "dim_projects",
+                                "entityName": "dim_projects",
+                                "entityType": "table",
+                                "id": "target-1767274454184",
+                                "label": "",
+                                "name": "id",
+                                "qualifiedFieldName": ""
+                              }
+                            }
+                          ],
+                          "operator": "AND"
+                        }
+                      ],
+                      "joinType": "INNER",
+                      "sequence": 1,
+                      "source": {
+                        "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                        "connectionType": "S3Tables",
+                        "database": "semaphor",
+                        "name": "token_events",
+                        "schema": "telemetry",
+                        "type": "table"
+                      },
+                      "target": {
+                        "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                        "connectionType": "S3Tables",
+                        "database": "semaphor",
+                        "name": "dim_projects",
+                        "schema": "telemetry",
+                        "type": "table"
+                      }
+                    }
+                  ]
+                },
                 "metricColumns": [
                   {
                     "aggregate": "COUNT",
@@ -322,10 +414,11 @@
                     "entityId": "token_events",
                     "entityName": "token_events",
                     "entityType": "table",
-                    "id": "sortBy-semaphor.telemetry.token_events-event_timestamp-1767165372080",
+                    "id": "sortBy-semaphor.telemetry.token_events-event_timestamp-1767450147854",
                     "label": "Event Timestamp",
                     "name": "event_timestamp",
                     "qualifiedEntityName": "semaphor.telemetry.token_events",
+                    "qualifiedFieldName": "token_events.event_timestamp",
                     "role": "sortby"
                   }
                 ]
@@ -352,6 +445,15 @@
                     "name": "token_events",
                     "schema": "telemetry",
                     "type": "table"
+                  },
+                  {
+                    "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                    "connectionType": "S3Tables",
+                    "database": "semaphor",
+                    "dialect": "duckdb",
+                    "name": "dim_projects",
+                    "schema": "telemetry",
+                    "type": "table"
                   }
                 ]
               },
@@ -367,45 +469,12 @@
               },
               "preferences": {
                 "tablePrefs": {
-                  "columnSettingsMap": {
-                    "Event Timestamp": {
-                      "colorRanges": [],
-                      "dateFormat": {
-                        "customFormat": "yyyy-MM-dd'T'HH:mm:ss",
-                        "format": "MM/dd/yyyy HH:mm",
-                        "sourceTimezone": "auto",
-                        "timezone": "auto",
-                        "useCustomFormat": false,
-                        "useRelativeTime": false
-                      },
-                      "linkFormat": {
-                        "labelColumn": "",
-                        "labelType": "value",
-                        "openInNewTab": true,
-                        "staticLabel": "",
-                        "urlTemplate": "{value}"
-                      },
-                      "maxWidth": 500,
-                      "minWidth": 50,
-                      "numberFormat": {
-                        "currency": "USD",
-                        "dataBarColor": "#3b82f6",
-                        "locale": "en-US",
-                        "maximumFractionDigits": 2,
-                        "minimumFractionDigits": 0,
-                        "showDataBar": false,
-                        "style": "decimal"
-                      },
-                      "textAlign": "left",
-                      "textOverflow": "ellipsis",
-                      "textWrap": "nowrap",
-                      "type": "date",
-                      "width": 150
-                    }
-                  },
+                  "columnSettingsMap": {},
                   "columnSizing": {
                     "Event Id": 275,
                     "Event Timestamp": 219,
+                    "Org User Email": 194,
+                    "Org User Id": 199,
                     "Token": 183
                   }
                 }
@@ -652,6 +721,15 @@
                     "name": "token_events",
                     "schema": "telemetry",
                     "type": "table"
+                  },
+                  {
+                    "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                    "connectionType": "S3Tables",
+                    "database": "semaphor",
+                    "dialect": "duckdb",
+                    "name": "dim_projects",
+                    "schema": "telemetry",
+                    "type": "table"
                   }
                 ]
               },
@@ -745,6 +823,198 @@
             }
           ],
           "id": "e7f34622-705e-4842-97cf-32c3cf08d900"
+        },
+        {
+          "activeCardId": "fbfc77bf-7940-4d09-950d-adf7d97dafe7",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "VARCHAR",
+                    "entityId": "dim_projects",
+                    "entityName": "dim_projects",
+                    "entityType": "table",
+                    "id": "groupBy-semaphor.telemetry.dim_projects-name-1767274177151",
+                    "label": "Name",
+                    "name": "name",
+                    "qualifiedEntityName": "semaphor.telemetry.dim_projects",
+                    "qualifiedFieldName": "dim_projects.name",
+                    "role": "groupby"
+                  }
+                ],
+                "joinPlan": {
+                  "baseEntity": {
+                    "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                    "connectionType": "S3Tables",
+                    "database": "semaphor",
+                    "name": "token_events",
+                    "schema": "telemetry",
+                    "type": "table"
+                  },
+                  "joins": [
+                    {
+                      "id": "join-1767274152655",
+                      "joinKeyGroups": [
+                        {
+                          "id": "group-1767274152655-tyhre2rlv",
+                          "keys": [
+                            {
+                              "id": "key-1767274158309",
+                              "operator": "=",
+                              "source": {
+                                "dataType": "",
+                                "entityId": "token_events",
+                                "entityName": "token_events",
+                                "entityType": "table",
+                                "id": "source-1767274158309",
+                                "label": "",
+                                "name": "project_id",
+                                "qualifiedFieldName": ""
+                              },
+                              "target": {
+                                "dataType": "",
+                                "entityId": "dim_projects",
+                                "entityName": "dim_projects",
+                                "entityType": "table",
+                                "id": "target-1767274158309",
+                                "label": "",
+                                "name": "id",
+                                "qualifiedFieldName": ""
+                              }
+                            }
+                          ],
+                          "operator": "AND"
+                        }
+                      ],
+                      "joinType": "INNER",
+                      "sequence": 1,
+                      "source": {
+                        "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                        "connectionType": "S3Tables",
+                        "database": "semaphor",
+                        "name": "token_events",
+                        "schema": "telemetry",
+                        "type": "table"
+                      },
+                      "target": {
+                        "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                        "connectionType": "S3Tables",
+                        "database": "semaphor",
+                        "name": "dim_projects",
+                        "schema": "telemetry",
+                        "type": "table"
+                      }
+                    }
+                  ]
+                },
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "VARCHAR",
+                    "entityId": "token_events",
+                    "entityName": "token_events",
+                    "entityType": "table",
+                    "id": "metrics-semaphor.telemetry.token_events-event_id-1767274123120",
+                    "label": "Count of Event Id",
+                    "name": "event_id",
+                    "qualifiedEntityName": "semaphor.telemetry.token_events",
+                    "qualifiedFieldName": "token_events.event_id",
+                    "role": "metric"
+                  }
+                ],
+                "rowLimit": 10,
+                "sortByColumns": [
+                  {
+                    "dataType": "VARCHAR",
+                    "direction": "asc",
+                    "entityId": "token_events",
+                    "entityName": "token_events",
+                    "entityType": "table",
+                    "id": "sortBy-semaphor.telemetry.token_events-event_id-1767282612545",
+                    "label": "Count of Event Id",
+                    "name": "event_id",
+                    "qualifiedEntityName": "semaphor.telemetry.token_events",
+                    "qualifiedFieldName": "token_events.event_id",
+                    "role": "sortby"
+                  }
+                ]
+              },
+              "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                "connectionType": "S3Tables",
+                "dbSelection": {
+                  "database": "semaphor",
+                  "entityType": "table",
+                  "schema": "telemetry"
+                },
+                "mode": "database",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                    "connectionType": "S3Tables",
+                    "database": "semaphor",
+                    "dialect": "duckdb",
+                    "name": "token_events",
+                    "schema": "telemetry",
+                    "type": "table"
+                  },
+                  {
+                    "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                    "connectionType": "S3Tables",
+                    "database": "semaphor",
+                    "dialect": "duckdb",
+                    "name": "dim_projects",
+                    "schema": "telemetry",
+                    "type": "table"
+                  }
+                ]
+              },
+              "description": "Description",
+              "id": "fbfc77bf-7940-4d09-950d-adf7d97dafe7",
+              "interactionConfig": {
+                "allowedDrillTargets": [],
+                "drillHierarchies": [],
+                "interactions": [
+                  {
+                    "filterFields": [],
+                    "mode": "clickFilter",
+                    "trigger": {
+                      "field": {
+                        "dataType": "VARCHAR",
+                        "entityId": "dim_projects",
+                        "entityName": "dim_projects",
+                        "entityType": "table",
+                        "id": "groupBy-semaphor.telemetry.dim_projects-name-1767274177151",
+                        "label": "Name",
+                        "name": "name",
+                        "qualifiedEntityName": "semaphor.telemetry.dim_projects",
+                        "qualifiedFieldName": "dim_projects.name",
+                        "role": "groupby"
+                      },
+                      "type": "attribute"
+                    }
+                  }
+                ]
+              },
+              "lastSelectedDatabase": "semaphor",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "telemetry",
+              "lastSelectedTable": "token_events",
+              "preferences": {
+                "chartOptions": {
+                  "indexAxis": "y",
+                  "scales": {}
+                }
+              },
+              "title": "Title",
+              "type": "bar"
+            }
+          ],
+          "id": "1b277082-320a-466b-affd-e50ee8865028"
         }
       ],
       "id": "7ef6f94b-b8e0-4fc8-9eb9-a6944e7b8eed",
@@ -757,7 +1027,7 @@
             "static": false,
             "w": 48,
             "x": 0,
-            "y": 22
+            "y": 63
           },
           {
             "h": 50,
@@ -768,7 +1038,7 @@
             "static": false,
             "w": 48,
             "x": 0,
-            "y": 58
+            "y": 13
           },
           {
             "h": 13,
@@ -790,7 +1060,7 @@
             "static": false,
             "w": 20,
             "x": 0,
-            "y": 108
+            "y": 99
           },
           {
             "h": 35,
@@ -801,7 +1071,7 @@
             "static": false,
             "w": 20,
             "x": 20,
-            "y": 108
+            "y": 99
           },
           {
             "h": 22,
@@ -811,55 +1081,96 @@
             "moved": false,
             "static": false,
             "w": 19,
-            "x": 9,
-            "y": 0
+            "x": 0,
+            "y": 134
+          },
+          {
+            "h": 40,
+            "i": "1b277082-320a-466b-affd-e50ee8865028",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 156
           }
         ],
         "md": [
+          {
+            "h": 1,
+            "i": "9c05d36a-e89b-4bbf-a753-a909620ec909",
+            "moved": false,
+            "static": false,
+            "w": 1,
+            "x": 0,
+            "y": 0
+          },
           {
             "h": 35,
             "i": "431a9002-ee40-4ee4-8751-8247f6240775",
             "minH": 10,
             "minW": 6,
+            "moved": false,
+            "static": false,
             "w": 20,
             "x": 0,
-            "y": 36
+            "y": 1
           },
           {
             "h": 35,
             "i": "b39970cf-851f-4d49-a162-b1910ac7400c",
             "minH": 10,
             "minW": 6,
+            "moved": false,
+            "static": false,
             "w": 20,
             "x": 0,
-            "y": 86
+            "y": 36
           },
           {
             "h": 35,
             "i": "d9946ba8-fc9a-4d83-8d67-0027bf81b658",
             "minH": 10,
             "minW": 6,
+            "moved": false,
+            "static": false,
             "w": 20,
             "x": 0,
-            "y": 99
+            "y": 71
           },
           {
             "h": 35,
             "i": "5e11b98e-bf01-4895-b648-e4530115d53e",
             "minH": 10,
             "minW": 6,
+            "moved": false,
+            "static": false,
             "w": 20,
             "x": 0,
-            "y": 134
+            "y": 106
           },
           {
             "h": 35,
             "i": "e7f34622-705e-4842-97cf-32c3cf08d900",
             "minH": 10,
             "minW": 6,
+            "moved": false,
+            "static": false,
             "w": 20,
             "x": 0,
-            "y": 134
+            "y": 141
+          },
+          {
+            "h": 35,
+            "i": "1b277082-320a-466b-affd-e50ee8865028",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 176
           }
         ],
         "sm": [
@@ -907,6 +1218,24 @@
             "w": 20,
             "x": 0,
             "y": 134
+          },
+          {
+            "h": 35,
+            "i": "1b277082-320a-466b-affd-e50ee8865028",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 143
+          },
+          {
+            "h": 8,
+            "i": "35c3d922-1b3c-435a-897f-6f40adc50e92",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xs": [
@@ -954,6 +1283,24 @@
             "w": 20,
             "x": 0,
             "y": 134
+          },
+          {
+            "h": 35,
+            "i": "1b277082-320a-466b-affd-e50ee8865028",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 143
+          },
+          {
+            "h": 8,
+            "i": "35c3d922-1b3c-435a-897f-6f40adc50e92",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ],
         "xxs": [
@@ -1001,6 +1348,24 @@
             "w": 20,
             "x": 0,
             "y": 134
+          },
+          {
+            "h": 35,
+            "i": "1b277082-320a-466b-affd-e50ee8865028",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 143
+          },
+          {
+            "h": 8,
+            "i": "35c3d922-1b3c-435a-897f-6f40adc50e92",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
           }
         ]
       },
@@ -1049,6 +1414,256 @@
           "y": 0
         }
       ]
+    },
+    {
+      "frames": [
+        {
+          "activeCardId": "fda94521-0f74-4d1c-ac1d-32cb494db643",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "VARCHAR",
+                    "entityId": "login_events",
+                    "entityName": "login_events",
+                    "entityType": "table",
+                    "id": "groupBy-semaphor.telemetry.login_events-user_name-1767282730582",
+                    "label": "User Name",
+                    "name": "user_name",
+                    "qualifiedEntityName": "semaphor.telemetry.login_events"
+                  },
+                  {
+                    "dataType": "VARCHAR",
+                    "entityId": "login_events",
+                    "entityName": "login_events",
+                    "entityType": "table",
+                    "id": "groupBy-semaphor.telemetry.login_events-user_email-1767282782167",
+                    "label": "User Email",
+                    "name": "user_email",
+                    "qualifiedEntityName": "semaphor.telemetry.login_events"
+                  },
+                  {
+                    "dataType": "TIMESTAMP WITH TIME ZONE",
+                    "dateFormat": "YYYY-MM",
+                    "entityId": "login_events",
+                    "entityName": "login_events",
+                    "entityType": "table",
+                    "granularity": "month",
+                    "id": "groupBy-semaphor.telemetry.login_events-event_timestamp-1767282726935",
+                    "label": "Event Timestamp",
+                    "name": "event_timestamp",
+                    "qualifiedEntityName": "semaphor.telemetry.login_events"
+                  }
+                ],
+                "sortByColumns": [
+                  {
+                    "dataType": "TIMESTAMP WITH TIME ZONE",
+                    "direction": "desc",
+                    "entityId": "login_events",
+                    "entityName": "login_events",
+                    "entityType": "table",
+                    "id": "sortBy-semaphor.telemetry.login_events-event_timestamp-1767282833350",
+                    "label": "Event Timestamp",
+                    "name": "event_timestamp",
+                    "qualifiedEntityName": "semaphor.telemetry.login_events",
+                    "role": "sortby"
+                  }
+                ]
+              },
+              "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                "connectionType": "S3Tables",
+                "dbSelection": {
+                  "database": "semaphor",
+                  "entityType": "table",
+                  "schema": "telemetry"
+                },
+                "mode": "database",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_9564f630-8477-4b1f-9c01-609ef06c9999",
+                    "connectionType": "S3Tables",
+                    "database": "semaphor",
+                    "dialect": "duckdb",
+                    "name": "login_events",
+                    "schema": "telemetry",
+                    "type": "table"
+                  }
+                ]
+              },
+              "description": "Logins Every 24 hours",
+              "id": "fda94521-0f74-4d1c-ac1d-32cb494db643",
+              "lastSelectedDatabase": "semaphor",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "telemetry",
+              "lastSelectedTable": "login_events",
+              "paginationConfig": {
+                "page": 1,
+                "pageSize": 50
+              },
+              "preferences": {
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ],
+                "tablePrefs": {
+                  "columnSettingsMap": {
+                    "Event Timestamp": {
+                      "colorRanges": [],
+                      "dateFormat": {
+                        "customFormat": "yyyy-MM-dd'T'HH:mm:ss",
+                        "format": "MM/dd/yyyy HH:mm zzz",
+                        "sourceTimezone": "auto",
+                        "timezone": "auto",
+                        "useCustomFormat": false,
+                        "useRelativeTime": false
+                      },
+                      "linkFormat": {
+                        "labelColumn": "",
+                        "labelType": "value",
+                        "openInNewTab": true,
+                        "staticLabel": "",
+                        "urlTemplate": "{value}"
+                      },
+                      "maxWidth": 500,
+                      "minWidth": 50,
+                      "numberFormat": {
+                        "currency": "USD",
+                        "dataBarColor": "#3b82f6",
+                        "locale": "en-US",
+                        "maximumFractionDigits": 2,
+                        "minimumFractionDigits": 0,
+                        "showDataBar": false,
+                        "style": "decimal"
+                      },
+                      "textAlign": "left",
+                      "textOverflow": "ellipsis",
+                      "textWrap": "nowrap",
+                      "type": "date",
+                      "width": 150
+                    }
+                  }
+                }
+              },
+              "title": "Console Logins",
+              "type": "table"
+            }
+          ],
+          "id": "2435258d-0269-434e-94f0-1f7031a1c301"
+        }
+      ],
+      "id": "825bd80e-7a0b-4497-9cc7-9badab003a1f",
+      "layouts": {
+        "lg": [
+          {
+            "h": 34,
+            "i": "2435258d-0269-434e-94f0-1f7031a1c301",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "35c3d922-1b3c-435a-897f-6f40adc50e92",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "md": [
+          {
+            "h": 35,
+            "i": "2435258d-0269-434e-94f0-1f7031a1c301",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "35c3d922-1b3c-435a-897f-6f40adc50e92",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "sm": [
+          {
+            "h": 35,
+            "i": "2435258d-0269-434e-94f0-1f7031a1c301",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "35c3d922-1b3c-435a-897f-6f40adc50e92",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xs": [
+          {
+            "h": 35,
+            "i": "2435258d-0269-434e-94f0-1f7031a1c301",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "35c3d922-1b3c-435a-897f-6f40adc50e92",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xxs": [
+          {
+            "h": 35,
+            "i": "2435258d-0269-434e-94f0-1f7031a1c301",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "35c3d922-1b3c-435a-897f-6f40adc50e92",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "title": "Logins"
     }
   ],
   "title": "Telemetry"
