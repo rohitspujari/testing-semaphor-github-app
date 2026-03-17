@@ -1,1 +1,355 @@
-"{\"schemaVersion\":\"2.0\",\"id\":\"c41bd014-8d7e-4e8d-8638-06eaff613804\",\"label\":\"Sales Analytics\",\"datasets\":[{\"name\":\"sales_data_view\",\"label\":\"sales_data_view\",\"description\":\"\",\"type\":\"physical\",\"connectionId\":\"c_d69fb62b-1012-405b-8997-4a8bfb3432aa\",\"connectionType\":\"PostgreSQL\",\"catalog\":\"verceldb\",\"schema\":\"public\",\"table\":\"sales_data_view\",\"fields\":{\"dimensions\":[{\"name\":\"order_id\",\"label\":\"Order ID\",\"description\":\"Unique identifier for the sales order\",\"dataType\":\"character varying\"},{\"name\":\"order_date\",\"label\":\"Order Date\",\"description\":\"Date the order was placed\",\"dataType\":\"date\"},{\"name\":\"ship_date\",\"label\":\"Ship Date\",\"description\":\"Date the order was shipped\",\"dataType\":\"date\"},{\"name\":\"ship_mode\",\"label\":\"Ship Mode\",\"description\":\"Shipping method or service level used for delivery\",\"dataType\":\"character varying\"},{\"name\":\"customer_id\",\"label\":\"Customer ID\",\"description\":\"Unique identifier for the customer\",\"dataType\":\"character varying\"},{\"name\":\"customer_name\",\"label\":\"Customer Name\",\"description\":\"Full name of the customer placing the order\",\"dataType\":\"character varying\"},{\"name\":\"segment\",\"label\":\"Customer Segment\",\"description\":\"Market segment or customer type (e.g., Consumer, Corporate, Home Office)\",\"dataType\":\"character varying\"},{\"name\":\"country\",\"label\":\"Country\",\"description\":\"Destination country for the order\",\"dataType\":\"character varying\"},{\"name\":\"city\",\"label\":\"City\",\"description\":\"Destination city for the order\",\"dataType\":\"character varying\"},{\"name\":\"state\",\"label\":\"State/Province\",\"description\":\"Destination state or province for the order\",\"dataType\":\"character varying\"},{\"name\":\"postal_code\",\"label\":\"Postal Code\",\"description\":\"ZIP or postal code for the shipping address\",\"dataType\":\"character varying\"},{\"name\":\"region\",\"label\":\"Region\",\"description\":\"Geographic region within the country\",\"dataType\":\"character varying\"},{\"name\":\"product_id\",\"label\":\"Product ID\",\"description\":\"Unique identifier for the product\",\"dataType\":\"character varying\"},{\"name\":\"category\",\"label\":\"Product Category\",\"description\":\"Top-level category of the product\",\"dataType\":\"character varying\"},{\"name\":\"sub_category\",\"label\":\"Product Sub-Category\",\"description\":\"Second-level category grouping of the product\",\"dataType\":\"character varying\"},{\"name\":\"product_name\",\"label\":\"Product Name\",\"description\":\"Descriptive name of the product\",\"dataType\":\"character varying\"},{\"name\":\"tenant_id\",\"label\":\"Tenant ID\",\"description\":\"Identifier for the tenant or account in a multi-tenant system\",\"dataType\":\"text\"}],\"metrics\":[{\"name\":\"row_id\",\"label\":\"Row ID\",\"description\":\"Unique identifier for the record within this dataset\",\"dataType\":\"integer\",\"sourceField\":\"row_id\"},{\"name\":\"sales\",\"label\":\"Sales Amount\",\"description\":\"Total sales amount for the line item (after discounts)\",\"dataType\":\"numeric\",\"sourceField\":\"sales\",\"expression\":\"sales * 1000\",\"format\":{\"type\":\"currency\",\"locale\":\"en-US\",\"useGrouping\":true,\"negativeStyle\":\"minus\",\"compact\":false,\"minimumFractionDigits\":0,\"maximumFractionDigits\":2,\"currency\":\"GBP\"}},{\"name\":\"quantity\",\"label\":\"Quantity\",\"description\":\"Number of units sold for the line item\",\"dataType\":\"numeric\",\"sourceField\":\"quantity\"},{\"name\":\"discount\",\"label\":\"Discount\",\"description\":\"Discount rate applied to the line item (e.g., 0.2 for 20%)\",\"dataType\":\"numeric\",\"sourceField\":\"discount\"},{\"name\":\"profit\",\"label\":\"Profit\",\"description\":\"Profit earned on the line item (sales minus cost)\",\"dataType\":\"numeric\",\"sourceField\":\"profit\"}]},\"primaryKey\":[]},{\"name\":\"sales_data\",\"label\":\"Sales Data\",\"description\":\"Contains transactional sales records including orders, customers, products, locations, and financial metrics.\",\"type\":\"physical\",\"connectionId\":\"c_d69fb62b-1012-405b-8997-4a8bfb3432aa\",\"connectionType\":\"PostgreSQL\",\"catalog\":\"verceldb\",\"schema\":\"public\",\"table\":\"sales_data\",\"fields\":{\"identifiers\":[{\"name\":\"row_id\",\"label\":\"Row ID\",\"description\":\"Internal unique row identifier\",\"dataType\":\"integer\",\"type\":\"primary\"},{\"name\":\"order_id\",\"label\":\"Order ID\",\"description\":\"Unique identifier for the order\",\"dataType\":\"character varying\",\"type\":\"foreign\"},{\"name\":\"customer_id\",\"label\":\"Customer ID\",\"description\":\"Unique identifier for the customer\",\"dataType\":\"character varying\",\"type\":\"foreign\"},{\"name\":\"product_id\",\"label\":\"Product ID\",\"description\":\"Unique identifier for the product\",\"dataType\":\"character varying\",\"type\":\"foreign\"}],\"dimensions\":[{\"name\":\"order_date\",\"label\":\"Order Date\",\"description\":\"Date when the order was placed\",\"dataType\":\"date\"},{\"name\":\"ship_date\",\"label\":\"Ship Date\",\"description\":\"Date when the order was shipped\",\"dataType\":\"date\"},{\"name\":\"ship_mode\",\"label\":\"Ship Mode\",\"description\":\"Shipping method or mode used for fulfillment\",\"dataType\":\"character varying\"},{\"name\":\"customer_name\",\"label\":\"Customer Name\",\"description\":\"Full name of the customer\",\"dataType\":\"character varying\"},{\"name\":\"segment\",\"label\":\"Segment\",\"description\":\"Customer segment category (e.g., Consumer, Corporate, Home Office)\",\"dataType\":\"character varying\"},{\"name\":\"country\",\"label\":\"Country\",\"description\":\"Country of the customer's address\",\"dataType\":\"character varying\"},{\"name\":\"city\",\"label\":\"City\",\"description\":\"City of the customer's address\",\"dataType\":\"character varying\"},{\"name\":\"state\",\"label\":\"State/Province\",\"description\":\"State or province of the customer's address\",\"dataType\":\"character varying\"},{\"name\":\"postal_code\",\"label\":\"Postal Code\",\"description\":\"Postal/ZIP code of the customer's address\",\"dataType\":\"character varying\"},{\"name\":\"region\",\"label\":\"Region\",\"description\":\"Geographic region (e.g., Americas, EMEA, APAC)\",\"dataType\":\"character varying\"},{\"name\":\"category\",\"label\":\"Category\",\"description\":\"Product category\",\"dataType\":\"character varying\"},{\"name\":\"sub_category\",\"label\":\"Sub-Category\",\"description\":\"Product sub-category\",\"dataType\":\"character varying\"},{\"name\":\"product_name\",\"label\":\"Product Name\",\"description\":\"Name of the product\",\"dataType\":\"character varying\"},{\"name\":\"tenant_id\",\"label\":\"Tenant ID\",\"description\":\"Tenant identifier for multi-tenant data isolation\",\"dataType\":\"text\"}],\"metrics\":[{\"name\":\"sales\",\"label\":\"Sales\",\"description\":\"Total sale value for the line item\",\"dataType\":\"numeric\",\"sourceField\":\"sales\"},{\"name\":\"quantity\",\"label\":\"Quantity\",\"description\":\"Quantity of items sold in the line item\",\"dataType\":\"numeric\",\"sourceField\":\"quantity\"},{\"name\":\"discount\",\"label\":\"Discount\",\"description\":\"Discount amount applied to the sale\",\"dataType\":\"numeric\",\"sourceField\":\"discount\"},{\"name\":\"profit\",\"label\":\"Profit\",\"description\":\"Profit earned on the sale\",\"dataType\":\"numeric\",\"sourceField\":\"profit\"}]},\"primaryKey\":[]}],\"calculatedMetrics\":{\"profit_margin\":{\"label\":\"Profit Margin\",\"description\":\"Profit Margin\",\"expression\":\"(SUM({profit}) / NULLIF(SUM({quantity}), 0))\",\"inputs\":{\"profit\":{\"dataset\":\"sales_data_view\",\"field\":\"profit\",\"aggregate\":\"SUM\"},\"quantity\":{\"dataset\":\"sales_data_view\",\"field\":\"quantity\",\"aggregate\":\"SUM\"}},\"metricType\":\"derived\",\"tags\":[]}},\"calculatedDimensions\":{}}"
+{
+  "calculatedDimensions": {},
+  "calculatedMetrics": {
+    "profit_margin": {
+      "description": "Profit Margin",
+      "expression": "(SUM({profit}) / NULLIF(SUM({quantity}), 0))",
+      "inputs": {
+        "profit": {
+          "aggregate": "SUM",
+          "dataset": "sales_data_view",
+          "field": "profit"
+        },
+        "quantity": {
+          "aggregate": "SUM",
+          "dataset": "sales_data_view",
+          "field": "quantity"
+        }
+      },
+      "label": "Profit Margin",
+      "metricType": "derived",
+      "tags": []
+    }
+  },
+  "datasets": [
+    {
+      "catalog": "verceldb",
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "connectionType": "PostgreSQL",
+      "description": "",
+      "fields": {
+        "dimensions": [
+          {
+            "dataType": "character varying",
+            "description": "Unique identifier for the sales order",
+            "label": "Order ID",
+            "name": "order_id"
+          },
+          {
+            "dataType": "date",
+            "description": "Date the order was placed",
+            "label": "Order Date",
+            "name": "order_date"
+          },
+          {
+            "dataType": "date",
+            "description": "Date the order was shipped",
+            "label": "Ship Date",
+            "name": "ship_date"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Shipping method or service level used for delivery",
+            "label": "Ship Mode",
+            "name": "ship_mode"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Unique identifier for the customer",
+            "label": "Customer ID",
+            "name": "customer_id"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Full name of the customer placing the order",
+            "label": "Customer Name",
+            "name": "customer_name"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Market segment or customer type (e.g., Consumer, Corporate, Home Office)",
+            "label": "Customer Segment",
+            "name": "segment"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Destination country for the order",
+            "label": "Country",
+            "name": "country"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Destination city for the order",
+            "label": "City",
+            "name": "city"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Destination state or province for the order",
+            "label": "State/Province",
+            "name": "state"
+          },
+          {
+            "dataType": "character varying",
+            "description": "ZIP or postal code for the shipping address",
+            "label": "Postal Code",
+            "name": "postal_code"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Geographic region within the country",
+            "label": "Region",
+            "name": "region"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Unique identifier for the product",
+            "label": "Product ID",
+            "name": "product_id"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Top-level category of the product",
+            "label": "Product Category",
+            "name": "category"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Second-level category grouping of the product",
+            "label": "Product Sub-Category",
+            "name": "sub_category"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Descriptive name of the product",
+            "label": "Product Name",
+            "name": "product_name"
+          },
+          {
+            "dataType": "text",
+            "description": "Identifier for the tenant or account in a multi-tenant system",
+            "label": "Tenant ID",
+            "name": "tenant_id"
+          }
+        ],
+        "metrics": [
+          {
+            "dataType": "integer",
+            "description": "Unique identifier for the record within this dataset",
+            "label": "Row ID",
+            "name": "row_id",
+            "sourceField": "row_id"
+          },
+          {
+            "dataType": "numeric",
+            "description": "Total sales amount for the line item (after discounts)",
+            "expression": "sales * 1000",
+            "format": {
+              "compact": false,
+              "currency": "GBP",
+              "locale": "en-US",
+              "maximumFractionDigits": 2,
+              "minimumFractionDigits": 0,
+              "negativeStyle": "minus",
+              "type": "currency",
+              "useGrouping": true
+            },
+            "label": "Sales Amount",
+            "name": "sales",
+            "sourceField": "sales"
+          },
+          {
+            "dataType": "numeric",
+            "description": "Number of units sold for the line item",
+            "label": "Quantity",
+            "name": "quantity",
+            "sourceField": "quantity"
+          },
+          {
+            "dataType": "numeric",
+            "description": "Discount rate applied to the line item (e.g., 0.2 for 20%)",
+            "label": "Discount",
+            "name": "discount",
+            "sourceField": "discount"
+          },
+          {
+            "dataType": "numeric",
+            "description": "Profit earned on the line item (sales minus cost)",
+            "label": "Profit",
+            "name": "profit",
+            "sourceField": "profit"
+          }
+        ]
+      },
+      "label": "sales_data_view",
+      "name": "sales_data_view",
+      "primaryKey": [],
+      "schema": "public",
+      "table": "sales_data_view",
+      "type": "physical"
+    },
+    {
+      "catalog": "verceldb",
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "connectionType": "PostgreSQL",
+      "description": "Contains transactional sales records including orders, customers, products, locations, and financial metrics.",
+      "fields": {
+        "dimensions": [
+          {
+            "dataType": "date",
+            "description": "Date when the order was placed",
+            "label": "Order Date",
+            "name": "order_date"
+          },
+          {
+            "dataType": "date",
+            "description": "Date when the order was shipped",
+            "label": "Ship Date",
+            "name": "ship_date"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Shipping method or mode used for fulfillment",
+            "label": "Ship Mode",
+            "name": "ship_mode"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Full name of the customer",
+            "label": "Customer Name",
+            "name": "customer_name"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Customer segment category (e.g., Consumer, Corporate, Home Office)",
+            "label": "Segment",
+            "name": "segment"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Country of the customer's address",
+            "label": "Country",
+            "name": "country"
+          },
+          {
+            "dataType": "character varying",
+            "description": "City of the customer's address",
+            "label": "City",
+            "name": "city"
+          },
+          {
+            "dataType": "character varying",
+            "description": "State or province of the customer's address",
+            "label": "State/Province",
+            "name": "state"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Postal/ZIP code of the customer's address",
+            "label": "Postal Code",
+            "name": "postal_code"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Geographic region (e.g., Americas, EMEA, APAC)",
+            "label": "Region",
+            "name": "region"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Product category",
+            "label": "Category",
+            "name": "category"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Product sub-category",
+            "label": "Sub-Category",
+            "name": "sub_category"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Name of the product",
+            "label": "Product Name",
+            "name": "product_name"
+          },
+          {
+            "dataType": "text",
+            "description": "Tenant identifier for multi-tenant data isolation",
+            "label": "Tenant ID",
+            "name": "tenant_id"
+          }
+        ],
+        "identifiers": [
+          {
+            "dataType": "integer",
+            "description": "Internal unique row identifier",
+            "label": "Row ID",
+            "name": "row_id",
+            "type": "primary"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Unique identifier for the order",
+            "label": "Order ID",
+            "name": "order_id",
+            "type": "foreign"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Unique identifier for the customer",
+            "label": "Customer ID",
+            "name": "customer_id",
+            "type": "foreign"
+          },
+          {
+            "dataType": "character varying",
+            "description": "Unique identifier for the product",
+            "label": "Product ID",
+            "name": "product_id",
+            "type": "foreign"
+          }
+        ],
+        "metrics": [
+          {
+            "dataType": "numeric",
+            "description": "Total sale value for the line item",
+            "label": "Sales",
+            "name": "sales",
+            "sourceField": "sales"
+          },
+          {
+            "dataType": "numeric",
+            "description": "Quantity of items sold in the line item",
+            "label": "Quantity",
+            "name": "quantity",
+            "sourceField": "quantity"
+          },
+          {
+            "dataType": "numeric",
+            "description": "Discount amount applied to the sale",
+            "label": "Discount",
+            "name": "discount",
+            "sourceField": "discount"
+          },
+          {
+            "dataType": "numeric",
+            "description": "Profit earned on the sale",
+            "label": "Profit",
+            "name": "profit",
+            "sourceField": "profit"
+          }
+        ]
+      },
+      "label": "Sales Data",
+      "name": "sales_data",
+      "primaryKey": [],
+      "schema": "public",
+      "table": "sales_data",
+      "type": "physical"
+    }
+  ],
+  "id": "c41bd014-8d7e-4e8d-8638-06eaff613804",
+  "label": "Sales Analytics",
+  "schemaVersion": "2.0"
+}
