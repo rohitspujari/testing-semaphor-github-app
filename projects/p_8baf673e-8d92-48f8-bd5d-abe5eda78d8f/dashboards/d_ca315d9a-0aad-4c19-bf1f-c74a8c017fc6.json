@@ -1,0 +1,259 @@
+{
+  "calculatedFields": [],
+  "description": "Description: Testing",
+  "filters": [
+    {
+      "column": "__global_date__",
+      "connectionId": "__global_date__",
+      "dataType": "date",
+      "displayMode": "inherit",
+      "id": "global-date-filter:01da1005-8527-4cd0-a5b9-08de4fc2b4fa",
+      "kind": "global-date",
+      "operation": "between",
+      "showLabel": true,
+      "sql": "",
+      "title": "Global Date",
+      "toolbarWidth": 220
+    }
+  ],
+  "id": "d_ca315d9a-0aad-4c19-bf1f-c74a8c017fc6",
+  "sheets": [
+    {
+      "calculatedFields": [],
+      "frames": [
+        {
+          "activeCardId": "667182f9-c63a-415d-8819-2057d9bcc21d",
+          "cards": [
+            {
+              "config": {
+                "detailColumns": [],
+                "groupByColumns": [
+                  {
+                    "dataType": "DateTime",
+                    "dateFormat": "YYYY-MM-DD HH:mm",
+                    "entityId": "scrapyard_ops__fact_scale_ticket",
+                    "entityName": "scrapyard_ops__fact_scale_ticket",
+                    "entityType": "dataset",
+                    "granularity": "hour",
+                    "id": "groupBy-scrapyard_ops.fact_scale_ticket-scale_in_at-1781575605263",
+                    "label": "Scale In At",
+                    "name": "scale_in_at",
+                    "qualifiedEntityName": "scrapyard_ops.fact_scale_ticket",
+                    "qualifiedFieldName": "scrapyard_ops__fact_scale_ticket.scale_in_at",
+                    "role": "groupby"
+                  },
+                  {
+                    "dataType": "Float64",
+                    "entityId": "scrapyard_ops__fact_scale_ticket",
+                    "entityName": "scrapyard_ops__fact_scale_ticket",
+                    "entityType": "dataset",
+                    "id": "groupBy-scrapyard_ops.fact_scale_ticket-dwell_minutes-1781622527953",
+                    "label": "Dwell Minutes",
+                    "name": "dwell_minutes",
+                    "qualifiedEntityName": "scrapyard_ops.fact_scale_ticket",
+                    "qualifiedFieldName": "scrapyard_ops__fact_scale_ticket.dwell_minutes",
+                    "role": "groupby"
+                  },
+                  {
+                    "dataType": "UInt8",
+                    "entityId": "scrapyard_ops__fact_scale_ticket",
+                    "entityName": "scrapyard_ops__fact_scale_ticket",
+                    "entityType": "dataset",
+                    "id": "groupBy-scrapyard_ops.fact_scale_ticket-facility_id-1781622530379",
+                    "label": "Facility Id",
+                    "name": "facility_id",
+                    "qualifiedEntityName": "scrapyard_ops.fact_scale_ticket",
+                    "qualifiedFieldName": "scrapyard_ops__fact_scale_ticket.facility_id",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "Date",
+                    "entityId": "scrapyard_ops__fact_scale_ticket",
+                    "entityName": "scrapyard_ops__fact_scale_ticket",
+                    "entityType": "dataset",
+                    "id": "metrics-scrapyard_ops.fact_scale_ticket-ticket_date-1781572116216",
+                    "label": "Count of Ticket Date",
+                    "name": "ticket_date",
+                    "qualifiedEntityName": "scrapyard_ops.fact_scale_ticket",
+                    "qualifiedFieldName": "scrapyard_ops__fact_scale_ticket.ticket_date",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": [],
+                "sortByColumns": [
+                  {
+                    "dataType": "DateTime",
+                    "direction": "asc",
+                    "entityId": "scrapyard_ops__fact_scale_ticket",
+                    "entityName": "scrapyard_ops__fact_scale_ticket",
+                    "entityType": "dataset",
+                    "id": "sortBy-scrapyard_ops.fact_scale_ticket-scale_in_at-1781622538237",
+                    "label": "Scale In At",
+                    "name": "scale_in_at",
+                    "qualifiedEntityName": "scrapyard_ops.fact_scale_ticket",
+                    "qualifiedFieldName": "scrapyard_ops__fact_scale_ticket.scale_in_at",
+                    "role": "sortby"
+                  }
+                ]
+              },
+              "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                "connectionType": "clickhouse",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                    "connectionType": "clickhouse",
+                    "database": "scrapyard_ops",
+                    "datasetType": "physical",
+                    "description": "Transactional records for scale tickets including product, facility, supplier, and quantitative measures such as tonnage and monetary values",
+                    "dialect": "clickhouse",
+                    "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                    "id": "scrapyard_ops.scrapyard_ops__fact_scale_ticket",
+                    "label": "Fact Scale Ticket",
+                    "name": "scrapyard_ops__fact_scale_ticket",
+                    "table": "fact_scale_ticket",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "1b087470-2a08-4123-85e1-dfd27c5af75c"
+              },
+              "description": "Description",
+              "id": "667182f9-c63a-415d-8819-2057d9bcc21d",
+              "lastSelectedDatabase": "scrapyard_ops",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "",
+              "lastSelectedTable": "scrapyard_ops__fact_scale_ticket",
+              "paginationConfig": {
+                "page": 1,
+                "pageSize": 50
+              },
+              "preferences": {},
+              "title": "Title",
+              "type": "table",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "b8271f77-b697-4ac6-b9f6-3298c2e6b391"
+        }
+      ],
+      "id": "2850e480-c718-4356-a82a-ec52e669e4b8",
+      "layouts": {
+        "lg": [
+          {
+            "h": 45,
+            "i": "b8271f77-b697-4ac6-b9f6-3298c2e6b391",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "global-date-filter:01da1005-8527-4cd0-a5b9-08de4fc2b4fa",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "md": [
+          {
+            "h": 36,
+            "i": "b8271f77-b697-4ac6-b9f6-3298c2e6b391",
+            "minH": 10,
+            "minW": 6,
+            "static": false,
+            "w": 18,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "global-date-filter:01da1005-8527-4cd0-a5b9-08de4fc2b4fa",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "sm": [
+          {
+            "h": 36,
+            "i": "b8271f77-b697-4ac6-b9f6-3298c2e6b391",
+            "minH": 10,
+            "minW": 6,
+            "static": false,
+            "w": 18,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "global-date-filter:01da1005-8527-4cd0-a5b9-08de4fc2b4fa",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xs": [
+          {
+            "h": 36,
+            "i": "b8271f77-b697-4ac6-b9f6-3298c2e6b391",
+            "minH": 10,
+            "minW": 6,
+            "static": false,
+            "w": 18,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "global-date-filter:01da1005-8527-4cd0-a5b9-08de4fc2b4fa",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xxs": [
+          {
+            "h": 36,
+            "i": "b8271f77-b697-4ac6-b9f6-3298c2e6b391",
+            "minH": 10,
+            "minW": 6,
+            "static": false,
+            "w": 18,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "global-date-filter:01da1005-8527-4cd0-a5b9-08de4fc2b4fa",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "title": "Sheet 1"
+    }
+  ],
+  "title": "Testing [API integration 2026-07-15T00-22-35-625Z]"
+}
