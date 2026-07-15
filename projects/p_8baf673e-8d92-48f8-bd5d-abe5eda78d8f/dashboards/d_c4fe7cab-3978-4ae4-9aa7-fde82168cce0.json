@@ -1,0 +1,1431 @@
+{
+  "calculatedFields": [],
+  "defaultInputValues": {},
+  "description": "Dashboard focused on processing throughput, yield, cost, and run volume using Processing Run data. Intended filters: facility_id, equipment_id, and operator_id. Equipment capacity and processing rate fields are not supplied, so output_tons, actual_yield_pct, and yield_variance_pct are used to identify efficiency gaps.",
+  "filterLayout": {
+    "toolbarItemOrder": [
+      "filter:c3e66ec0-7ce4-47ee-9c7b-eae110c1de4a",
+      "filter:filter_259b1293-e8cc-4fdb-a5ad-5eb3fc9a34b4",
+      "filter:filter_ef8bd281-1dbe-4d0c-9f8a-576330022a21"
+    ]
+  },
+  "filters": [
+    {
+      "applyToSheetIds": [
+        "sheet-processing-run-performance-by-facility-and-equipment"
+      ],
+      "column": "scrapyard_ops__fact_processing_run.processing_date",
+      "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+      "dataType": "Date",
+      "fieldMeta": {
+        "dataType": "Date",
+        "entityId": "scrapyard_ops__fact_processing_run",
+        "entityName": "scrapyard_ops__fact_processing_run",
+        "entityType": "dataset",
+        "id": "scrapyard_ops__fact_processing_run-processing_date",
+        "name": "processing_date",
+        "qualifiedEntityName": "scrapyard_ops.fact_processing_run",
+        "qualifiedFieldName": "scrapyard_ops__fact_processing_run.processing_date",
+        "role": "groupby"
+      },
+      "id": "c3e66ec0-7ce4-47ee-9c7b-eae110c1de4a",
+      "location": "sheet",
+      "operation": "between",
+      "qualifiedTableName": "scrapyard_ops.fact_processing_run",
+      "semanticContext": {
+        "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+        "connectionType": "clickhouse",
+        "selectedEntities": [
+          {
+            "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+            "connectionType": "clickhouse",
+            "database": "scrapyard_ops",
+            "datasetType": "physical",
+            "description": "Records of individual processing runs including inputs, outputs, costs, and yields for manufacturing facilities.",
+            "dialect": "clickhouse",
+            "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+            "id": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+            "label": "Fact Processing Run",
+            "name": "scrapyard_ops__fact_processing_run",
+            "table": "fact_processing_run",
+            "type": "dataset"
+          }
+        ],
+        "semanticDomainId": "1b087470-2a08-4123-85e1-dfd27c5af75c"
+      },
+      "sql": "",
+      "title": "Processing Date"
+    },
+    {
+      "column": "__global_date__",
+      "connectionId": "__global_date__",
+      "dataType": "date",
+      "displayMode": "inherit",
+      "id": "global-date-filter:4a976bb9-de4f-4fe2-9e47-8a0945d0ccaf",
+      "kind": "global-date",
+      "operation": "between",
+      "showLabel": true,
+      "sql": "",
+      "title": "Global Date",
+      "toolbarWidth": 220
+    }
+  ],
+  "id": "d_c4fe7cab-3978-4ae4-9aa7-fde82168cce0",
+  "inputs": [
+    {
+      "exports": [
+        "label",
+        "value",
+        "start",
+        "end",
+        "range"
+      ],
+      "filter": {
+        "applyToCardIds": [
+          "card-kpi-total-output-tons",
+          "card-kpi-total-input-tons",
+          "card-kpi-avg-actual-yield",
+          "card-kpi-processing-runs",
+          "card-throughput-by-start-hour",
+          "card-scrapyard-ops-fact-processing-run-scrapyard-ops-dim-facility-joined"
+        ],
+        "column": "start_hour",
+        "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+        "dataType": "UInt8",
+        "displayMode": "toolbar",
+        "fieldMeta": {
+          "dataType": "UInt8",
+          "entityId": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+          "entityName": "scrapyard_ops__fact_processing_run",
+          "name": "start_hour",
+          "qualifiedEntityName": "scrapyard_ops.fact_processing_run",
+          "qualifiedFieldName": "scrapyard_ops__fact_processing_run.start_hour",
+          "role": "groupby"
+        },
+        "id": "filter_259b1293-e8cc-4fdb-a5ad-5eb3fc9a34b4",
+        "location": "dashboard",
+        "operation": "in",
+        "qualifiedTableName": "scrapyard_ops.fact_processing_run",
+        "semanticContext": {
+          "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+          "connectionType": "clickhouse",
+          "selectedEntities": [
+            {
+              "database": "scrapyard_ops",
+              "id": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+              "name": "scrapyard_ops__fact_processing_run",
+              "table": "fact_processing_run",
+              "type": "dataset"
+            }
+          ],
+          "semanticDomainId": "1b087470-2a08-4123-85e1-dfd27c5af75c"
+        },
+        "sql": "select distinct start_hour as value from scrapyard_ops.fact_processing_run limit 100",
+        "title": "Start Hour",
+        "type": "multiple",
+        "uiType": "dropdown",
+        "variableName": "start_hour"
+      },
+      "id": "input_d35599d8-8d1e-4e27-a16d-d798153d5f81",
+      "kind": "filter",
+      "label": "Start Hour",
+      "presentation": {
+        "order": 1,
+        "placement": "toolbar"
+      },
+      "runtimeScope": "shared",
+      "scope": {
+        "cardIds": [
+          "card-kpi-total-output-tons",
+          "card-kpi-total-input-tons",
+          "card-kpi-avg-actual-yield",
+          "card-kpi-processing-runs",
+          "card-throughput-by-start-hour",
+          "card-scrapyard-ops-fact-processing-run-scrapyard-ops-dim-facility-joined"
+        ],
+        "kind": "cards"
+      },
+      "variableName": "start_hour"
+    },
+    {
+      "exports": [
+        "label",
+        "value",
+        "start",
+        "end",
+        "range"
+      ],
+      "filter": {
+        "applyToCardIds": [
+          "card-scrapyard-ops-fact-inventory-movement-scrapyard-ops-dim-facility-joined"
+        ],
+        "column": "movement_type",
+        "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+        "dataType": "String",
+        "displayMode": "toolbar",
+        "fieldMeta": {
+          "dataType": "String",
+          "entityId": "scrapyard_ops.scrapyard_ops__fact_inventory_movement",
+          "entityName": "scrapyard_ops__fact_inventory_movement",
+          "name": "movement_type",
+          "qualifiedEntityName": "scrapyard_ops.fact_inventory_movement",
+          "qualifiedFieldName": "scrapyard_ops__fact_inventory_movement.movement_type",
+          "role": "groupby"
+        },
+        "id": "filter_ef8bd281-1dbe-4d0c-9f8a-576330022a21",
+        "location": "dashboard",
+        "operation": "in",
+        "qualifiedTableName": "scrapyard_ops.fact_inventory_movement",
+        "semanticContext": {
+          "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+          "connectionType": "clickhouse",
+          "selectedEntities": [
+            {
+              "database": "scrapyard_ops",
+              "id": "scrapyard_ops.scrapyard_ops__fact_inventory_movement",
+              "name": "scrapyard_ops__fact_inventory_movement",
+              "table": "fact_inventory_movement",
+              "type": "dataset"
+            }
+          ],
+          "semanticDomainId": "1b087470-2a08-4123-85e1-dfd27c5af75c"
+        },
+        "sql": "select distinct movement_type as value from scrapyard_ops.fact_inventory_movement limit 100",
+        "title": "Movement Type",
+        "type": "multiple",
+        "uiType": "dropdown",
+        "variableName": "movement_type"
+      },
+      "id": "input_ee163731-5173-4675-bea6-b7002a470301",
+      "kind": "filter",
+      "label": "Movement Type",
+      "presentation": {
+        "order": 2,
+        "placement": "toolbar"
+      },
+      "runtimeScope": "shared",
+      "scope": {
+        "cardIds": [
+          "card-scrapyard-ops-fact-inventory-movement-scrapyard-ops-dim-facility-joined"
+        ],
+        "kind": "cards"
+      },
+      "variableName": "movement_type"
+    }
+  ],
+  "sheets": [
+    {
+      "calculatedFields": [],
+      "description": "Dashboard focused on processing throughput, yield, cost, and run volume using Processing Run data. Intended filters: facility_id, equipment_id, and operator_id. Equipment capacity and processing rate fields are not supplied, so output_tons, actual_yield_pct, and yield_variance_pct are used to identify efficiency gaps.",
+      "frames": [
+        {
+          "activeCardId": "card-kpi-total-output-tons",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "Date",
+                    "dateFormat": "YYYY-MM",
+                    "entityId": "scrapyard_ops__fact_processing_run",
+                    "entityName": "scrapyard_ops__fact_processing_run",
+                    "entityType": "dataset",
+                    "granularity": "month",
+                    "id": "groupBy-scrapyard_ops.fact_processing_run-processing_date-1784081400343",
+                    "label": "Processing Date",
+                    "name": "processing_date",
+                    "qualifiedEntityName": "scrapyard_ops.fact_processing_run",
+                    "qualifiedFieldName": "scrapyard_ops__fact_processing_run.processing_date",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "SUM",
+                    "aggregateSource": "caller_override",
+                    "alias": "output_tons",
+                    "dataType": "number",
+                    "description": "Quantity of product produced in tons",
+                    "effectiveAggregate": "SUM",
+                    "entityId": "scrapyard_ops__fact_processing_run",
+                    "entityName": "scrapyard_ops__fact_processing_run",
+                    "entityType": "dataset",
+                    "id": "scrapyard_ops__fact_processing_run.output_tons",
+                    "label": "Output Tons",
+                    "name": "output_tons",
+                    "nativeDataType": "Float64",
+                    "qualifiedEntityName": "scrapyard_ops.fact_processing_run",
+                    "qualifiedFieldName": "scrapyard_ops__fact_processing_run.output_tons",
+                    "role": "metric",
+                    "sourceField": "output_tons"
+                  }
+                ],
+                "queryBaseSource": {
+                  "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                  "datasetId": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+                  "datasetName": "scrapyard_ops__fact_processing_run",
+                  "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                  "kind": "semantic",
+                  "label": "Fact Processing Run"
+                },
+                "rowLimit": 100,
+                "sortByColumns": []
+              },
+              "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+              "data": [
+                {
+                  "metricId": "scrapyard_ops__fact_processing_run.output_tons",
+                  "segment": "current",
+                  "value": 233710.02900000004
+                },
+                {
+                  "metricId": "scrapyard_ops__fact_processing_run.output_tons",
+                  "segment": "comparison",
+                  "value": 0
+                }
+              ],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                "connectionType": "clickhouse",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                    "connectionType": "clickhouse",
+                    "database": "scrapyard_ops",
+                    "datasetType": "physical",
+                    "description": "Records of individual processing runs including inputs, outputs, costs, and yields for manufacturing facilities.",
+                    "dialect": "clickhouse",
+                    "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                    "id": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+                    "label": "Fact Processing Run",
+                    "name": "scrapyard_ops__fact_processing_run",
+                    "table": "fact_processing_run",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "1b087470-2a08-4123-85e1-dfd27c5af75c"
+              },
+              "id": "card-kpi-total-output-tons",
+              "lastSelectedDatabase": "scrapyard_ops",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "",
+              "lastSelectedTable": "scrapyard_ops__fact_processing_run",
+              "title": "Total Output Tons",
+              "type": "kpi",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "frame-kpi-total-output-tons"
+        },
+        {
+          "activeCardId": "card-kpi-total-input-tons",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [],
+                "metricColumns": [
+                  {
+                    "aggregate": "SUM",
+                    "aggregateSource": "caller_override",
+                    "alias": "input_tons",
+                    "dataType": "number",
+                    "description": "Quantity of input material in tons for the run",
+                    "effectiveAggregate": "SUM",
+                    "entityId": "scrapyard_ops__fact_processing_run",
+                    "entityName": "scrapyard_ops__fact_processing_run",
+                    "entityType": "dataset",
+                    "id": "scrapyard_ops__fact_processing_run.input_tons",
+                    "label": "Input Tons",
+                    "name": "input_tons",
+                    "nativeDataType": "Float64",
+                    "qualifiedEntityName": "scrapyard_ops.fact_processing_run",
+                    "qualifiedFieldName": "scrapyard_ops__fact_processing_run.input_tons",
+                    "role": "metric",
+                    "sourceField": "input_tons"
+                  }
+                ],
+                "queryBaseSource": {
+                  "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                  "datasetId": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+                  "datasetName": "scrapyard_ops__fact_processing_run",
+                  "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                  "kind": "semantic",
+                  "label": "Fact Processing Run"
+                },
+                "rowLimit": 100,
+                "sortByColumns": []
+              },
+              "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+              "data": [
+                {
+                  "metricId": "scrapyard_ops__fact_processing_run.input_tons",
+                  "segment": "current",
+                  "value": 289682.49700000003
+                },
+                {
+                  "metricId": "scrapyard_ops__fact_processing_run.input_tons",
+                  "segment": "comparison",
+                  "value": 0
+                }
+              ],
+              "dataSource": {
+                "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                "connectionType": "clickhouse",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                    "connectionType": "clickhouse",
+                    "database": "scrapyard_ops",
+                    "datasetType": "physical",
+                    "description": "Records of individual processing runs including inputs, outputs, costs, and yields for manufacturing facilities.",
+                    "dialect": "clickhouse",
+                    "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                    "id": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+                    "label": "Fact Processing Run",
+                    "name": "scrapyard_ops__fact_processing_run",
+                    "table": "fact_processing_run",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "1b087470-2a08-4123-85e1-dfd27c5af75c"
+              },
+              "id": "card-kpi-total-input-tons",
+              "title": "Total Input Tons",
+              "type": "kpi"
+            }
+          ],
+          "id": "frame-kpi-total-input-tons"
+        },
+        {
+          "activeCardId": "card-kpi-avg-actual-yield",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [],
+                "metricColumns": [
+                  {
+                    "aggregate": "AVG",
+                    "aggregateSource": "caller_override",
+                    "alias": "actual_yield_pct",
+                    "dataType": "number",
+                    "description": "Achieved yield percentage for the run",
+                    "effectiveAggregate": "AVG",
+                    "entityId": "scrapyard_ops__fact_processing_run",
+                    "entityName": "scrapyard_ops__fact_processing_run",
+                    "entityType": "dataset",
+                    "id": "scrapyard_ops__fact_processing_run.actual_yield_pct",
+                    "label": "Actual Yield %",
+                    "name": "actual_yield_pct",
+                    "nativeDataType": "Float64",
+                    "qualifiedEntityName": "scrapyard_ops.fact_processing_run",
+                    "qualifiedFieldName": "scrapyard_ops__fact_processing_run.actual_yield_pct",
+                    "role": "metric",
+                    "sourceField": "actual_yield_pct"
+                  }
+                ],
+                "queryBaseSource": {
+                  "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                  "datasetId": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+                  "datasetName": "scrapyard_ops__fact_processing_run",
+                  "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                  "kind": "semantic",
+                  "label": "Fact Processing Run"
+                },
+                "rowLimit": 100,
+                "sortByColumns": []
+              },
+              "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+              "data": [
+                {
+                  "metricId": "scrapyard_ops__fact_processing_run.actual_yield_pct",
+                  "segment": "current",
+                  "value": 0.806325885
+                },
+                {
+                  "metricId": "scrapyard_ops__fact_processing_run.actual_yield_pct",
+                  "segment": "comparison",
+                  "value": 0
+                }
+              ],
+              "dataSource": {
+                "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                "connectionType": "clickhouse",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                    "connectionType": "clickhouse",
+                    "database": "scrapyard_ops",
+                    "datasetType": "physical",
+                    "description": "Records of individual processing runs including inputs, outputs, costs, and yields for manufacturing facilities.",
+                    "dialect": "clickhouse",
+                    "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                    "id": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+                    "label": "Fact Processing Run",
+                    "name": "scrapyard_ops__fact_processing_run",
+                    "table": "fact_processing_run",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "1b087470-2a08-4123-85e1-dfd27c5af75c"
+              },
+              "id": "card-kpi-avg-actual-yield",
+              "title": "Average Actual Yield %",
+              "type": "kpi"
+            }
+          ],
+          "id": "frame-kpi-avg-actual-yield"
+        },
+        {
+          "activeCardId": "card-kpi-processing-runs",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "aggregateSource": "caller_override",
+                    "alias": "processing_run_id",
+                    "dataType": "number",
+                    "description": "Unique identifier for each processing run",
+                    "effectiveAggregate": "COUNT",
+                    "entityId": "scrapyard_ops__fact_processing_run",
+                    "entityName": "scrapyard_ops__fact_processing_run",
+                    "entityType": "dataset",
+                    "id": "scrapyard_ops__fact_processing_run.processing_run_id",
+                    "label": "Processing Run ID",
+                    "name": "processing_run_id",
+                    "nativeDataType": "UInt32",
+                    "qualifiedEntityName": "scrapyard_ops.fact_processing_run",
+                    "qualifiedFieldName": "scrapyard_ops__fact_processing_run.processing_run_id",
+                    "role": "metric",
+                    "sourceField": "processing_run_id"
+                  }
+                ],
+                "queryBaseSource": {
+                  "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                  "datasetId": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+                  "datasetName": "scrapyard_ops__fact_processing_run",
+                  "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                  "kind": "semantic",
+                  "label": "Fact Processing Run"
+                },
+                "rowLimit": 100,
+                "sortByColumns": []
+              },
+              "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+              "data": [
+                {
+                  "metricId": "scrapyard_ops__fact_processing_run.processing_run_id",
+                  "segment": "current",
+                  "value": 20000
+                },
+                {
+                  "metricId": "scrapyard_ops__fact_processing_run.processing_run_id",
+                  "segment": "comparison",
+                  "value": 0
+                }
+              ],
+              "dataSource": {
+                "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                "connectionType": "clickhouse",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                    "connectionType": "clickhouse",
+                    "database": "scrapyard_ops",
+                    "datasetType": "physical",
+                    "description": "Records of individual processing runs including inputs, outputs, costs, and yields for manufacturing facilities.",
+                    "dialect": "clickhouse",
+                    "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                    "id": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+                    "label": "Fact Processing Run",
+                    "name": "scrapyard_ops__fact_processing_run",
+                    "table": "fact_processing_run",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "1b087470-2a08-4123-85e1-dfd27c5af75c"
+              },
+              "id": "card-kpi-processing-runs",
+              "title": "Processing Runs",
+              "type": "kpi"
+            }
+          ],
+          "id": "frame-kpi-processing-runs"
+        },
+        {
+          "activeCardId": "card-throughput-by-start-hour",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "Date",
+                    "dateFormat": "YYYY-MM",
+                    "entityId": "scrapyard_ops__fact_processing_run",
+                    "entityName": "scrapyard_ops__fact_processing_run",
+                    "entityType": "dataset",
+                    "granularity": "month",
+                    "id": "groupBy-scrapyard_ops.fact_processing_run-processing_date-1783816624252",
+                    "label": "Processing Date",
+                    "name": "processing_date",
+                    "qualifiedEntityName": "scrapyard_ops.fact_processing_run",
+                    "qualifiedFieldName": "scrapyard_ops__fact_processing_run.processing_date",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "SUM",
+                    "aggregateSource": "caller_override",
+                    "alias": "output_tons",
+                    "dataType": "number",
+                    "description": "Quantity of product produced in tons",
+                    "effectiveAggregate": "SUM",
+                    "entityId": "scrapyard_ops__fact_processing_run",
+                    "entityName": "scrapyard_ops__fact_processing_run",
+                    "entityType": "dataset",
+                    "id": "scrapyard_ops__fact_processing_run.output_tons",
+                    "label": "Output Tons",
+                    "name": "output_tons",
+                    "nativeDataType": "Float64",
+                    "qualifiedEntityName": "scrapyard_ops.fact_processing_run",
+                    "qualifiedFieldName": "scrapyard_ops__fact_processing_run.output_tons",
+                    "role": "metric",
+                    "sourceField": "output_tons"
+                  }
+                ],
+                "queryBaseSource": {
+                  "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                  "datasetId": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+                  "datasetName": "scrapyard_ops__fact_processing_run",
+                  "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                  "kind": "semantic",
+                  "label": "Fact Processing Run"
+                },
+                "rowLimit": 100,
+                "sortByColumns": [
+                  {
+                    "dataType": "Date",
+                    "direction": "asc",
+                    "entityId": "scrapyard_ops__fact_processing_run",
+                    "entityName": "scrapyard_ops__fact_processing_run",
+                    "entityType": "dataset",
+                    "id": "sortBy-scrapyard_ops.fact_processing_run-processing_date-1783816646980",
+                    "label": "Processing Date",
+                    "name": "processing_date",
+                    "qualifiedEntityName": "scrapyard_ops.fact_processing_run",
+                    "qualifiedFieldName": "scrapyard_ops__fact_processing_run.processing_date",
+                    "role": "sortby"
+                  }
+                ]
+              },
+              "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+              "data": [
+                {
+                  "Output Tons": 26496.583,
+                  "Start Hour": 10
+                },
+                {
+                  "Output Tons": 26445.918000000005,
+                  "Start Hour": 22
+                },
+                {
+                  "Output Tons": 26311.460000000003,
+                  "Start Hour": 13
+                },
+                {
+                  "Output Tons": 26305.485999999997,
+                  "Start Hour": 16
+                },
+                {
+                  "Output Tons": 25760.618,
+                  "Start Hour": 8
+                },
+                {
+                  "Output Tons": 25717.509,
+                  "Start Hour": 15
+                },
+                {
+                  "Output Tons": 25717.374,
+                  "Start Hour": 9
+                },
+                {
+                  "Output Tons": 25607.226999999995,
+                  "Start Hour": 7
+                },
+                {
+                  "Output Tons": 25347.854000000003,
+                  "Start Hour": 14
+                }
+              ],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                "connectionType": "clickhouse",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                    "connectionType": "clickhouse",
+                    "database": "scrapyard_ops",
+                    "datasetType": "physical",
+                    "description": "Records of individual processing runs including inputs, outputs, costs, and yields for manufacturing facilities.",
+                    "dialect": "clickhouse",
+                    "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                    "id": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+                    "label": "Fact Processing Run",
+                    "name": "scrapyard_ops__fact_processing_run",
+                    "table": "fact_processing_run",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "1b087470-2a08-4123-85e1-dfd27c5af75c"
+              },
+              "description": "Output tons by processing start hour to identify peak and low-throughput operating windows.",
+              "id": "card-throughput-by-start-hour",
+              "lastSelectedDatabase": "scrapyard_ops",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "",
+              "lastSelectedTable": "scrapyard_ops__fact_processing_run",
+              "title": "Throughput by Start Hour",
+              "type": "bar",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "frame-throughput-by-start-hour"
+        },
+        {
+          "activeCardId": "card-scrapyard-ops-fact-inventory-movement-scrapyard-ops-dim-facility-joined",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "alias": "facility_name",
+                    "dataType": "string",
+                    "description": "Official name of the facility",
+                    "entityId": "scrapyard_ops__dim_facility",
+                    "entityName": "scrapyard_ops__dim_facility",
+                    "entityType": "dataset",
+                    "id": "scrapyard_ops__dim_facility.facility_name",
+                    "label": "Facility Name",
+                    "name": "facility_name",
+                    "nativeDataType": "String",
+                    "qualifiedEntityName": "scrapyard_ops.dim_facility",
+                    "qualifiedFieldName": "scrapyard_ops__dim_facility.facility_name",
+                    "role": "groupby",
+                    "sourceField": "facility_name"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "SUM",
+                    "aggregateSource": "default_sum",
+                    "alias": "quantity_tons",
+                    "dataType": "number",
+                    "description": "Quantity of material moved, measured in tons",
+                    "effectiveAggregate": "SUM",
+                    "entityId": "scrapyard_ops__fact_inventory_movement",
+                    "entityName": "scrapyard_ops__fact_inventory_movement",
+                    "entityType": "dataset",
+                    "id": "scrapyard_ops__fact_inventory_movement.quantity_tons",
+                    "label": "Quantity (Tons)",
+                    "name": "quantity_tons",
+                    "nativeDataType": "Float64",
+                    "qualifiedEntityName": "scrapyard_ops.fact_inventory_movement",
+                    "qualifiedFieldName": "scrapyard_ops__fact_inventory_movement.quantity_tons",
+                    "role": "metric",
+                    "sourceField": "quantity_tons"
+                  }
+                ],
+                "queryBaseSource": {
+                  "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                  "datasetId": "scrapyard_ops.scrapyard_ops__fact_inventory_movement",
+                  "datasetName": "scrapyard_ops__fact_inventory_movement",
+                  "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                  "kind": "semantic",
+                  "label": "Fact Inventory Movement"
+                },
+                "rowLimit": 100,
+                "sortByColumns": [
+                  {
+                    "aggregate": "SUM",
+                    "aggregateSource": "default_sum",
+                    "alias": "quantity_tons",
+                    "dataType": "number",
+                    "description": "Quantity of material moved, measured in tons",
+                    "direction": "desc",
+                    "effectiveAggregate": "SUM",
+                    "entityId": "scrapyard_ops__fact_inventory_movement",
+                    "entityName": "scrapyard_ops__fact_inventory_movement",
+                    "entityType": "dataset",
+                    "id": "scrapyard_ops__fact_inventory_movement.quantity_tons",
+                    "label": "Quantity (Tons)",
+                    "name": "quantity_tons",
+                    "nativeDataType": "Float64",
+                    "qualifiedEntityName": "scrapyard_ops.fact_inventory_movement",
+                    "qualifiedFieldName": "scrapyard_ops__fact_inventory_movement.quantity_tons",
+                    "role": "sortby",
+                    "sourceField": "quantity_tons"
+                  }
+                ]
+              },
+              "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+              "data": [
+                {
+                  "Facility Name": "Harbor City Metals",
+                  "Quantity (Tons)": 371671.97700000077
+                },
+                {
+                  "Facility Name": "Prairie State Recycling",
+                  "Quantity (Tons)": 225060.75799999997
+                },
+                {
+                  "Facility Name": "Sunbelt Recovery Yard",
+                  "Quantity (Tons)": 190670.76200000042
+                }
+              ],
+              "dataSource": {
+                "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                "connectionType": "clickhouse",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                    "connectionType": "clickhouse",
+                    "database": "scrapyard_ops",
+                    "datasetType": "physical",
+                    "description": "Records each movement of inventory items between locations, including quantities, costs, and related processing or tickets.",
+                    "dialect": "clickhouse",
+                    "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                    "id": "scrapyard_ops.scrapyard_ops__fact_inventory_movement",
+                    "label": "Fact Inventory Movement",
+                    "name": "scrapyard_ops__fact_inventory_movement",
+                    "table": "fact_inventory_movement",
+                    "type": "dataset"
+                  },
+                  {
+                    "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                    "connectionType": "clickhouse",
+                    "database": "scrapyard_ops",
+                    "datasetType": "physical",
+                    "description": "Descriptive information about facilities, including location and opening date, used for filtering and joining with fact data.",
+                    "dialect": "clickhouse",
+                    "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                    "id": "scrapyard_ops.scrapyard_ops__dim_facility",
+                    "label": "Facility Dimension",
+                    "name": "scrapyard_ops__dim_facility",
+                    "table": "dim_facility",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "1b087470-2a08-4123-85e1-dfd27c5af75c"
+              },
+              "description": "Break down Quantity (Tons) by Facility Name so teams can see which Facility Dimension groups are driving Fact Inventory Movement performance.",
+              "id": "card-scrapyard-ops-fact-inventory-movement-scrapyard-ops-dim-facility-joined",
+              "title": "Quantity (Tons) by Facility Name",
+              "type": "bar"
+            }
+          ],
+          "id": "frame-scrapyard-ops-fact-inventory-movement-scrapyard-ops-dim-facility-joined"
+        },
+        {
+          "activeCardId": "card-scrapyard-ops-fact-processing-run-scrapyard-ops-dim-facility-joined",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "alias": "facility_name",
+                    "dataType": "string",
+                    "description": "Official name of the facility",
+                    "entityId": "scrapyard_ops__dim_facility",
+                    "entityName": "scrapyard_ops__dim_facility",
+                    "entityType": "dataset",
+                    "id": "scrapyard_ops__dim_facility.facility_name",
+                    "label": "Facility Name",
+                    "name": "facility_name",
+                    "nativeDataType": "String",
+                    "qualifiedEntityName": "scrapyard_ops.dim_facility",
+                    "qualifiedFieldName": "scrapyard_ops__dim_facility.facility_name",
+                    "role": "groupby",
+                    "sourceField": "facility_name"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "SUM",
+                    "aggregateSource": "default_sum",
+                    "alias": "input_tons",
+                    "dataType": "number",
+                    "description": "Quantity of input material in tons for the run",
+                    "effectiveAggregate": "SUM",
+                    "entityId": "scrapyard_ops__fact_processing_run",
+                    "entityName": "scrapyard_ops__fact_processing_run",
+                    "entityType": "dataset",
+                    "id": "scrapyard_ops__fact_processing_run.input_tons",
+                    "label": "Input Tons",
+                    "name": "input_tons",
+                    "nativeDataType": "Float64",
+                    "qualifiedEntityName": "scrapyard_ops.fact_processing_run",
+                    "qualifiedFieldName": "scrapyard_ops__fact_processing_run.input_tons",
+                    "role": "metric",
+                    "sourceField": "input_tons"
+                  }
+                ],
+                "queryBaseSource": {
+                  "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                  "datasetId": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+                  "datasetName": "scrapyard_ops__fact_processing_run",
+                  "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                  "kind": "semantic",
+                  "label": "Fact Processing Run"
+                },
+                "rowLimit": 100,
+                "sortByColumns": [
+                  {
+                    "aggregate": "SUM",
+                    "aggregateSource": "default_sum",
+                    "alias": "input_tons",
+                    "dataType": "number",
+                    "description": "Quantity of input material in tons for the run",
+                    "direction": "desc",
+                    "effectiveAggregate": "SUM",
+                    "entityId": "scrapyard_ops__fact_processing_run",
+                    "entityName": "scrapyard_ops__fact_processing_run",
+                    "entityType": "dataset",
+                    "id": "scrapyard_ops__fact_processing_run.input_tons",
+                    "label": "Input Tons",
+                    "name": "input_tons",
+                    "nativeDataType": "Float64",
+                    "qualifiedEntityName": "scrapyard_ops.fact_processing_run",
+                    "qualifiedFieldName": "scrapyard_ops__fact_processing_run.input_tons",
+                    "role": "sortby",
+                    "sourceField": "input_tons"
+                  }
+                ]
+              },
+              "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+              "data": [
+                {
+                  "Facility Name": "Harbor City Metals",
+                  "Input Tons": 108740.76999999993
+                },
+                {
+                  "Facility Name": "Prairie State Recycling",
+                  "Input Tons": 100307.823
+                },
+                {
+                  "Facility Name": "Sunbelt Recovery Yard",
+                  "Input Tons": 80633.904
+                }
+              ],
+              "dataSource": {
+                "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                "connectionType": "clickhouse",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                    "connectionType": "clickhouse",
+                    "database": "scrapyard_ops",
+                    "datasetType": "physical",
+                    "description": "Records of individual processing runs including inputs, outputs, costs, and yields for manufacturing facilities.",
+                    "dialect": "clickhouse",
+                    "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                    "id": "scrapyard_ops.scrapyard_ops__fact_processing_run",
+                    "label": "Fact Processing Run",
+                    "name": "scrapyard_ops__fact_processing_run",
+                    "table": "fact_processing_run",
+                    "type": "dataset"
+                  },
+                  {
+                    "connectionId": "c_abf67ffa-1917-4510-bbb7-baf70b62ce86",
+                    "connectionType": "clickhouse",
+                    "database": "scrapyard_ops",
+                    "datasetType": "physical",
+                    "description": "Descriptive information about facilities, including location and opening date, used for filtering and joining with fact data.",
+                    "dialect": "clickhouse",
+                    "domainId": "1b087470-2a08-4123-85e1-dfd27c5af75c",
+                    "id": "scrapyard_ops.scrapyard_ops__dim_facility",
+                    "label": "Facility Dimension",
+                    "name": "scrapyard_ops__dim_facility",
+                    "table": "dim_facility",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "1b087470-2a08-4123-85e1-dfd27c5af75c"
+              },
+              "description": "Break down Input Tons by Facility Name so teams can see which Facility Dimension groups are driving Fact Processing Run performance.",
+              "id": "card-scrapyard-ops-fact-processing-run-scrapyard-ops-dim-facility-joined",
+              "title": "Input Tons by Facility Name",
+              "type": "bar"
+            }
+          ],
+          "id": "frame-scrapyard-ops-fact-processing-run-scrapyard-ops-dim-facility-joined"
+        }
+      ],
+      "id": "sheet-processing-run-performance-by-facility-and-equipment",
+      "kind": "dashboard",
+      "layouts": {
+        "lg": [
+          {
+            "h": 15,
+            "i": "frame-kpi-total-output-tons",
+            "minH": 12,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-total-input-tons",
+            "minH": 12,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 12,
+            "y": 0
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-avg-actual-yield",
+            "minH": 12,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 24,
+            "y": 0
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-processing-runs",
+            "minH": 12,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 36,
+            "y": 0
+          },
+          {
+            "h": 30,
+            "i": "frame-throughput-by-start-hour",
+            "minH": 16,
+            "minW": 12,
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 15
+          },
+          {
+            "h": 30,
+            "i": "frame-scrapyard-ops-fact-inventory-movement-scrapyard-ops-dim-facility-joined",
+            "minH": 16,
+            "minW": 12,
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 24,
+            "y": 45
+          },
+          {
+            "h": 30,
+            "i": "frame-scrapyard-ops-fact-processing-run-scrapyard-ops-dim-facility-joined",
+            "minH": 16,
+            "minW": 12,
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 45
+          },
+          {
+            "h": 8,
+            "i": "global-date-filter:4a976bb9-de4f-4fe2-9e47-8a0945d0ccaf",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "md": [
+          {
+            "h": 15,
+            "i": "frame-kpi-total-output-tons",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-total-input-tons",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 12,
+            "x": 12,
+            "y": 0
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-avg-actual-yield",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 12,
+            "x": 24,
+            "y": 0
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-processing-runs",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 15
+          },
+          {
+            "h": 30,
+            "i": "frame-throughput-by-start-hour",
+            "minH": 16,
+            "minW": 12,
+            "static": false,
+            "w": 36,
+            "x": 0,
+            "y": 30
+          },
+          {
+            "h": 30,
+            "i": "frame-scrapyard-ops-fact-processing-run-scrapyard-ops-dim-facility-joined",
+            "minH": 16,
+            "minW": 12,
+            "static": false,
+            "w": 36,
+            "x": 0,
+            "y": 60
+          },
+          {
+            "h": 30,
+            "i": "frame-scrapyard-ops-fact-inventory-movement-scrapyard-ops-dim-facility-joined",
+            "minH": 16,
+            "minW": 12,
+            "static": false,
+            "w": 36,
+            "x": 0,
+            "y": 90
+          },
+          {
+            "h": 8,
+            "i": "c3e66ec0-7ce4-47ee-9c7b-eae110c1de4a",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "global-date-filter:4a976bb9-de4f-4fe2-9e47-8a0945d0ccaf",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "sm": [
+          {
+            "h": 15,
+            "i": "frame-kpi-total-output-tons",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-total-input-tons",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 12,
+            "x": 12,
+            "y": 0
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-avg-actual-yield",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 15
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-processing-runs",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 12,
+            "x": 12,
+            "y": 15
+          },
+          {
+            "h": 30,
+            "i": "frame-throughput-by-start-hour",
+            "minH": 16,
+            "minW": 12,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 30
+          },
+          {
+            "h": 30,
+            "i": "frame-scrapyard-ops-fact-processing-run-scrapyard-ops-dim-facility-joined",
+            "minH": 16,
+            "minW": 12,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 60
+          },
+          {
+            "h": 30,
+            "i": "frame-scrapyard-ops-fact-inventory-movement-scrapyard-ops-dim-facility-joined",
+            "minH": 16,
+            "minW": 12,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 90
+          },
+          {
+            "h": 8,
+            "i": "c3e66ec0-7ce4-47ee-9c7b-eae110c1de4a",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "global-date-filter:4a976bb9-de4f-4fe2-9e47-8a0945d0ccaf",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xs": [
+          {
+            "h": 15,
+            "i": "frame-kpi-total-output-tons",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-total-input-tons",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 15
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-avg-actual-yield",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 30
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-processing-runs",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 45
+          },
+          {
+            "h": 28,
+            "i": "frame-throughput-by-start-hour",
+            "minH": 16,
+            "minW": 12,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 60
+          },
+          {
+            "h": 28,
+            "i": "frame-scrapyard-ops-fact-processing-run-scrapyard-ops-dim-facility-joined",
+            "minH": 16,
+            "minW": 12,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 88
+          },
+          {
+            "h": 28,
+            "i": "frame-scrapyard-ops-fact-inventory-movement-scrapyard-ops-dim-facility-joined",
+            "minH": 16,
+            "minW": 12,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 116
+          },
+          {
+            "h": 8,
+            "i": "c3e66ec0-7ce4-47ee-9c7b-eae110c1de4a",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "global-date-filter:4a976bb9-de4f-4fe2-9e47-8a0945d0ccaf",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xxs": [
+          {
+            "h": 15,
+            "i": "frame-kpi-total-output-tons",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-total-input-tons",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 15
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-avg-actual-yield",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 30
+          },
+          {
+            "h": 15,
+            "i": "frame-kpi-processing-runs",
+            "minH": 12,
+            "minW": 6,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 45
+          },
+          {
+            "h": 28,
+            "i": "frame-throughput-by-start-hour",
+            "minH": 16,
+            "minW": 6,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 60
+          },
+          {
+            "h": 28,
+            "i": "frame-scrapyard-ops-fact-processing-run-scrapyard-ops-dim-facility-joined",
+            "minH": 16,
+            "minW": 6,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 88
+          },
+          {
+            "h": 28,
+            "i": "frame-scrapyard-ops-fact-inventory-movement-scrapyard-ops-dim-facility-joined",
+            "minH": 16,
+            "minW": 6,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 116
+          },
+          {
+            "h": 8,
+            "i": "c3e66ec0-7ce4-47ee-9c7b-eae110c1de4a",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "global-date-filter:4a976bb9-de4f-4fe2-9e47-8a0945d0ccaf",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "title": "Processing Run Performance by Facility and Equipment"
+    }
+  ],
+  "title": "Processing Run Performance by Facility and Equipment"
+}
