@@ -135,7 +135,7 @@
                 "pageSize": 50
               },
               "preferences": {},
-              "title": "Title",
+              "title": "Test Visual",
               "type": "table",
               "visualizationMode": "builtin"
             }
@@ -255,5 +255,5 @@
       "title": "Sheet 1"
     }
   ],
-  "title": "Testing"
+  "title": "Testing - 1"
 }
