@@ -1,0 +1,3937 @@
+{
+  "aiContext": {
+    "selectedEntities": [
+      {
+        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+        "connectionType": "PostgreSQL",
+        "database": "verceldb",
+        "datasetType": "physical",
+        "description": "",
+        "dialect": "postgres",
+        "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+        "id": "verceldb.public.Activity",
+        "label": "Activity",
+        "name": "Activity",
+        "schema": "public",
+        "type": "dataset"
+      },
+      {
+        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+        "connectionType": "PostgreSQL",
+        "database": "verceldb",
+        "datasetType": "physical",
+        "description": "This is the company that manages Semaphor projects",
+        "dialect": "postgres",
+        "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+        "id": "verceldb.public.organizations",
+        "label": "Organizations",
+        "name": "organizations",
+        "schema": "public",
+        "type": "dataset"
+      },
+      {
+        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+        "connectionType": "PostgreSQL",
+        "database": "verceldb",
+        "datasetType": "physical",
+        "description": "",
+        "dialect": "postgres",
+        "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+        "id": "verceldb.public.Dashboard",
+        "label": "Dashboard",
+        "name": "Dashboard",
+        "schema": "public",
+        "type": "dataset"
+      },
+      {
+        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+        "connectionType": "PostgreSQL",
+        "database": "verceldb",
+        "datasetType": "physical",
+        "description": "",
+        "dialect": "postgres",
+        "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+        "id": "verceldb.public.User",
+        "label": "User",
+        "name": "User",
+        "schema": "public",
+        "type": "dataset"
+      },
+      {
+        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+        "connectionType": "PostgreSQL",
+        "database": "verceldb",
+        "datasetType": "physical",
+        "description": "",
+        "dialect": "postgres",
+        "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+        "id": "verceldb.public.Project",
+        "label": "Project",
+        "name": "Project",
+        "schema": "public",
+        "type": "dataset"
+      },
+      {
+        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+        "connectionType": "PostgreSQL",
+        "database": "verceldb",
+        "datasetType": "physical",
+        "description": "",
+        "dialect": "postgres",
+        "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+        "id": "verceldb.public.tenant_users",
+        "label": "Tenant Users",
+        "name": "tenant_users",
+        "schema": "public",
+        "type": "dataset"
+      },
+      {
+        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+        "connectionType": "PostgreSQL",
+        "database": "verceldb",
+        "datasetType": "physical",
+        "description": "Contains information about groups, including identifiers, metadata, and audit fields.",
+        "dialect": "postgres",
+        "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+        "id": "verceldb.public.Group",
+        "label": "Group",
+        "name": "Group",
+        "schema": "public",
+        "type": "dataset"
+      },
+      {
+        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+        "connectionType": "PostgreSQL",
+        "database": "verceldb",
+        "datasetType": "physical",
+        "description": "Contains membership records linking users to groups within a tenant, including who added the membership and when.",
+        "dialect": "postgres",
+        "domainId": "5f02bb58-9698-4060-a335-b24c099c0c8a",
+        "id": "verceldb.public.GroupMember",
+        "label": "Group Memberships",
+        "name": "GroupMember",
+        "schema": "public",
+        "type": "dataset"
+      }
+    ]
+  },
+  "aiScopeTables": [
+    {
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "connectionType": "PostgreSQL",
+      "databaseName": "",
+      "datamodelId": "m_bf139c91-0693-48aa-a984-288b06ff9651",
+      "datamodelName": "dm.dashboard_model",
+      "schemaName": "",
+      "tableName": ""
+    }
+  ],
+  "baseQueries": [
+    {
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "description": "Dashboard model with extracted month",
+      "id": "m_bf139c91-0693-48aa-a984-288b06ff9651",
+      "name": "dashboard_model",
+      "sql": "WITH extracted_month AS (\n    SELECT \n        *,\n        TO_CHAR(timestamp, 'Mon') AS month_name\n    FROM \n        logging.dashboard_request\n)\nSELECT * FROM extracted_month;\n"
+    }
+  ],
+  "calculatedFields": [],
+  "filterLayout": {
+    "displayMode": "toolbar"
+  },
+  "filters": [
+    {
+      "column": "\"User\".\"updatedAt\"",
+      "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+      "database": "verceldb",
+      "dataType": "timestamp without time zone",
+      "id": "ad207565-d357-4153-ae1a-4fecccde1bb1",
+      "location": "frame",
+      "operation": "in",
+      "sql": "SELECT min(\"updatedAt\") as min, max(\"updatedAt\") as max FROM \"User\" {{ filters | where }}",
+      "table": "User",
+      "title": "Updated At"
+    },
+    {
+      "column": "dm.dashboard_model.dashboard_name",
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "database": "",
+      "dataType": "text",
+      "id": "854cf336-7d60-4076-905f-4203bedc3dd2",
+      "location": "dashboard",
+      "operation": "in",
+      "sheetId": "4c4909c5-45b0-4386-a8ec-12013edea367",
+      "sql": "SELECT dashboard_name, COUNT(*) FROM dm.dashboard_model {{ filters | where }} GROUP BY dashboard_name ORDER BY dashboard_name ASC LIMIT 50",
+      "table": "",
+      "title": "Dashboard Name",
+      "toolbarWidth": 236
+    },
+    {
+      "column": "dm.dashboard_model.project_id",
+      "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+      "database": "",
+      "dataType": "text",
+      "id": "d3f10716-337c-4385-9d6a-718242333877",
+      "location": "dashboard",
+      "operation": "in",
+      "sheetId": "4c4909c5-45b0-4386-a8ec-12013edea367",
+      "sql": "SELECT project_id, COUNT(*) FROM dm.dashboard_model {{ filters | where }} GROUP BY project_id ORDER BY project_id ASC LIMIT 50",
+      "table": "",
+      "title": "Project Id",
+      "toolbarWidth": 400
+    },
+    {
+      "applyToSheetIds": [
+        "ba276141-96a3-4310-af84-e178c7c62a31"
+      ],
+      "column": "Project.id",
+      "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+      "dataType": "text",
+      "fieldMeta": {
+        "dataType": "text",
+        "entityId": "Project",
+        "entityName": "Project",
+        "entityType": "dataset",
+        "id": "Project-id",
+        "name": "id",
+        "qualifiedEntityName": "verceldb.public.Project",
+        "qualifiedFieldName": "Project.id"
+      },
+      "id": "40689b92-ca61-4f66-b498-191ee96e65ff",
+      "location": "sheet",
+      "operation": "in",
+      "qualifiedTableName": "verceldb.public.\"Project\"",
+      "semanticContext": {
+        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+        "connectionType": "PostgreSQL",
+        "selectedEntities": [
+          {
+            "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+            "connectionType": "PostgreSQL",
+            "database": "verceldb",
+            "datasetType": "physical",
+            "description": "Contains project metadata and configuration for software projects managed on the platform",
+            "dialect": "postgres",
+            "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+            "id": "verceldb.public.Project",
+            "label": "Projects",
+            "name": "Project",
+            "schema": "public",
+            "table": "Project",
+            "type": "dataset"
+          }
+        ],
+        "semanticDomainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa"
+      },
+      "sql": "",
+      "title": "Project Name"
+    },
+    {
+      "applyToSheetIds": [
+        "ba276141-96a3-4310-af84-e178c7c62a31"
+      ],
+      "column": "organizations.id",
+      "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+      "dataType": "text",
+      "fieldMeta": {
+        "dataType": "text",
+        "entityId": "organizations",
+        "entityName": "organizations",
+        "entityType": "dataset",
+        "id": "organizations-id",
+        "name": "id",
+        "qualifiedEntityName": "verceldb.public.organizations",
+        "qualifiedFieldName": "organizations.id"
+      },
+      "id": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+      "location": "sheet",
+      "operation": "in",
+      "qualifiedTableName": "verceldb.public.organizations",
+      "semanticContext": {
+        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+        "connectionType": "PostgreSQL",
+        "selectedEntities": [
+          {
+            "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+            "connectionType": "PostgreSQL",
+            "database": "verceldb",
+            "datasetType": "physical",
+            "description": "Contains organization records with metadata such as domain, ownership, branding, and calendar configuration",
+            "dialect": "postgres",
+            "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+            "id": "verceldb.public.organizations",
+            "label": "Organizations",
+            "name": "organizations",
+            "schema": "public",
+            "table": "organizations",
+            "type": "dataset"
+          }
+        ],
+        "semanticDomainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa"
+      },
+      "sql": "",
+      "title": "Organization"
+    }
+  ],
+  "globalStyle": {
+    "dark": {
+      "canvasTheme": "muted",
+      "chart": {
+        "dataset": {
+          "backgroundColor": [
+            "#14b8a6",
+            "#5eead4",
+            "#374151",
+            "#6b7280",
+            "#d1d5db"
+          ],
+          "borderColor": [
+            "#14b8a6",
+            "#5eead4",
+            "#374151",
+            "#6b7280",
+            "#d1d5db"
+          ]
+        }
+      }
+    },
+    "default": {
+      "canvasTheme": "muted",
+      "cardBorderRadius": 2,
+      "chart": {
+        "dataset": {
+          "backgroundColor": [
+            "#2dd4bf",
+            "#60a5fa",
+            "#fde047",
+            "#fb7185",
+            "#c084fc"
+          ],
+          "borderColor": [
+            "#2dd4bf",
+            "#60a5fa",
+            "#fde047",
+            "#fb7185",
+            "#c084fc"
+          ]
+        },
+        "font": {
+          "family": "\"Open Sans\", sans-serif"
+        },
+        "options": {
+          "borderRadius": 2
+        }
+      },
+      "controlInputRadius": 2,
+      "gridLayout": {
+        "margin": [
+          10,
+          10
+        ]
+      }
+    }
+  },
+  "id": "d_f2a630ab-a668-4422-88b5-e1a13d9906fd",
+  "inputs": [
+    {
+      "application": {
+        "cards": [
+          {
+            "bindingId": "ff0262ed-e393-46a5-9f46-6d8b6b1b4365",
+            "cardId": "6d6abc10-aec7-4225-9626-3abff3a33f41",
+            "kind": "bound",
+            "target": {
+              "field": {
+                "dataType": "string",
+                "name": "projectId",
+                "source": {
+                  "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                  "datasetId": "verceldb.public.Dashboard",
+                  "datasetName": "Dashboard",
+                  "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                  "kind": "semantic",
+                  "label": "Dashboard"
+                }
+              },
+              "kind": "field"
+            }
+          }
+        ],
+        "kind": "cardMappings"
+      },
+      "exports": [
+        "label",
+        "value"
+      ],
+      "filterReference": {
+        "filterId": "40689b92-ca61-4f66-b498-191ee96e65ff",
+        "kind": "dashboardFilter"
+      },
+      "id": "d2a6b758-f41b-4ad2-b123-31efb9844af4",
+      "kind": "filter",
+      "label": "Project Name",
+      "optionSource": {
+        "labelField": {
+          "dataType": "string",
+          "name": "name",
+          "source": {
+            "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+            "datasetId": "verceldb.public.Project",
+            "datasetName": "Project",
+            "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+            "kind": "semantic"
+          }
+        },
+        "source": {
+          "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+          "datasetId": "verceldb.public.Project",
+          "datasetName": "Project",
+          "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+          "kind": "semantic"
+        },
+        "valueField": {
+          "dataType": "string",
+          "name": "id",
+          "source": {
+            "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+            "datasetId": "verceldb.public.Project",
+            "datasetName": "Project",
+            "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+            "kind": "semantic"
+          }
+        }
+      },
+      "presentation": {
+        "placement": "toolbar"
+      },
+      "runtimeScope": "shared",
+      "scope": {
+        "kind": "sheets",
+        "sheetIds": [
+          "ba276141-96a3-4310-af84-e178c7c62a31"
+        ]
+      },
+      "variableName": "projectName"
+    },
+    {
+      "application": {
+        "cards": [
+          {
+            "bindingId": "2620c823-6771-4865-b003-578e7030ed37",
+            "cardId": "f8cc885f-a093-42ce-b4f0-35e9139e9d3d",
+            "kind": "bound",
+            "target": {
+              "field": {
+                "dataType": "string",
+                "name": "organizationId",
+                "source": {
+                  "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                  "datasetId": "verceldb.public.Project",
+                  "datasetName": "Project",
+                  "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                  "kind": "semantic",
+                  "label": "Projects"
+                }
+              },
+              "kind": "field"
+            }
+          },
+          {
+            "bindingId": "f2016a32-a56b-4161-a0e3-34184d8f86ab",
+            "cardId": "6d6abc10-aec7-4225-9626-3abff3a33f41",
+            "kind": "bound",
+            "target": {
+              "field": {
+                "dataType": "string",
+                "name": "id",
+                "source": {
+                  "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                  "datasetId": "verceldb.public.Dashboard",
+                  "datasetName": "Dashboard",
+                  "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                  "kind": "semantic",
+                  "label": "Dashboard"
+                }
+              },
+              "kind": "field"
+            }
+          }
+        ],
+        "kind": "cardMappings"
+      },
+      "exports": [
+        "label",
+        "value"
+      ],
+      "filterReference": {
+        "filterId": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+        "kind": "dashboardFilter"
+      },
+      "id": "070aef96-1f33-4a0e-bf70-7e6c931497e9",
+      "kind": "filter",
+      "label": "Organization",
+      "optionSource": {
+        "labelField": {
+          "dataType": "string",
+          "name": "name",
+          "source": {
+            "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+            "datasetId": "verceldb.public.organizations",
+            "datasetName": "organizations",
+            "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+            "kind": "semantic"
+          }
+        },
+        "source": {
+          "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+          "datasetId": "verceldb.public.organizations",
+          "datasetName": "organizations",
+          "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+          "kind": "semantic"
+        },
+        "valueField": {
+          "dataType": "string",
+          "name": "id",
+          "source": {
+            "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+            "datasetId": "verceldb.public.organizations",
+            "datasetName": "organizations",
+            "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+            "kind": "semantic"
+          }
+        }
+      },
+      "presentation": {
+        "placement": "toolbar"
+      },
+      "runtimeScope": "shared",
+      "scope": {
+        "kind": "sheets",
+        "sheetIds": [
+          "ba276141-96a3-4310-af84-e178c7c62a31"
+        ]
+      },
+      "variableName": "organization"
+    }
+  ],
+  "sheets": [
+    {
+      "calculatedFields": [],
+      "frames": [
+        {
+          "activeCardId": "3ecfacb1-354f-4902-be6c-d4175fc4e92f",
+          "cards": [
+            {
+              "cfg": {
+                "data": {
+                  "labels": []
+                }
+              },
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                "connectionType": "PostgreSQL",
+                "dbSelection": {
+                  "database": "verceldb",
+                  "entityType": "table",
+                  "schema": "public"
+                },
+                "mode": "database",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "dbObjectType": "table",
+                    "dialect": "postgres",
+                    "name": "User",
+                    "schema": "public",
+                    "type": "table"
+                  }
+                ]
+              },
+              "description": "Registered Users",
+              "id": "3ecfacb1-354f-4902-be6c-d4175fc4e92f",
+              "info": "Total Users",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "User",
+              "paginationConfig": {
+                "page": 1,
+                "pageSize": 30
+              },
+              "preferences": {
+                "columnSettings": [
+                  {
+                    "columnIdx": 2,
+                    "options": {
+                      "format": "short-date-time",
+                      "locale": "en-US",
+                      "options": {
+                        "day": "2-digit",
+                        "hour": "2-digit",
+                        "hour12": true,
+                        "minute": "2-digit",
+                        "month": "2-digit",
+                        "year": "numeric"
+                      }
+                    },
+                    "type": "date"
+                  },
+                  {
+                    "columnIdx": 1,
+                    "options": {},
+                    "type": "none",
+                    "width": 150
+                  },
+                  {
+                    "columnIdx": 0,
+                    "options": {},
+                    "type": "none",
+                    "width": 225
+                  }
+                ],
+                "filterOnClick": true,
+                "onClickFilter": [],
+                "tablePrefs": {
+                  "columnSettingsMap": {
+                    "Last Login": {
+                      "colorRanges": [],
+                      "dateFormat": {
+                        "customFormat": "yyyy-MM-dd'T'HH:mm:ss",
+                        "format": "MM/dd/yyyy HH:mm zzz",
+                        "sourceTimezone": "local",
+                        "timezone": "auto",
+                        "useCustomFormat": false,
+                        "useRelativeTime": false
+                      },
+                      "numberFormat": {
+                        "currency": "USD",
+                        "dataBarColor": "#3b82f6",
+                        "locale": "en-US",
+                        "maximumFractionDigits": 2,
+                        "minimumFractionDigits": 0,
+                        "showDataBar": false,
+                        "style": "decimal"
+                      },
+                      "textAlign": "left",
+                      "textWrap": "nowrap",
+                      "type": "date",
+                      "width": "auto"
+                    },
+                    "updatedAt": {
+                      "dateFormat": {
+                        "format": ""
+                      },
+                      "type": "date"
+                    }
+                  },
+                  "enableDevModePagination": true,
+                  "pageSize": 30
+                }
+              },
+              "sql": "SELECT \n    u.\"updatedAt\",\n    u.name,    \n    TO_CHAR(\n        u.\"updatedAt\" AT TIME ZONE 'UTC' AT TIME ZONE 'America/Chicago',\n        'MM/DD/YY HH24:MI:SS'\n    ) AS \"Last Login\",\n    u.email,\n    TO_CHAR(\n        u.\"createdAt\" AT TIME ZONE 'UTC' AT TIME ZONE 'America/Chicago',\n        'MM/DD/YY HH24:MI:SS'\n    ) AS \"First Login\"\nFROM \n    \"User\" AS u\n{{ filters | where }}\n    AND 1 = 1 \n    AND u.name NOT IN (\n        'Rohit Pujari',\n        'testing-demo-dashboard-delete zzz',\n        'Sam Dannovan'\n    )\nORDER BY \n    u.\"updatedAt\" DESC\n\n",
+              "title": "Users",
+              "type": "table",
+              "visualizationMode": "builtin"
+            },
+            {
+              "cfg": {
+                "data": {
+                  "labels": []
+                }
+              },
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "description": "Description",
+              "id": "396fb49a-3f1c-43aa-8ef9-a0c9a550412a",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "User",
+              "preferences": {
+                "chartOptions": {
+                  "indexAxis": "x",
+                  "plugins": {
+                    "legend": {
+                      "display": false
+                    }
+                  },
+                  "scales": {
+                    "x": {
+                      "grid": {
+                        "display": false
+                      }
+                    },
+                    "y": {
+                      "grid": {
+                        "display": false
+                      }
+                    }
+                  }
+                },
+                "sortChart": "none"
+              },
+              "sql": "SELECT \n    TO_CHAR(DATE_TRUNC('month', d.\"createdAt\"), 'YYYY-MM') AS month,\n    u.name AS user_name,\n    COUNT(d.id) AS dashboard_count\nFROM \n    \"Dashboard\" AS d\nJOIN \n    \"Project\" AS p ON d.\"projectId\" = p.id\nJOIN \n    \"User\" AS u ON p.\"userId\" = u.id\n {{ filters | where }} GROUP BY \n    month, u.name\nORDER BY \n    month asc\n",
+              "tabTitle": "Dashboards",
+              "title": "Dashboards by Project User",
+              "type": "stackedBar",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "adccd41f-9c4e-4a62-957f-682e396db432"
+        },
+        {
+          "activeCardId": "5c4cd977-3e1f-411b-aa4a-2ebf3a9be157",
+          "cards": [
+            {
+              "cfg": {
+                "data": {
+                  "labels": []
+                }
+              },
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "customCardPreferences": {
+                "componentName": "Area Chart",
+                "settings": {
+                  "animation": {
+                    "duration": 300,
+                    "easing": "ease",
+                    "enabled": true
+                  },
+                  "appearance": {
+                    "colors": {
+                      "mappings": [],
+                      "scheme": "default",
+                      "useCustom": false
+                    },
+                    "dataPoints": {
+                      "dotSize": 4,
+                      "position": "top",
+                      "show": false,
+                      "size": 12,
+                      "style": "circle"
+                    },
+                    "grid": {
+                      "horizontal": true,
+                      "opacity": 0.5,
+                      "show": true,
+                      "style": "solid",
+                      "vertical": false
+                    }
+                  },
+                  "axes": {
+                    "x": {
+                      "label": "",
+                      "position": "bottom",
+                      "show": true
+                    },
+                    "y": {
+                      "label": "",
+                      "position": "left",
+                      "show": true
+                    }
+                  },
+                  "chart": {
+                    "orientation": "vertical",
+                    "type": "line"
+                  },
+                  "chartSpecific": {
+                    "line": {
+                      "curve": "monotone",
+                      "fillOpacity": 0,
+                      "strokeWidth": 2
+                    }
+                  },
+                  "formatting": {
+                    "compactDisplay": "short",
+                    "currency": "USD",
+                    "enabled": false,
+                    "locale": "en-US",
+                    "maximumFractionDigits": 2,
+                    "minimumFractionDigits": 0,
+                    "notation": "standard",
+                    "prefix": "",
+                    "signDisplay": "auto",
+                    "style": "decimal",
+                    "suffix": "",
+                    "unitDisplay": "short",
+                    "useGrouping": true
+                  },
+                  "interaction": {
+                    "brush": {
+                      "enabled": false
+                    },
+                    "tooltip": {
+                      "enabled": true,
+                      "format": "default",
+                      "trigger": "hover"
+                    },
+                    "zoom": {
+                      "enabled": false,
+                      "type": "x"
+                    }
+                  },
+                  "legend": {
+                    "alignment": "center",
+                    "orientation": "horizontal",
+                    "position": "top",
+                    "show": true
+                  }
+                },
+                "type": "component",
+                "url": "https://apps.semaphor.cloud/plugins/standard/shadcn-charts-plugin",
+                "visualType": "single"
+              },
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "mode": "directSource"
+              },
+              "description": "Monthly active users based on their last login date.",
+              "id": "5c4cd977-3e1f-411b-aa4a-2ebf3a9be157",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "User",
+              "preferences": {
+                "chartOptions": {
+                  "scales": {
+                    "x": {
+                      "grid": {
+                        "display": false
+                      }
+                    },
+                    "y": {
+                      "grid": {
+                        "display": false
+                      }
+                    }
+                  }
+                }
+              },
+              "sql": "SELECT \n    TO_CHAR(\"updatedAt\", 'YYYY-MM') AS mm_yyyy,\n    COUNT(id) AS user_count\nFROM \"User\" as u\n {{ filters | where }} AND \n    name != 'Rohit Pujari'\n    AND EXTRACT(YEAR FROM \"updatedAt\") >= 2024\nGROUP BY \n    mm_yyyy\nORDER BY \n    mm_yyyy Asc\nLIMIT 100;\n",
+              "title": "Monthly Active Users",
+              "type": "line"
+            }
+          ],
+          "filterId": "ad207565-d357-4153-ae1a-4fecccde1bb1",
+          "id": "50ac1069-bb64-4c69-a22c-a724b6b3b246"
+        },
+        {
+          "activeCardId": "7fb9fb55-db6e-4331-acec-a36636e9ed3c",
+          "cards": [
+            {
+              "cfg": {
+                "data": {
+                  "labels": []
+                }
+              },
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                "connectionType": "PostgreSQL",
+                "dbSelection": {
+                  "database": "verceldb",
+                  "entityType": "table",
+                  "schema": "public"
+                },
+                "mode": "database",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "dbObjectType": "table",
+                    "dialect": "postgres",
+                    "name": "User",
+                    "schema": "public",
+                    "type": "table"
+                  }
+                ]
+              },
+              "description": "",
+              "id": "7fb9fb55-db6e-4331-acec-a36636e9ed3c",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "User",
+              "preferences": {},
+              "sql": "SELECT COUNT(DISTINCT dash.id) AS unique_dashboard_count\nFROM \"Dashboard\" dash\nLEFT JOIN \"Project\" p ON dash.\"projectId\" = p.id\nLEFT JOIN \"User\" u ON p.\"userId\" = u.id where u.name != 'Rohit Pujari'\n {{ filters | and  }} ",
+              "title": "Total Dashboards",
+              "type": "kpi",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "c8c39a92-837c-4cc5-bb65-7f57cc9bb22b"
+        },
+        {
+          "activeCardId": "17e073ee-176c-452a-9097-f17aa66788aa",
+          "cards": [
+            {
+              "cfg": {
+                "data": {
+                  "labels": []
+                }
+              },
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                "connectionType": "PostgreSQL",
+                "dbSelection": {
+                  "database": "verceldb",
+                  "entityType": "table",
+                  "schema": "public"
+                },
+                "mode": "database",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "dbObjectType": "table",
+                    "dialect": "postgres",
+                    "name": "User",
+                    "schema": "public",
+                    "type": "table"
+                  }
+                ]
+              },
+              "description": "",
+              "id": "17e073ee-176c-452a-9097-f17aa66788aa",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "User",
+              "preferences": {},
+              "sql": "SELECT COUNT(*) AS total_projects\nFROM public.\"Project\" AS p\n {{ filters | where }}",
+              "title": "Total Projects",
+              "type": "kpi",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "342802fb-f89f-48ca-bbcc-11367f9a52ca"
+        },
+        {
+          "activeCardId": "05bbb577-05ca-4d1d-b858-943becaca2f0",
+          "cards": [
+            {
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                "connectionType": "PostgreSQL",
+                "dbSelection": {
+                  "database": "verceldb",
+                  "entityType": "table",
+                  "schema": "public"
+                },
+                "mode": "database",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "dbObjectType": "table",
+                    "dialect": "postgres",
+                    "name": "User",
+                    "schema": "public",
+                    "type": "table"
+                  }
+                ]
+              },
+              "description": "",
+              "id": "05bbb577-05ca-4d1d-b858-943becaca2f0",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "User",
+              "preferences": {},
+              "sql": "SELECT count(*)\nFROM \"User\" as u\n  {{ filters | where }} AND Name != 'Rohit Pujari'\n\n\n",
+              "title": "Total Users",
+              "type": "kpi",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "05ecde46-c04f-4053-a598-9ac126573899"
+        },
+        {
+          "activeCardId": "fb464021-f87e-43c9-ad98-33f4d91fc22c",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "timestamp(3) without time zone",
+                    "entityId": "Dashboard",
+                    "entityName": "Dashboard",
+                    "entityType": "dataset",
+                    "format": {
+                      "presentation": {
+                        "mode": "auto"
+                      },
+                      "type": "temporal_bucket"
+                    },
+                    "granularity": "month",
+                    "id": "groupBy-verceldb.public.Dashboard-createdAt-1789078761164",
+                    "label": "Created At",
+                    "name": "createdAt",
+                    "qualifiedEntityName": "verceldb.public.Dashboard",
+                    "qualifiedFieldName": "Dashboard.createdAt",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "text",
+                    "entityId": "Dashboard",
+                    "entityName": "Dashboard",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.Dashboard-id-1789078772620",
+                    "label": "Count of Id",
+                    "name": "id",
+                    "qualifiedEntityName": "verceldb.public.Dashboard",
+                    "qualifiedFieldName": "Dashboard.id",
+                    "role": "metric"
+                  }
+                ],
+                "sortByColumns": [
+                  {
+                    "dataType": "timestamp(3) without time zone",
+                    "direction": "asc",
+                    "entityId": "Dashboard",
+                    "entityName": "Dashboard",
+                    "entityType": "dataset",
+                    "granularity": "month",
+                    "id": "sortBy-verceldb.public.Dashboard-createdAt-1789078801939",
+                    "label": "Created At",
+                    "name": "createdAt",
+                    "qualifiedEntityName": "verceldb.public.Dashboard",
+                    "qualifiedFieldName": "Dashboard.createdAt",
+                    "role": "sortby"
+                  }
+                ]
+              },
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "Contains dashboard definitions and metadata for rendering and managing dashboards within the platform.",
+                    "dialect": "postgres",
+                    "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                    "id": "verceldb.public.Dashboard",
+                    "label": "Dashboard",
+                    "name": "Dashboard",
+                    "schema": "public",
+                    "table": "Dashboard",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa"
+              },
+              "id": "fb464021-f87e-43c9-ad98-33f4d91fc22c",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "Dashboard",
+              "preferences": {
+                "chartOptions": {
+                  "scales": {
+                    "x": {
+                      "grid": {
+                        "display": false
+                      }
+                    },
+                    "y": {
+                      "grid": {
+                        "display": false
+                      }
+                    }
+                  }
+                },
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "title": "Count of Dashboards",
+              "type": "line",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "a881ed7b-17ec-44c1-84ba-9701d3c0114f"
+        },
+        {
+          "activeCardId": "dee0089b-74d2-4e43-bc40-cef8493bbed9",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "text",
+                    "entityId": "organizations",
+                    "entityName": "organizations",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.organizations-name-1789245873463",
+                    "label": "Organization Name",
+                    "name": "name",
+                    "qualifiedEntityName": "verceldb.public.organizations",
+                    "qualifiedFieldName": "organizations.name",
+                    "role": "groupby"
+                  },
+                  {
+                    "dataType": "text",
+                    "entityId": "User",
+                    "entityName": "User",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.User-name-1789246428332",
+                    "label": "Full Name",
+                    "name": "name",
+                    "qualifiedEntityName": "verceldb.public.User",
+                    "qualifiedFieldName": "User.name",
+                    "role": "groupby"
+                  }
+                ],
+                "joinPlan": {
+                  "baseEntity": {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "Contains project metadata and configuration for software projects managed on the platform",
+                    "dialect": "postgres",
+                    "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                    "id": "verceldb.public.Project",
+                    "label": "Projects",
+                    "name": "Project",
+                    "schema": "public",
+                    "table": "Project",
+                    "type": "dataset"
+                  },
+                  "joins": [
+                    {
+                      "id": "join-1789245897479",
+                      "joinKeyGroups": [
+                        {
+                          "id": "group-1789245897479-pj6qz7b4p",
+                          "keys": [
+                            {
+                              "id": "key-1789245901727",
+                              "operator": "=",
+                              "source": {
+                                "dataType": "",
+                                "entityId": "Project",
+                                "entityName": "Project",
+                                "entityType": "dataset",
+                                "id": "source-1789245901727",
+                                "label": "",
+                                "name": "organizationId",
+                                "qualifiedFieldName": ""
+                              },
+                              "target": {
+                                "dataType": "",
+                                "entityId": "organizations",
+                                "entityName": "organizations",
+                                "entityType": "dataset",
+                                "id": "target-1789245901727",
+                                "label": "",
+                                "name": "id",
+                                "qualifiedFieldName": ""
+                              }
+                            }
+                          ],
+                          "operator": "AND"
+                        }
+                      ],
+                      "joinType": "INNER",
+                      "sequence": 1,
+                      "source": {
+                        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                        "connectionType": "PostgreSQL",
+                        "database": "verceldb",
+                        "datasetType": "physical",
+                        "description": "Contains project metadata and configuration for software projects managed on the platform",
+                        "dialect": "postgres",
+                        "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                        "id": "verceldb.public.Project",
+                        "label": "Projects",
+                        "name": "Project",
+                        "schema": "public",
+                        "table": "Project",
+                        "type": "dataset"
+                      },
+                      "target": {
+                        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                        "connectionType": "PostgreSQL",
+                        "database": "verceldb",
+                        "datasetType": "physical",
+                        "description": "Contains organization records with metadata such as domain, ownership, branding, and calendar configuration",
+                        "dialect": "postgres",
+                        "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                        "id": "verceldb.public.organizations",
+                        "label": "Organizations",
+                        "name": "organizations",
+                        "schema": "public",
+                        "table": "organizations",
+                        "type": "dataset"
+                      }
+                    },
+                    {
+                      "id": "join-1789246404476",
+                      "joinKeyGroups": [
+                        {
+                          "id": "group-1789246404476-1zv2qy3nn",
+                          "keys": [
+                            {
+                              "id": "key-1789246410085",
+                              "operator": "=",
+                              "source": {
+                                "dataType": "",
+                                "entityId": "Project",
+                                "entityName": "Project",
+                                "entityType": "dataset",
+                                "id": "source-1789246410085",
+                                "label": "",
+                                "name": "userId",
+                                "qualifiedFieldName": ""
+                              },
+                              "target": {
+                                "dataType": "",
+                                "entityId": "User",
+                                "entityName": "User",
+                                "entityType": "dataset",
+                                "id": "target-1789246410085",
+                                "label": "",
+                                "name": "id",
+                                "qualifiedFieldName": ""
+                              }
+                            }
+                          ],
+                          "operator": "AND"
+                        }
+                      ],
+                      "joinType": "INNER",
+                      "sequence": 2,
+                      "source": {
+                        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                        "connectionType": "PostgreSQL",
+                        "database": "verceldb",
+                        "name": "Project",
+                        "schema": "public",
+                        "type": "dataset"
+                      },
+                      "target": {
+                        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                        "connectionType": "PostgreSQL",
+                        "database": "verceldb",
+                        "name": "User",
+                        "schema": "public",
+                        "type": "dataset"
+                      }
+                    }
+                  ]
+                },
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "text",
+                    "entityId": "Project",
+                    "entityName": "Project",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.Project-id-1789245923277",
+                    "label": "Count of Project Id",
+                    "name": "id",
+                    "qualifiedEntityName": "verceldb.public.Project",
+                    "qualifiedFieldName": "Project.id",
+                    "role": "metric"
+                  }
+                ]
+              },
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                "connectionType": "PostgreSQL",
+                "dbSelection": {
+                  "database": "verceldb",
+                  "entityType": "table",
+                  "schema": "public"
+                },
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "Contains project metadata and configuration for software projects managed on the platform",
+                    "dialect": "postgres",
+                    "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                    "id": "verceldb.public.Project",
+                    "label": "Projects",
+                    "name": "Project",
+                    "schema": "public",
+                    "table": "Project",
+                    "type": "dataset"
+                  },
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "Contains organization records with metadata such as domain, ownership, branding, and calendar configuration",
+                    "dialect": "postgres",
+                    "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                    "id": "verceldb.public.organizations",
+                    "label": "Organizations",
+                    "name": "organizations",
+                    "schema": "public",
+                    "table": "organizations",
+                    "type": "dataset"
+                  },
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "Contains user accounts and profile information for the organization's users",
+                    "dialect": "postgres",
+                    "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                    "id": "verceldb.public.User",
+                    "label": "Users",
+                    "name": "User",
+                    "schema": "public",
+                    "table": "User",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa"
+              },
+              "id": "dee0089b-74d2-4e43-bc40-cef8493bbed9",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "Project",
+              "paginationConfig": {
+                "page": 1,
+                "pageSize": 50
+              },
+              "preferences": {
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ],
+                "tablePrefs": {
+                  "tableStyle": {
+                    "totals": {
+                      "enabled": true
+                    }
+                  }
+                }
+              },
+              "title": "Organization Projects",
+              "type": "table",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "3bc0fb7d-b484-4590-adac-c521f6198bf4"
+        },
+        {
+          "activeCardId": "6b813b2a-7c19-49cd-b593-cff442f7a982",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "text",
+                    "description": "Official name of the organization",
+                    "entityId": "organizations",
+                    "entityName": "organizations",
+                    "entityType": "dataset",
+                    "id": "groupBy-verceldb.public.organizations-name-1789472004376",
+                    "label": "Organization Name",
+                    "name": "name",
+                    "qualifiedEntityName": "verceldb.public.organizations",
+                    "qualifiedFieldName": "organizations.name",
+                    "role": "groupby",
+                    "sourceField": "name"
+                  }
+                ],
+                "joinPlan": {
+                  "baseEntity": {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "name": "Dashboard",
+                    "schema": "public",
+                    "type": "dataset"
+                  },
+                  "joins": [
+                    {
+                      "id": "join-1789471943852",
+                      "joinKeyGroups": [
+                        {
+                          "id": "group-1789471943852-b2chbcuer",
+                          "keys": [
+                            {
+                              "id": "key-1789471951915",
+                              "operator": "=",
+                              "source": {
+                                "dataType": "",
+                                "entityId": "Dashboard",
+                                "entityName": "Dashboard",
+                                "entityType": "dataset",
+                                "id": "source-1789471951915",
+                                "label": "",
+                                "name": "projectId",
+                                "qualifiedFieldName": ""
+                              },
+                              "target": {
+                                "dataType": "",
+                                "entityId": "Project",
+                                "entityName": "Project",
+                                "entityType": "dataset",
+                                "id": "target-1789471951915",
+                                "label": "",
+                                "name": "id",
+                                "qualifiedFieldName": ""
+                              }
+                            }
+                          ],
+                          "operator": "AND"
+                        }
+                      ],
+                      "joinType": "INNER",
+                      "sequence": 1,
+                      "source": {
+                        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                        "connectionType": "PostgreSQL",
+                        "database": "verceldb",
+                        "name": "Dashboard",
+                        "schema": "public",
+                        "type": "dataset"
+                      },
+                      "target": {
+                        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                        "connectionType": "PostgreSQL",
+                        "database": "verceldb",
+                        "name": "Project",
+                        "schema": "public",
+                        "type": "dataset"
+                      }
+                    },
+                    {
+                      "id": "join-1789471967188",
+                      "joinKeyGroups": [
+                        {
+                          "id": "group-1789471967188-lx0ffaewg",
+                          "keys": [
+                            {
+                              "id": "key-1789471976702",
+                              "operator": "=",
+                              "source": {
+                                "dataType": "",
+                                "entityId": "Project",
+                                "entityName": "Project",
+                                "entityType": "dataset",
+                                "id": "source-1789471976702",
+                                "label": "",
+                                "name": "organizationId",
+                                "qualifiedFieldName": ""
+                              },
+                              "target": {
+                                "dataType": "",
+                                "entityId": "organizations",
+                                "entityName": "organizations",
+                                "entityType": "dataset",
+                                "id": "target-1789471976702",
+                                "label": "",
+                                "name": "id",
+                                "qualifiedFieldName": ""
+                              }
+                            }
+                          ],
+                          "operator": "AND"
+                        }
+                      ],
+                      "joinType": "INNER",
+                      "sequence": 2,
+                      "source": {
+                        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                        "connectionType": "PostgreSQL",
+                        "database": "verceldb",
+                        "name": "Project",
+                        "schema": "public",
+                        "type": "dataset"
+                      },
+                      "target": {
+                        "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                        "connectionType": "PostgreSQL",
+                        "database": "verceldb",
+                        "name": "organizations",
+                        "schema": "public",
+                        "type": "dataset"
+                      }
+                    }
+                  ]
+                },
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "aggregateOrigin": "default",
+                    "dataType": "text",
+                    "description": "Unique identifier for the dashboard",
+                    "entityId": "Dashboard",
+                    "entityName": "Dashboard",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.Dashboard-id-1789471903803",
+                    "label": "Count of Id",
+                    "name": "id",
+                    "qualifiedEntityName": "verceldb.public.Dashboard",
+                    "qualifiedFieldName": "Dashboard.id",
+                    "role": "metric"
+                  }
+                ],
+                "sortByColumns": [
+                  {
+                    "dataType": "text",
+                    "description": "Unique identifier for the dashboard",
+                    "direction": "desc",
+                    "entityId": "Dashboard",
+                    "entityName": "Dashboard",
+                    "entityType": "dataset",
+                    "id": "sortBy-verceldb.public.Dashboard-id-1789472023123",
+                    "label": "Count of Id",
+                    "name": "id",
+                    "qualifiedEntityName": "verceldb.public.Dashboard",
+                    "qualifiedFieldName": "Dashboard.id",
+                    "role": "sortby"
+                  }
+                ]
+              },
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                "connectionType": "PostgreSQL",
+                "dbSelection": {
+                  "database": "verceldb",
+                  "entityType": "table",
+                  "schema": "public"
+                },
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "Contains dashboard definitions and metadata for rendering and managing dashboards within the platform.",
+                    "dialect": "postgres",
+                    "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                    "id": "verceldb.public.Dashboard",
+                    "label": "Dashboard",
+                    "name": "Dashboard",
+                    "schema": "public",
+                    "table": "Dashboard",
+                    "type": "dataset"
+                  },
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "Contains project metadata and configuration for software projects managed on the platform",
+                    "dialect": "postgres",
+                    "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                    "id": "verceldb.public.Project",
+                    "label": "Projects",
+                    "name": "Project",
+                    "schema": "public",
+                    "table": "Project",
+                    "type": "dataset"
+                  },
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "Contains organization records with metadata such as domain, ownership, branding, and calendar configuration",
+                    "dialect": "postgres",
+                    "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                    "id": "verceldb.public.organizations",
+                    "label": "Organizations",
+                    "name": "organizations",
+                    "schema": "public",
+                    "table": "organizations",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa"
+              },
+              "id": "6b813b2a-7c19-49cd-b593-cff442f7a982",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "Dashboard",
+              "preferences": {
+                "chartOptions": {
+                  "indexAxis": "y",
+                  "scales": {}
+                },
+                "dataLabelsConfig": {
+                  "display": true,
+                  "enabled": true,
+                  "position": "auto"
+                },
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "title": "Dashboards by Project",
+              "type": "bar",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "7b111bff-19bd-4bd5-994d-414cc4027c56"
+        }
+      ],
+      "id": "de8562f3-b3a2-43d2-b040-844df775b598",
+      "layout": [
+        {
+          "h": 11,
+          "i": "adccd41f-9c4e-4a62-957f-682e396db432",
+          "minW": 10,
+          "moved": false,
+          "static": false,
+          "w": 24,
+          "x": 0,
+          "y": 12
+        },
+        {
+          "h": 7,
+          "i": "50ac1069-bb64-4c69-a22c-a724b6b3b246",
+          "minH": 2,
+          "minW": 6,
+          "w": 20,
+          "x": 0,
+          "y": null
+        },
+        {
+          "h": 7,
+          "i": "c8c39a92-837c-4cc5-bb65-7f57cc9bb22b",
+          "minH": 2,
+          "minW": 6,
+          "w": 20,
+          "x": 0,
+          "y": null
+        }
+      ],
+      "layouts": {
+        "lg": [
+          {
+            "h": 102,
+            "i": "adccd41f-9c4e-4a62-957f-682e396db432",
+            "minH": 8,
+            "minW": 10,
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 56,
+            "i": "50ac1069-bb64-4c69-a22c-a724b6b3b246",
+            "minH": 8,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 24,
+            "y": 81
+          },
+          {
+            "h": 11,
+            "i": "c8c39a92-837c-4cc5-bb65-7f57cc9bb22b",
+            "minH": 8,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 8,
+            "x": 40,
+            "y": 0
+          },
+          {
+            "h": 11,
+            "i": "342802fb-f89f-48ca-bbcc-11367f9a52ca",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 8,
+            "x": 32,
+            "y": 0
+          },
+          {
+            "h": 11,
+            "i": "05ecde46-c04f-4053-a598-9ac126573899",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 8,
+            "x": 24,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "a881ed7b-17ec-44c1-84ba-9701d3c0114f",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 24,
+            "y": 11
+          },
+          {
+            "h": 57,
+            "i": "3bc0fb7d-b484-4590-adac-c521f6198bf4",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 102
+          },
+          {
+            "h": 35,
+            "i": "7b111bff-19bd-4bd5-994d-414cc4027c56",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 24,
+            "y": 46
+          }
+        ],
+        "md": [
+          {
+            "h": 25,
+            "i": "adccd41f-9c4e-4a62-957f-682e396db432",
+            "minH": 8,
+            "moved": false,
+            "static": false,
+            "w": 18,
+            "x": 0,
+            "y": 11
+          },
+          {
+            "h": 47,
+            "i": "50ac1069-bb64-4c69-a22c-a724b6b3b246",
+            "minH": 8,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 18,
+            "x": 18,
+            "y": 0
+          },
+          {
+            "h": 11,
+            "i": "c8c39a92-837c-4cc5-bb65-7f57cc9bb22b",
+            "minH": 8,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 9,
+            "x": 9,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "342802fb-f89f-48ca-bbcc-11367f9a52ca",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 47
+          },
+          {
+            "h": 35,
+            "i": "05ecde46-c04f-4053-a598-9ac126573899",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 82
+          },
+          {
+            "h": 8,
+            "i": "40689b92-ca61-4f66-b498-191ee96e65ff",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "a881ed7b-17ec-44c1-84ba-9701d3c0114f",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 67
+          },
+          {
+            "h": 35,
+            "i": "3bc0fb7d-b484-4590-adac-c521f6198bf4",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 102
+          },
+          {
+            "h": 35,
+            "i": "7b111bff-19bd-4bd5-994d-414cc4027c56",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 159
+          }
+        ],
+        "sm": [
+          {
+            "h": 48,
+            "i": "adccd41f-9c4e-4a62-957f-682e396db432",
+            "minH": 8,
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 11
+          },
+          {
+            "h": 38,
+            "i": "50ac1069-bb64-4c69-a22c-a724b6b3b246",
+            "minH": 8,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 24,
+            "x": 0,
+            "y": 59
+          },
+          {
+            "h": 11,
+            "i": "c8c39a92-837c-4cc5-bb65-7f57cc9bb22b",
+            "minH": 8,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 11,
+            "i": "342802fb-f89f-48ca-bbcc-11367f9a52ca",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 6,
+            "y": 0
+          },
+          {
+            "h": 11,
+            "i": "05ecde46-c04f-4053-a598-9ac126573899",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 12,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "40689b92-ca61-4f66-b498-191ee96e65ff",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "a881ed7b-17ec-44c1-84ba-9701d3c0114f",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 67
+          },
+          {
+            "h": 35,
+            "i": "3bc0fb7d-b484-4590-adac-c521f6198bf4",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 102
+          },
+          {
+            "h": 35,
+            "i": "7b111bff-19bd-4bd5-994d-414cc4027c56",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 159
+          }
+        ],
+        "xs": [
+          {
+            "h": 8,
+            "i": "adccd41f-9c4e-4a62-957f-682e396db432",
+            "minH": 8,
+            "moved": false,
+            "static": false,
+            "w": 1,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "50ac1069-bb64-4c69-a22c-a724b6b3b246",
+            "minH": 8,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 5
+          },
+          {
+            "h": 35,
+            "i": "c8c39a92-837c-4cc5-bb65-7f57cc9bb22b",
+            "minH": 8,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 40
+          },
+          {
+            "h": 35,
+            "i": "342802fb-f89f-48ca-bbcc-11367f9a52ca",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 75
+          },
+          {
+            "h": 35,
+            "i": "05ecde46-c04f-4053-a598-9ac126573899",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 110
+          },
+          {
+            "h": 8,
+            "i": "40689b92-ca61-4f66-b498-191ee96e65ff",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "a881ed7b-17ec-44c1-84ba-9701d3c0114f",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 67
+          },
+          {
+            "h": 35,
+            "i": "3bc0fb7d-b484-4590-adac-c521f6198bf4",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 102
+          },
+          {
+            "h": 35,
+            "i": "7b111bff-19bd-4bd5-994d-414cc4027c56",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 159
+          }
+        ],
+        "xxs": [
+          {
+            "h": 8,
+            "i": "adccd41f-9c4e-4a62-957f-682e396db432",
+            "minH": 8,
+            "moved": false,
+            "static": false,
+            "w": 1,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "f17fa44e-81ad-462c-935d-8a71ffe0588e",
+            "minH": 8,
+            "moved": false,
+            "static": false,
+            "w": 1,
+            "x": 0,
+            "y": 5
+          },
+          {
+            "h": 35,
+            "i": "50ac1069-bb64-4c69-a22c-a724b6b3b246",
+            "minH": 8,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 10
+          },
+          {
+            "h": 35,
+            "i": "c8c39a92-837c-4cc5-bb65-7f57cc9bb22b",
+            "minH": 8,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 6,
+            "x": 0,
+            "y": 45
+          },
+          {
+            "h": 35,
+            "i": "342802fb-f89f-48ca-bbcc-11367f9a52ca",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 50
+          },
+          {
+            "h": 8,
+            "i": "854cf336-7d60-4076-905f-4203bedc3dd2",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "05ecde46-c04f-4053-a598-9ac126573899",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 67
+          },
+          {
+            "h": 8,
+            "i": "d3f10716-337c-4385-9d6a-718242333877",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "40689b92-ca61-4f66-b498-191ee96e65ff",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "a881ed7b-17ec-44c1-84ba-9701d3c0114f",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 67
+          },
+          {
+            "h": 35,
+            "i": "3bc0fb7d-b484-4590-adac-c521f6198bf4",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 102
+          },
+          {
+            "h": 35,
+            "i": "7b111bff-19bd-4bd5-994d-414cc4027c56",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 159
+          }
+        ]
+      },
+      "title": "Logins"
+    },
+    {
+      "calculatedFields": [],
+      "frames": [
+        {
+          "activeCardId": "8c8d3e6c-0408-4ab6-bcf7-391a16bebb6d",
+          "cards": [
+            {
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "m_bf139c91-0693-48aa-a984-288b06ff9651",
+              "description": "",
+              "id": "8319e51c-cddf-48a4-aaee-6172415d14b7",
+              "lastSelectedDatabase": "",
+              "lastSelectedDatamodelId": "m_bf139c91-0693-48aa-a984-288b06ff9651",
+              "lastSelectedSchema": "",
+              "lastSelectedTable": "",
+              "preferences": {},
+              "python": "",
+              "sql": "SELECT COUNT(*) as count FROM dm.dashboard_model {{ filters | where }}",
+              "tabTitle": "All__Header",
+              "title": "Total Requests",
+              "type": "kpi"
+            },
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "timestamp without time zone",
+                    "dateFormat": "MM/DD/YYYY",
+                    "entityId": "dashboard_request",
+                    "entityName": "dashboard_request",
+                    "entityType": "table",
+                    "granularity": "day",
+                    "id": "groupBy-verceldb.logging.dashboard_request-timestamp-1749655789810",
+                    "label": "Timestamp",
+                    "name": "timestamp",
+                    "qualifiedEntityName": "verceldb.logging.dashboard_request",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "aliasTemplate": "{{dashboard_name}}",
+                    "dataType": "text",
+                    "entityId": "dashboard_request",
+                    "entityName": "dashboard_request",
+                    "entityType": "table",
+                    "id": "metrics-verceldb.logging.dashboard_request-id-1749655802630",
+                    "label": "Count of Id",
+                    "name": "id",
+                    "qualifiedEntityName": "verceldb.logging.dashboard_request",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": [
+                  {
+                    "dataType": "text",
+                    "entityId": "dashboard_request",
+                    "entityName": "dashboard_request",
+                    "entityType": "table",
+                    "id": "pivotBy-verceldb.logging.dashboard_request-dashboard_name-1749655813096",
+                    "label": "Dashboard Name",
+                    "name": "dashboard_name",
+                    "qualifiedEntityName": "verceldb.logging.dashboard_request",
+                    "role": "pivotby"
+                  }
+                ],
+                "sortByColumns": [
+                  {
+                    "dataType": "timestamp without time zone",
+                    "direction": "asc",
+                    "entityId": "dashboard_request",
+                    "entityName": "dashboard_request",
+                    "entityType": "table",
+                    "id": "sortBy-verceldb.logging.dashboard_request-timestamp-1749655903354",
+                    "label": "Timestamp",
+                    "name": "timestamp",
+                    "qualifiedEntityName": "verceldb.logging.dashboard_request",
+                    "role": "sortby"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCardPreferences": {
+                "componentName": "Stacked Bar Chart",
+                "pluginChartType": "stacked",
+                "settings": {
+                  "animation": {
+                    "duration": 300,
+                    "easing": "ease",
+                    "enabled": true
+                  },
+                  "appearance": {
+                    "colors": {
+                      "mappings": [],
+                      "scheme": "default",
+                      "useCustom": false
+                    },
+                    "dataPoints": {
+                      "dotSize": 4,
+                      "position": "top",
+                      "show": false,
+                      "size": 12,
+                      "style": "circle"
+                    },
+                    "grid": {
+                      "horizontal": true,
+                      "opacity": 0.5,
+                      "show": true,
+                      "style": "solid",
+                      "vertical": false
+                    }
+                  },
+                  "axes": {
+                    "x": {
+                      "label": "",
+                      "position": "bottom",
+                      "show": true
+                    },
+                    "y": {
+                      "label": "",
+                      "position": "left",
+                      "show": true
+                    }
+                  },
+                  "chart": {
+                    "orientation": "vertical",
+                    "type": "stacked"
+                  },
+                  "chartSpecific": {
+                    "bar": {
+                      "maxWidth": 50,
+                      "radius": 4,
+                      "spacing": 2
+                    },
+                    "combo": {},
+                    "funnel": {},
+                    "line": {},
+                    "pie": {}
+                  },
+                  "formatting": {
+                    "compactDisplay": "short",
+                    "currency": "USD",
+                    "enabled": false,
+                    "locale": "en-US",
+                    "maximumFractionDigits": 2,
+                    "minimumFractionDigits": 0,
+                    "notation": "standard",
+                    "prefix": "",
+                    "signDisplay": "auto",
+                    "style": "decimal",
+                    "suffix": "",
+                    "unitDisplay": "short",
+                    "useGrouping": true
+                  },
+                  "interaction": {
+                    "brush": {
+                      "enabled": false
+                    },
+                    "tooltip": {
+                      "enabled": true,
+                      "format": "default",
+                      "trigger": "hover"
+                    },
+                    "zoom": {
+                      "enabled": false,
+                      "type": "x"
+                    }
+                  },
+                  "legend": {
+                    "alignment": "center",
+                    "orientation": "horizontal",
+                    "position": "top",
+                    "show": false
+                  }
+                },
+                "type": "component",
+                "url": "https://apps.semaphor.cloud/plugins/standard/shadcn-charts-plugin",
+                "visualType": "single"
+              },
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "dbSelection": {
+                  "database": "verceldb",
+                  "entityType": "table",
+                  "schema": "logging"
+                },
+                "mode": "database",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "name": "dashboard_request",
+                    "schema": "logging",
+                    "type": "table"
+                  }
+                ]
+              },
+              "description": "Description",
+              "id": "8c8d3e6c-0408-4ab6-bcf7-391a16bebb6d",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "User",
+              "preferences": {
+                "chartOptions": {
+                  "scales": {
+                    "x": {
+                      "grid": {
+                        "display": false
+                      }
+                    },
+                    "y": {
+                      "grid": {
+                        "display": false
+                      }
+                    }
+                  }
+                }
+              },
+              "sql": "",
+              "tabTitle": "Requests Daily",
+              "title": "Dashboard Requests (Daily)",
+              "type": "stackedBar"
+            },
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "timestamp without time zone",
+                    "dateFormat": "MM/DD/YYYY",
+                    "entityId": "dashboard_request",
+                    "entityName": "dashboard_request",
+                    "entityType": "table",
+                    "granularity": "week",
+                    "id": "groupBy-verceldb.logging.dashboard_request-timestamp-1749655656722",
+                    "label": "Timestamp",
+                    "name": "timestamp",
+                    "qualifiedEntityName": "verceldb.logging.dashboard_request",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "aliasTemplate": "{{dashboard_name}}",
+                    "dataType": "text",
+                    "entityId": "dashboard_request",
+                    "entityName": "dashboard_request",
+                    "entityType": "table",
+                    "id": "metrics-verceldb.logging.dashboard_request-id-1749655669246",
+                    "label": "Count of Id",
+                    "name": "id",
+                    "qualifiedEntityName": "verceldb.logging.dashboard_request",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": [
+                  {
+                    "dataType": "text",
+                    "entityId": "dashboard_request",
+                    "entityName": "dashboard_request",
+                    "entityType": "table",
+                    "id": "pivotBy-verceldb.logging.dashboard_request-dashboard_name-1749655695177",
+                    "label": "Dashboard Name",
+                    "name": "dashboard_name",
+                    "qualifiedEntityName": "verceldb.logging.dashboard_request",
+                    "role": "pivotby"
+                  }
+                ],
+                "sortByColumns": [
+                  {
+                    "dataType": "timestamp without time zone",
+                    "direction": "asc",
+                    "entityId": "dashboard_request",
+                    "entityName": "dashboard_request",
+                    "entityType": "table",
+                    "id": "sortBy-verceldb.logging.dashboard_request-timestamp-1749655745523",
+                    "label": "Timestamp",
+                    "name": "timestamp",
+                    "qualifiedEntityName": "verceldb.logging.dashboard_request",
+                    "role": "sortby"
+                  }
+                ]
+              },
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "m_bf139c91-0693-48aa-a984-288b06ff9651",
+              "dataSource": {
+                "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                "connectionType": "PostgreSQL",
+                "dbSelection": {
+                  "database": "verceldb",
+                  "entityType": "table",
+                  "schema": "logging"
+                },
+                "mode": "database",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "name": "dashboard_request",
+                    "schema": "logging",
+                    "type": "table"
+                  }
+                ]
+              },
+              "description": "Description",
+              "id": "b8a7e0e4-e3b2-4c33-9f9b-f5ee7a9a3c81",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "m_bf139c91-0693-48aa-a984-288b06ff9651",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "User",
+              "preferences": {},
+              "queryConfig": {
+                "filterColumns": [
+                  {
+                    "column_name": "end_user_email",
+                    "data_type": "text",
+                    "id": "end_user_email-2be28c22-88aa-4b6e-b8f8-0e39948bbb66",
+                    "mode": "exclude",
+                    "name": "end_user_email",
+                    "role": "filter",
+                    "sql": "SELECT end_user_email, COUNT(*) FROM logging.dashboard_request {{ filters | where }} GROUP BY end_user_email ORDER BY end_user_email ASC LIMIT 50",
+                    "type": "text"
+                  }
+                ],
+                "filters": [
+                  {
+                    "filterColumnName": "end_user_email",
+                    "filterValue": [
+                      "rohit@semaphor.cloud",
+                      "rohitspujari@gmail.com"
+                    ]
+                  }
+                ],
+                "groupByColumns": [
+                  {
+                    "column_name": "timestamp",
+                    "data_type": "timestamp without time zone",
+                    "granularity": "week",
+                    "id": "timestamp-89cdd646-b2b3-464f-b794-d292a8ebc73a",
+                    "label": "Week of Timestamp",
+                    "name": "timestamp",
+                    "role": "groupby",
+                    "type": "timestamp without time zone"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "aliasTemplate": "{pivot}",
+                    "column_name": "id",
+                    "data_type": "text",
+                    "id": "id-f688dabe-d9ed-4015-ae00-362b7ca4307d",
+                    "label": "Count of Id",
+                    "name": "id",
+                    "role": "metric",
+                    "type": "text"
+                  }
+                ],
+                "orderBy": [
+                  {
+                    "columnId": "timestamp-89cdd646-b2b3-464f-b794-d292a8ebc73a",
+                    "direction": "asc"
+                  }
+                ],
+                "pivotColumns": [
+                  {
+                    "column_name": "dashboard_name",
+                    "data_type": "text",
+                    "id": "dashboard_name-65367f20-6c14-4b16-a4e9-fc78d65380f7",
+                    "name": "dashboard_name",
+                    "role": "groupby",
+                    "type": "text"
+                  }
+                ]
+              },
+              "sql": "",
+              "tabTitle": "Requests Weekly",
+              "title": "Dashboard Requests (Daily) Copy",
+              "type": "stackedBar"
+            }
+          ],
+          "id": "f563f9b0-15cd-4c5a-bc68-1e2190979743"
+        },
+        {
+          "activeCardId": "45918bac-fc7b-4451-a58b-fcf0cba3468e",
+          "cards": [
+            {
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "m_bf139c91-0693-48aa-a984-288b06ff9651",
+              "description": "Description",
+              "id": "45918bac-fc7b-4451-a58b-fcf0cba3468e",
+              "lastSelectedDatabase": "",
+              "lastSelectedDatamodelId": "m_bf139c91-0693-48aa-a984-288b06ff9651",
+              "preferences": {},
+              "python": "",
+              "queryConfig": {
+                "groupByColumns": [
+                  {
+                    "granularity": "week",
+                    "id": "month_name-533b7f22-06f1-4b6d-b36a-42ac8536be2d",
+                    "label": "Week of Timestamp",
+                    "name": "timestamp",
+                    "role": "groupby",
+                    "type": "date"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "aliasTemplate": "{pivot}",
+                    "column_name": "dashboard_id",
+                    "data_type": "text",
+                    "id": "dashboard_id-bdfe677b-157a-4e44-b111-0a7362666f4a",
+                    "label": "Count of Requests",
+                    "name": "dashboard_id",
+                    "role": "metric",
+                    "type": "text"
+                  }
+                ],
+                "pivotColumns": [
+                  {
+                    "column_name": "dashboard_name",
+                    "data_type": "text",
+                    "id": "dashboard_name-ccd82672-d2c7-4b63-baf7-92d61ffcddc2",
+                    "name": "dashboard_name",
+                    "role": "groupby",
+                    "type": "text"
+                  }
+                ]
+              },
+              "sql": "",
+              "title": "Dashboard Sessions",
+              "type": "table"
+            }
+          ],
+          "id": "6cb61033-bb2b-4e53-a129-8a08d2284c72"
+        },
+        {
+          "activeCardId": "cedfc861-2518-475b-b4bf-52fde3360bc6",
+          "cards": [
+            {
+              "connectionId": "c_d69fb62b-1012-405b-8997-4a8bfb3432aa",
+              "customCfg": null,
+              "data": [],
+              "datamodelId": "m_bf139c91-0693-48aa-a984-288b06ff9651",
+              "description": "No user email means embedded access",
+              "id": "cedfc861-2518-475b-b4bf-52fde3360bc6",
+              "lastSelectedDatabase": "",
+              "lastSelectedDatamodelId": "m_bf139c91-0693-48aa-a984-288b06ff9651",
+              "lastSelectedSchema": "",
+              "lastSelectedTable": "",
+              "preferences": {},
+              "python": "",
+              "queryConfig": {
+                "groupByColumns": [
+                  {
+                    "column_name": "dashboard_name",
+                    "data_type": "text",
+                    "id": "dashboard_name-77c1be88-de1e-479b-8bfc-fd475d67ae95",
+                    "name": "dashboard_name",
+                    "role": "groupby",
+                    "type": "text"
+                  },
+                  {
+                    "column_name": "end_user_email",
+                    "data_type": "text",
+                    "id": "end_user_email-e120389f-8705-43e4-806e-3167514d4e83",
+                    "name": "end_user_email",
+                    "role": "groupby",
+                    "type": "text"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "column_name": "id",
+                    "data_type": "text",
+                    "id": "id-8e1bac2f-a7f6-4c19-88a6-75da68b93e3d",
+                    "label": "Count",
+                    "name": "id",
+                    "role": "metric",
+                    "type": "text"
+                  }
+                ],
+                "orderBy": [
+                  {
+                    "columnId": "id-8e1bac2f-a7f6-4c19-88a6-75da68b93e3d",
+                    "direction": "desc"
+                  },
+                  {
+                    "columnId": "end_user_email-e120389f-8705-43e4-806e-3167514d4e83",
+                    "direction": "asc"
+                  }
+                ]
+              },
+              "sql": "",
+              "title": "Console Dashboard Users",
+              "type": "table"
+            }
+          ],
+          "id": "9b069a76-2911-4e91-9572-38a0f407f07d"
+        }
+      ],
+      "id": "4c4909c5-45b0-4386-a8ec-12013edea367",
+      "layouts": {
+        "lg": [
+          {
+            "h": 59,
+            "i": "f563f9b0-15cd-4c5a-bc68-1e2190979743",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "6cb61033-bb2b-4e53-a129-8a08d2284c72",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 59
+          },
+          {
+            "h": 47,
+            "i": "9b069a76-2911-4e91-9572-38a0f407f07d",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 48,
+            "x": 0,
+            "y": 94
+          },
+          {
+            "h": 8,
+            "i": "40689b92-ca61-4f66-b498-191ee96e65ff",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "md": [
+          {
+            "h": 8,
+            "i": "854cf336-7d60-4076-905f-4203bedc3dd2",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "d3f10716-337c-4385-9d6a-718242333877",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 10,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "f563f9b0-15cd-4c5a-bc68-1e2190979743",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 36,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "6cb61033-bb2b-4e53-a129-8a08d2284c72",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 36,
+            "x": 0,
+            "y": 43
+          },
+          {
+            "h": 35,
+            "i": "9b069a76-2911-4e91-9572-38a0f407f07d",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 78
+          },
+          {
+            "h": 8,
+            "i": "40689b92-ca61-4f66-b498-191ee96e65ff",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "sm": [
+          {
+            "h": 8,
+            "i": "854cf336-7d60-4076-905f-4203bedc3dd2",
+            "minH": 7,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "f563f9b0-15cd-4c5a-bc68-1e2190979743",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 35,
+            "i": "6cb61033-bb2b-4e53-a129-8a08d2284c72",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 20,
+            "x": 0,
+            "y": 43
+          },
+          {
+            "h": 35,
+            "i": "4f6d8515-22e4-4aa0-bced-eecd4ccaf8ce",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 79
+          },
+          {
+            "h": 35,
+            "i": "9b069a76-2911-4e91-9572-38a0f407f07d",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 79
+          },
+          {
+            "h": 8,
+            "i": "d3f10716-337c-4385-9d6a-718242333877",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "40689b92-ca61-4f66-b498-191ee96e65ff",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xs": [
+          {
+            "h": 8,
+            "i": "ad207565-d357-4153-ae1a-4fecccde1bb1",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "f563f9b0-15cd-4c5a-bc68-1e2190979743",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "6cb61033-bb2b-4e53-a129-8a08d2284c72",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 44
+          },
+          {
+            "h": 8,
+            "i": "854cf336-7d60-4076-905f-4203bedc3dd2",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "4f6d8515-22e4-4aa0-bced-eecd4ccaf8ce",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 79
+          },
+          {
+            "h": 35,
+            "i": "9b069a76-2911-4e91-9572-38a0f407f07d",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 79
+          },
+          {
+            "h": 8,
+            "i": "d3f10716-337c-4385-9d6a-718242333877",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "40689b92-ca61-4f66-b498-191ee96e65ff",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "xxs": [
+          {
+            "h": 8,
+            "i": "ad207565-d357-4153-ae1a-4fecccde1bb1",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "f563f9b0-15cd-4c5a-bc68-1e2190979743",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "6cb61033-bb2b-4e53-a129-8a08d2284c72",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 44
+          },
+          {
+            "h": 8,
+            "i": "854cf336-7d60-4076-905f-4203bedc3dd2",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "4f6d8515-22e4-4aa0-bced-eecd4ccaf8ce",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 79
+          },
+          {
+            "h": 35,
+            "i": "9b069a76-2911-4e91-9572-38a0f407f07d",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 79
+          },
+          {
+            "h": 8,
+            "i": "d3f10716-337c-4385-9d6a-718242333877",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "40689b92-ca61-4f66-b498-191ee96e65ff",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "title": "Usage"
+    },
+    {
+      "calculatedFields": [],
+      "frames": [
+        {
+          "activeCardId": "f8cc885f-a093-42ce-b4f0-35e9139e9d3d",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "text",
+                    "entityId": "Project",
+                    "entityName": "Project",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.Project-id-1786851260589",
+                    "label": "Count of Project Id",
+                    "name": "id",
+                    "qualifiedEntityName": "verceldb.public.Project",
+                    "qualifiedFieldName": "Project.id",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": [],
+                "sortByColumns": []
+              },
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "Contains project metadata and configuration for software projects managed on the platform",
+                    "dialect": "postgres",
+                    "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                    "id": "verceldb.public.Project",
+                    "label": "Projects",
+                    "name": "Project",
+                    "schema": "public",
+                    "table": "Project",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                "type": "dataset"
+              },
+              "id": "f8cc885f-a093-42ce-b4f0-35e9139e9d3d",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "Project",
+              "preferences": {
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "title": "Count of Projects",
+              "type": "kpi",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "e638304b-cac0-404c-9b96-9ddd4890b11b"
+        },
+        {
+          "activeCardId": "6d6abc10-aec7-4225-9626-3abff3a33f41",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "text",
+                    "entityId": "Dashboard",
+                    "entityName": "Dashboard",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.Dashboard-id-1786851311747",
+                    "label": "Count of Id",
+                    "name": "id",
+                    "qualifiedEntityName": "verceldb.public.Dashboard",
+                    "qualifiedFieldName": "Dashboard.id",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": [],
+                "sortByColumns": []
+              },
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "Contains dashboard definitions and metadata for rendering and managing dashboards within the platform.",
+                    "dialect": "postgres",
+                    "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                    "id": "verceldb.public.Dashboard",
+                    "label": "Dashboard",
+                    "name": "Dashboard",
+                    "schema": "public",
+                    "table": "Dashboard",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                "type": "dataset"
+              },
+              "id": "6d6abc10-aec7-4225-9626-3abff3a33f41",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "Dashboard",
+              "preferences": {
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "title": "Count of Dashboards",
+              "type": "kpi",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "e51bc844-bb94-443f-aa24-d880616dd1d2"
+        },
+        {
+          "activeCardId": "15049064-e0e1-4372-85ea-60ca5463b2bc",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "text",
+                    "entityId": "organizations",
+                    "entityName": "organizations",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.organizations-id-1786851610473",
+                    "label": "Count of Organization Id",
+                    "name": "id",
+                    "qualifiedEntityName": "verceldb.public.organizations",
+                    "qualifiedFieldName": "organizations.id",
+                    "role": "metric"
+                  }
+                ],
+                "pivotByColumns": [],
+                "sortByColumns": []
+              },
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "Contains organization records with metadata such as domain, ownership, branding, and calendar configuration",
+                    "dialect": "postgres",
+                    "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                    "id": "verceldb.public.organizations",
+                    "label": "Organizations",
+                    "name": "organizations",
+                    "schema": "public",
+                    "table": "organizations",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                "type": "dataset"
+              },
+              "id": "15049064-e0e1-4372-85ea-60ca5463b2bc",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "organizations",
+              "preferences": {
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "title": "Organizations",
+              "type": "kpi",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "e57a1084-34af-4138-b1b7-d2d9c4939597"
+        },
+        {
+          "activeCardId": "16f8172f-eb36-4039-a11a-4ee82c3bf590",
+          "cards": [
+            {
+              "config": {
+                "groupByColumns": [
+                  {
+                    "dataType": "timestamp(3) without time zone",
+                    "entityId": "Dashboard",
+                    "entityName": "Dashboard",
+                    "entityType": "dataset",
+                    "granularity": "month",
+                    "id": "groupBy-verceldb.public.Dashboard-createdAt-1786983667197",
+                    "label": "Created At",
+                    "name": "createdAt",
+                    "qualifiedEntityName": "verceldb.public.Dashboard",
+                    "qualifiedFieldName": "Dashboard.createdAt",
+                    "role": "groupby"
+                  }
+                ],
+                "metricColumns": [
+                  {
+                    "aggregate": "COUNT",
+                    "dataType": "text",
+                    "entityId": "Dashboard",
+                    "entityName": "Dashboard",
+                    "entityType": "dataset",
+                    "id": "metrics-verceldb.public.Dashboard-id-1786983662652",
+                    "label": "Count of Id",
+                    "name": "id",
+                    "qualifiedEntityName": "verceldb.public.Dashboard",
+                    "qualifiedFieldName": "Dashboard.id",
+                    "role": "metric"
+                  }
+                ]
+              },
+              "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+              "data": [],
+              "datamodelId": "",
+              "dataSource": {
+                "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                "connectionType": "PostgreSQL",
+                "mode": "semanticDomain",
+                "selectedEntities": [
+                  {
+                    "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
+                    "connectionType": "PostgreSQL",
+                    "database": "verceldb",
+                    "datasetType": "physical",
+                    "description": "Contains dashboard definitions and metadata for rendering and managing dashboards within the platform.",
+                    "dialect": "postgres",
+                    "domainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                    "id": "verceldb.public.Dashboard",
+                    "label": "Dashboard",
+                    "name": "Dashboard",
+                    "schema": "public",
+                    "table": "Dashboard",
+                    "type": "dataset"
+                  }
+                ],
+                "semanticDomainId": "5c56f87b-60e4-4d1d-b8aa-f9915f2a39aa",
+                "type": "dataset"
+              },
+              "id": "16f8172f-eb36-4039-a11a-4ee82c3bf590",
+              "lastSelectedDatabase": "verceldb",
+              "lastSelectedDatamodelId": "",
+              "lastSelectedSchema": "public",
+              "lastSelectedTable": "Dashboard",
+              "preferences": {
+                "onClickFilter": [
+                  {
+                    "columnIndex": 0,
+                    "expression": ""
+                  }
+                ]
+              },
+              "title": "Dashboards over time",
+              "type": "bar",
+              "visualizationMode": "builtin"
+            }
+          ],
+          "id": "0e446aca-01f1-47f0-acd6-2031c649505a"
+        }
+      ],
+      "id": "ba276141-96a3-4310-af84-e178c7c62a31",
+      "layouts": {
+        "lg": [
+          {
+            "h": 13,
+            "i": "e638304b-cac0-404c-9b96-9ddd4890b11b",
+            "minH": 4,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 11,
+            "x": 12,
+            "y": 0
+          },
+          {
+            "h": 13,
+            "i": "e51bc844-bb94-443f-aa24-d880616dd1d2",
+            "minH": 4,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 10,
+            "x": 23,
+            "y": 0
+          },
+          {
+            "h": 13,
+            "i": "e57a1084-34af-4138-b1b7-d2d9c4939597",
+            "minH": 4,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 48,
+            "i": "3fc60f97-8dfc-4774-bcab-4258d50f9182",
+            "minH": 10,
+            "minW": 6,
+            "moved": false,
+            "static": false,
+            "w": 33,
+            "x": 0,
+            "y": 13
+          },
+          {
+            "h": 35,
+            "i": "0e446aca-01f1-47f0-acd6-2031c649505a",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 61
+          }
+        ],
+        "md": [
+          {
+            "h": 8,
+            "i": "ad207565-d357-4153-ae1a-4fecccde1bb1",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "40689b92-ca61-4f66-b498-191ee96e65ff",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 8,
+            "i": "854cf336-7d60-4076-905f-4203bedc3dd2",
+            "w": 10,
+            "x": 0,
+            "y": 16
+          },
+          {
+            "h": 8,
+            "i": "e57a1084-34af-4138-b1b7-d2d9c4939597",
+            "minH": 4,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 24
+          },
+          {
+            "h": 8,
+            "i": "e51bc844-bb94-443f-aa24-d880616dd1d2",
+            "minH": 4,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 32
+          },
+          {
+            "h": 8,
+            "i": "d3f10716-337c-4385-9d6a-718242333877",
+            "w": 10,
+            "x": 0,
+            "y": 40
+          },
+          {
+            "h": 8,
+            "i": "e638304b-cac0-404c-9b96-9ddd4890b11b",
+            "minH": 4,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 48
+          },
+          {
+            "h": 8,
+            "i": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "3fc60f97-8dfc-4774-bcab-4258d50f9182",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 13
+          },
+          {
+            "h": 35,
+            "i": "0e446aca-01f1-47f0-acd6-2031c649505a",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 61
+          }
+        ],
+        "sm": [
+          {
+            "h": 8,
+            "i": "ad207565-d357-4153-ae1a-4fecccde1bb1",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "40689b92-ca61-4f66-b498-191ee96e65ff",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 8,
+            "i": "854cf336-7d60-4076-905f-4203bedc3dd2",
+            "w": 10,
+            "x": 0,
+            "y": 16
+          },
+          {
+            "h": 8,
+            "i": "e57a1084-34af-4138-b1b7-d2d9c4939597",
+            "minH": 4,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 24
+          },
+          {
+            "h": 8,
+            "i": "e51bc844-bb94-443f-aa24-d880616dd1d2",
+            "minH": 4,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 32
+          },
+          {
+            "h": 8,
+            "i": "d3f10716-337c-4385-9d6a-718242333877",
+            "w": 10,
+            "x": 0,
+            "y": 40
+          },
+          {
+            "h": 8,
+            "i": "e638304b-cac0-404c-9b96-9ddd4890b11b",
+            "minH": 4,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 48
+          },
+          {
+            "h": 8,
+            "i": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "3fc60f97-8dfc-4774-bcab-4258d50f9182",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 13
+          },
+          {
+            "h": 35,
+            "i": "0e446aca-01f1-47f0-acd6-2031c649505a",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 61
+          }
+        ],
+        "xs": [
+          {
+            "h": 8,
+            "i": "ad207565-d357-4153-ae1a-4fecccde1bb1",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "40689b92-ca61-4f66-b498-191ee96e65ff",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 8,
+            "i": "854cf336-7d60-4076-905f-4203bedc3dd2",
+            "w": 10,
+            "x": 0,
+            "y": 16
+          },
+          {
+            "h": 8,
+            "i": "e57a1084-34af-4138-b1b7-d2d9c4939597",
+            "minH": 4,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 24
+          },
+          {
+            "h": 8,
+            "i": "e51bc844-bb94-443f-aa24-d880616dd1d2",
+            "minH": 4,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 32
+          },
+          {
+            "h": 8,
+            "i": "d3f10716-337c-4385-9d6a-718242333877",
+            "w": 10,
+            "x": 0,
+            "y": 40
+          },
+          {
+            "h": 8,
+            "i": "e638304b-cac0-404c-9b96-9ddd4890b11b",
+            "minH": 4,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 48
+          },
+          {
+            "h": 8,
+            "i": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "3fc60f97-8dfc-4774-bcab-4258d50f9182",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 13
+          },
+          {
+            "h": 35,
+            "i": "0e446aca-01f1-47f0-acd6-2031c649505a",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 61
+          }
+        ],
+        "xxs": [
+          {
+            "h": 8,
+            "i": "ad207565-d357-4153-ae1a-4fecccde1bb1",
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 8,
+            "i": "40689b92-ca61-4f66-b498-191ee96e65ff",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "h": 8,
+            "i": "854cf336-7d60-4076-905f-4203bedc3dd2",
+            "w": 10,
+            "x": 0,
+            "y": 16
+          },
+          {
+            "h": 8,
+            "i": "e57a1084-34af-4138-b1b7-d2d9c4939597",
+            "minH": 4,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 24
+          },
+          {
+            "h": 8,
+            "i": "e51bc844-bb94-443f-aa24-d880616dd1d2",
+            "minH": 4,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 32
+          },
+          {
+            "h": 8,
+            "i": "d3f10716-337c-4385-9d6a-718242333877",
+            "w": 10,
+            "x": 0,
+            "y": 40
+          },
+          {
+            "h": 8,
+            "i": "e638304b-cac0-404c-9b96-9ddd4890b11b",
+            "minH": 4,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 48
+          },
+          {
+            "h": 8,
+            "i": "aa656f67-dabd-4ffa-acdb-7dc5d6ab0bbe",
+            "minH": 7,
+            "minW": 6,
+            "w": 10,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "h": 35,
+            "i": "3fc60f97-8dfc-4774-bcab-4258d50f9182",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 13
+          },
+          {
+            "h": 35,
+            "i": "0e446aca-01f1-47f0-acd6-2031c649505a",
+            "minH": 10,
+            "minW": 6,
+            "w": 20,
+            "x": 0,
+            "y": 61
+          }
+        ]
+      },
+      "title": "New Sheet"
+    }
+  ],
+  "style": {
+    "dark": {
+      "canvasTheme": "muted",
+      "chart": {
+        "dataset": {
+          "backgroundColor": [
+            "#14b8a6",
+            "#5eead4",
+            "#374151",
+            "#6b7280",
+            "#d1d5db"
+          ],
+          "borderColor": [
+            "#14b8a6",
+            "#5eead4",
+            "#374151",
+            "#6b7280",
+            "#d1d5db"
+          ],
+          "datalables": {}
+        },
+        "options": {
+          "datalabels": {
+            "display": false
+          },
+          "plugins": {
+            "tooltip": {
+              "backgroundColor": "#000",
+              "bodyColor": "#fff",
+              "borderColor": "rgb(128,131,139)",
+              "borderWidth": 0.25,
+              "boxPadding": 4,
+              "cornerRadius": 2,
+              "titleColor": "#fff"
+            }
+          },
+          "scales": {
+            "x": {
+              "grid": {
+                "color": "#1e293b",
+                "display": true
+              }
+            },
+            "y": {
+              "grid": {
+                "color": "#1e293b",
+                "display": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "default": {
+      "canvasTheme": "muted",
+      "cardBorderRadius": 2,
+      "chart": {
+        "dataset": {
+          "backgroundColor": [
+            "#2dd4bf",
+            "#60a5fa",
+            "#fde047",
+            "#fb7185",
+            "#c084fc"
+          ],
+          "borderColor": [
+            "#2dd4bf",
+            "#60a5fa",
+            "#fde047",
+            "#fb7185",
+            "#c084fc"
+          ]
+        },
+        "font": {
+          "family": "'open_sans', 'open_sans Fallback'"
+        },
+        "options": {
+          "borderRadius": 2,
+          "interaction": {
+            "mode": "index"
+          },
+          "layout": {
+            "padding": {
+              "top": -40
+            }
+          },
+          "maintainAspectRatio": false,
+          "plugins": {
+            "datalabels": {
+              "display": false
+            },
+            "legend": {
+              "align": "center",
+              "labels": {
+                "borderRadius": 2,
+                "useBorderRadius": true
+              },
+              "maxHeight": 0,
+              "position": "top"
+            },
+            "title": {
+              "display": true
+            },
+            "tooltip": {
+              "backgroundColor": "#fff",
+              "bodyColor": "#000",
+              "borderColor": "rgb(128,131,139)",
+              "borderWidth": 0.25,
+              "boxPadding": 4,
+              "cornerRadius": 4,
+              "pointStyle": "rectRounded",
+              "titleColor": "#000",
+              "usePointStyle": true
+            }
+          },
+          "responsive": true,
+          "scales": {
+            "x": {
+              "grid": {
+                "display": true
+              },
+              "title": {
+                "display": true
+              }
+            },
+            "y": {
+              "beginAtZero": true,
+              "grid": {
+                "display": true
+              },
+              "ticks": {
+                "precision": 0
+              },
+              "title": {
+                "display": true,
+                "text": ""
+              }
+            }
+          }
+        }
+      },
+      "controlInputRadius": 2,
+      "dashboardPanel": "",
+      "dashboardTabsContainer": "",
+      "gridLayout": {
+        "className": "",
+        "margin": [
+          10,
+          10
+        ]
+      }
+    }
+  },
+  "title": "Admin Dashboard"
+}
