@@ -1272,6 +1272,21 @@
                     "qualifiedFieldName": "Project.id",
                     "role": "metric"
                   }
+                ],
+                "sortByColumns": [
+                  {
+                    "dataType": "text",
+                    "direction": "desc",
+                    "entityId": "Project",
+                    "entityName": "Project",
+                    "entityType": "dataset",
+                    "id": "sortBy-verceldb.public.Project-id-1789572253350",
+                    "label": "Count of Project Id",
+                    "name": "id",
+                    "qualifiedEntityName": "verceldb.public.Project",
+                    "qualifiedFieldName": "Project.id",
+                    "role": "sortby"
+                  }
                 ]
               },
               "connectionId": "c_27c31c0e-6ed0-4169-b52f-d4d431302259",
@@ -1730,7 +1745,7 @@
             "y": 11
           },
           {
-            "h": 57,
+            "h": 33,
             "i": "3bc0fb7d-b484-4590-adac-c521f6198bf4",
             "minH": 10,
             "minW": 6,
